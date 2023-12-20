@@ -1,0 +1,48 @@
+<div id="div-index">
+  <div id="logo"></div>
+  
+  <div id="form" class="form-hide">
+    <div id="row-form" class="row row-form-hide">
+      <%= turbo_frame_tag 'login' do %>
+        <h2>Entrar</h2>
+
+        <%= form_for(resource, as: resource_name, url: session_path(resource_name), data: {turbo_frame: 'login', controller: 'login'}) do |f| %>
+            <%= f.label :email, class: "form-label" %><br />
+            <%= f.email_field :email, class: "form-control", autofocus: true, autocomplete: "email", required: 'required' %>
+            <%= f.label :password, class: "form-label" %><br />
+            <%= f.password_field :password, class: "form-control", autocomplete: "current-password", required: 'required' %>
+          <div class="actions">
+            <%= f.button "Entrar", class: "btn-login btn", id:"submit-login" %>
+          </div>
+        <% end %>
+        <% if notice %>
+          <p class="alert alert-success"><%= notice %></p>
+        <% end %>
+        <% if alert %>
+          <p class="alert alert-danger"><%= alert %></p>
+        <% end %>
+      <% end %>
+      <div class="links">
+        <span id="cadastro">Increva-se</span>
+        <span id="senha">Esqueci minha senha</span>
+      </div>
+    </div>
+  </div>
+  
+</div>
+
+<div class="modal fade" id="modal-cadastro" tabindex="-1" role="dialog" aria-labelledby="ModalCadastro" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Inscreva-se no <span class="fansour">FansOur!<span></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true"></span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <%= render "devise/registrations/new" %>
+      </div>
+    </div>
+  </div>
+</div>

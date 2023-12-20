@@ -1,0 +1,76 @@
+turbo_frame id='dados_pessoais'
+  h5 Dados do Perfil
+  = form_with(model: @user) do |form|
+    div class="row-form"
+      div class="col-form"
+        = form.label :nome_publico, class: "form-label"
+          = "Nome público "
+          span class="text-primary" * 
+        = form.text_field :nome_publico, class: "form-control", required: "required", data: {action: 'blur->settings#naoVazio'}
+      div class="col-form" 
+        = form.label :nome_arroba, class: "form-label"
+          = "Seu @ "
+          span class="text-primary" *
+        = form.text_field :nome_arroba, class: "form-control", required: "required", data: {action: 'input->settings#checaUsername'}
+      
+      div class="col-form" 
+        = form.label :valor1, class: "form-label"
+          = "Plano 1 mês (R$) "
+          span class="text-primary" *
+        = form.text_field :valor1, class: "form-control moeda", required: "required", data: {action: 'keyup->settings#preencheValor1'}
+      div class="col-form" 
+        = form.label :desc1, class: "form-label"
+          = "Desconto 1 mês (%)"
+        = form.text_field :desc1, class: "form-control desconto", data: {action: 'keyup->settings#preencheDesc1'} 
+      
+      div class="col-form" 
+        = form.label :valor3, class: "form-label"
+          = "Plano 3 meses mês (R$)"
+        = form.text_field :valor3, class: "form-control moeda", readonly: "readonly" 
+      div class="col-form" 
+        = form.label :desc3, class: "form-label"
+          = "Desconto 3 meses (%)"
+        = form.text_field :desc3, class: "form-control desconto", data: {action: 'keyup->settings#preencheDesc3'} 
+
+      div class="col-form" 
+        = form.label :valor6, class: "form-label"
+          = "Plano 6 meses mês (R$)"
+        = form.text_field :valor6, class: "form-control moeda", readonly: "readonly" 
+      div class="col-form" 
+        = form.label :desc6, class: "form-label"
+          = "Desconto 6 meses (%)"
+        = form.text_field :desc6, class: "form-control desconto", data: {action: 'keyup->settings#preencheDesc6'}  
+     
+      div class="col-form-100"
+        = form.label :descricao, class: "form-label"
+          = "Descrição do perfil "
+          span class="text-primary" *
+        = form.text_area :descricao, class: "form-control", data: {action: 'blur->settings#naoVazio'}
+
+      div class="col-form"
+        = form.label :instagram, class: "form-label"
+          = "Link do Instagram"
+        = form.text_field :instagram, class: "form-control"
+
+      div class="col-form"
+        = form.label :twitter, class: "form-label"
+          = "Link do Twitter"
+        = form.text_field :twitter, class: "form-control"
+
+      div class="col-form"
+        = form.label :tiktok, class: "form-label"
+          = "Link do TikTok"
+        = form.text_field :tiktok, class: "form-control"
+
+      div class="col-form"
+        = form.label :telegram, class: "form-label"
+          = "Link do Telegram"
+        = form.text_field :telegram, class: "form-control"
+
+      div class="col-form"
+        = form.label :site, class: "form-label"
+          = "Link do seu site"
+        = form.text_field :site, class: "form-control"
+
+      div class="col-form-100"
+        = form.submit class: "btn btn-success", disabled: "disabled"

@@ -1,0 +1,22 @@
+div class='sugestao'
+    - @users.each do |user|
+        div class="profile"
+            div class="capa"
+                - if user.capa.attached?
+                    = image_tag user.capa.variant(:thumb)
+                - else
+                    = image_tag "capa-default.png", class: "img-sug-capa"
+            div class="avatar"
+                - if user.avatar.attached?
+                    = image_tag user.avatar.variant(:thumb)
+                - else
+                    = image_tag "avatar-default.png", class: "img-avatar"
+            div class="data"                            
+                = link_to '/'+user.nome_arroba
+                    span
+                        = user.nome_publico
+                    br
+                    span 
+                        = '@' + user.nome_arroba
+
+    

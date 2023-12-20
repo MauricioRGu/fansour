@@ -1,0 +1,82 @@
+turbo_frame id='dados_pessoais'
+  h5 Dados Pessoais
+  = form_with(model: @user) do |form|
+    div class="row-form"
+      div class="col-form"
+        = form.label :nome_completo, class: "form-label"
+          = "Nome Completo "
+          span class="text-primary" *
+        = form.text_field :nome_completo, class: "form-control", data: {action: 'blur->settings#naoVazio'}
+      div class="col-form" 
+        = form.label :email, class: "form-label"
+          = "E-mail "
+          span class="text-primary" *        
+        = form.text_field :email, class: "form-control", disabled: "disabled", data: {action: 'blur->settings#naoVazio'}
+      
+      div class="col-form"
+        = form.label :cpf, class: "form-label"
+          = "CPF "
+          span class="text-primary" *
+        = form.text_field :cpf, class: "form-control", data: {action: 'blur->settings#naoVazio'}
+      div class="col-form" 
+        = form.label :dt_nascimento, class: "form-label" 
+          = "Data de Nascimento "
+          span class="text-primary" *
+        = form.text_field :dt_nascimento, class: "form-control", data: {action: 'blur->settings#naoVazio'}
+      
+      div class="col-form"
+        = form.label :telefone, class: "form-label"
+          = "Telefone "
+          span class="text-primary" *        
+        = form.text_field :telefone, class: "form-control", data: {action: 'blur->settings#naoVazio'}      
+      div class="col-form"
+        = form.label :cep, class: "form-label"
+          = "CEP"
+        = form.text_field :cep, class: "form-control", data: {action: "input->settings#preencheCEP"}   
+
+      div class="col-form" 
+        = form.label :pais, class: "form-label"
+          = "País "
+          span class="text-primary" *        
+        = form.text_field :pais, class: "form-control", data: {action: 'blur->settings#naoVazio'}   
+      div class="col-form" 
+        = form.label :estado, class: "form-label"
+          = "Estado "
+          span class="text-primary" *        
+        = form.text_field :estado, class: "form-control", data: {action: 'blur->settings#naoVazio'}
+
+      div class="col-form" 
+        = form.label :cidade, class: "form-label"
+          = "Cidade "
+          span class="text-primary" *        
+        = form.text_field :cidade, class: "form-control", data: {action: 'blur->settings#naoVazio'}
+      div class="col-form" 
+        = form.label :bairro, class: "form-label"
+          = "Bairro "
+          span class="text-primary" *        
+        = form.text_field :bairro, class: "form-control", data: {action: 'blur->settings#naoVazio'}
+
+      div class="col-form" 
+        = form.label :endereco, class: "form-label"
+          = "Endereço "
+          span class="text-primary" *        
+        = form.text_field :endereco, class: "form-control", data: {action: 'blur->settings#naoVazio'}
+      div class="col-form" 
+        = form.label :numero, class: "form-label"
+          = "Número "
+          span class="text-primary" *        
+        = form.text_field :numero, class: "form-control", data: {action: 'blur->settings#naoVazio'}
+
+      div class="col-form" 
+        = form.label :complemento, class: "form-label"
+        = form.text_field :complemento, class: "form-control"
+
+      div class="col-form-100"
+        = form.check_box :criador, class: "form-check-input"
+        = form.label :criador, class: "form-label"
+          = "Tornar o perfil criador"
+        
+
+      div class="col-form"
+        = form.submit class: "btn btn-success", disabled: "disabled"
+          = "Salvar"

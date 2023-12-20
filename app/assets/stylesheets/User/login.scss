@@ -1,0 +1,110 @@
+:root{
+    //--background-color-50: #11111f50;
+}
+  
+body{
+  margin: 0;
+}
+
+a{
+  text-decoration: none;
+}
+
+#div-index{
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-around;
+  background-color: rgb(17, 17, 31);
+  background-image: radial-gradient(circle closest-side, rgba(255, 255, 255, 0.07) 0%, rgba(255, 255, 255, 0) 100%);
+}
+
+#logo{
+  max-width: 500px;
+  flex-grow: .6;
+}
+
+#form{
+  overflow: hidden;
+  flex: 1;
+  color: white;
+  padding: 0;
+  max-width: 100%;
+  transition: max-width 1200ms linear;
+  background-color: var(--background-color-50);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+}
+
+.form-hide{
+  padding: 0 !important;
+  max-width: 0 !important;
+}
+
+#row-form{   
+  max-width: 360px;
+  transition: opacity 1200ms linear;
+}
+
+.row-form-hide{
+  opacity: 0;
+}
+
+#new_user > input{
+  background-color: var(--background-color-50);
+  width: 100%;
+  color: #fff;
+}
+
+.btn-login{
+  width: 100%;
+  color: #11111f !important;
+  margin: 26px 0 5px;
+  background-color: var(--azul-fansour) !important;
+  &:hover{
+  color: white !important;
+  background-color: var(--azul-fansour) !important;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  #div-index{
+    flex-direction: column;
+    align-items: center;
+  }
+  #form{
+    padding: 50px 25px;
+    width: 100%;
+    max-height: 100%;
+    transition: max-height 1200ms linear;
+  }
+  .form-hide{
+    padding: 0 !important;
+    max-height: 0 !important;
+  }
+}
+
+//links cadastro e esqueci senha
+.links{
+  display: flex;
+  justify-content: space-between;
+  color: slategray;
+}
+
+.links span{
+  cursor: pointer;
+  &:hover{
+    color: var(--azul-fansour);
+  }
+}
+
+#error_explanation h6{
+  color: red;
+}
+
+#error_explanation ul{
+  color: #a50000;
+}

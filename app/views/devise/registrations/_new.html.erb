@@ -1,0 +1,14 @@
+<%= turbo_frame_tag 'cadastro' do %>
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name), data: {turbo_frame: 'cadastro', controller: 'login'}) do |f| %>
+    <%= render "devise/shared/error_messages", resource: resource %>
+      <%= f.email_field :email, class: "form-control", autocomplete: "email", placeholder: "E-mail", required: "required" %><br />
+      <% if @minimum_password_length %>
+      <em>(<%= @minimum_password_length %> caracteres no minímo)</em><br />
+      <% end %>
+      <%= f.password_field :password, class: "form-control", autocomplete: "new-password", placeholder: "Senha", required: "required" %><br />
+      <%= f.password_field :password_confirmation, class: "form-control", autocomplete: "new-password", placeholder: "Confirme a senha", required: "required" %><br />
+    <div class="actions">
+      <%= f.submit "Cadastrar", class:"btn btn-login" %>
+    </div>
+  <% end %>
+<% end %>

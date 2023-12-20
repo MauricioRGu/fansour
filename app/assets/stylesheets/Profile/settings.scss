@@ -1,0 +1,113 @@
+h5 {
+    color: var(--azul-fansour) !important;
+}
+
+.menu-selected{
+    color: white;    
+}
+
+content{
+    display: flex;
+    justify-content: space-between;
+    padding-top: 40px;
+}
+
+.menu-settings{
+    margin-right: 20px;
+    text-decoration: none;
+    flex: 0 0 20%;
+    min-width: 152px;
+
+    & ul{
+        list-style: none;
+        padding: 0;
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+    & li {
+        height: 30px;
+        margin: 25px 0px;
+    }
+    
+    & a {
+        text-decoration: none;
+    }
+
+    & svg {
+        margin-right: 5px;
+    }
+}
+
+.data{
+    flex: 0 0 80%;
+}
+
+//formulario 
+.row-form{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.col-form{
+    flex: 0 0 50%;
+    max-width: 50%;
+    padding: 15px 15px 0;
+}
+
+.col-form-100{
+    flex: 0 0 100%;
+    max-width: 100%;
+    padding: 15px 15px 0;
+}
+
+.feedback-input{
+    margin-top: 0.25rem;
+    font-size: 0.875em;
+}
+
+//auto complete list
+.easy-autocomplete-container{
+    list-style: none;
+}
+
+.easy-autocomplete-container ul{
+    display: none;
+    border: 1px solid var(--bs-border-color);
+    padding: 10px;
+    border-radius: 6px;
+}
+
+.easy-autocomplete-container ul li{
+    list-style: none;
+    cursor: pointer;
+}
+
+// adequação em telas menores
+@media screen and (max-width: 768px) {
+    content{
+        flex-direction: column;
+    }
+
+    .menu-settings{
+        margin: 0;
+    }
+
+    .menu-settings ul{
+        display: flex;
+        justify-content: space-around;
+    }
+
+    .menu-settings ul li span{
+        display: none;
+    }
+
+    .row-form{
+        flex-direction: column;
+    }
+
+    .col-form{
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+}

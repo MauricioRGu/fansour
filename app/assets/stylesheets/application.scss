@@ -1,0 +1,164 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS (and SCSS, if configured) file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+ 
+ @import 'bootstrap';
+
+:root{
+    --background-color: #11111f;
+    --background-color-50: #11111f50;
+    --font-color-nav: white;
+    --azul-fansour: #4ec3e0;
+
+    //sobrepondo bootstrap
+    --bs-modal-bg-custom: #1b1c21; //fundo da modal
+}
+
+main{
+    margin: 4.5rem 2rem 2rem 2rem;
+}
+
+.nav{
+    box-shadow: 0px 3px 5px 1px #11111fb5;
+    height: 4.25rem;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: var(--background-color);
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    z-index: 1000;
+}
+
+.nav a{
+    display: flex;
+    max-width: 200px;
+}
+
+.nav div{
+    display: flex;
+    align-items: center;
+}
+
+.nav p{
+    color: white !important;
+    margin: auto;
+}
+
+.img-avatar{
+    width: 48px;
+    height: 48px;
+    border-radius: 25px;
+    margin: 0 10px;
+    cursor: pointer;
+    object-fit: cover;
+}
+
+.menu-hide{
+    opacity: 0;
+    visibility: hidden;
+}
+
+.menu{
+    background-color: var(--background-color);
+    position: absolute;
+    right: 0;
+    top: calc(100% + 20px);
+    color: var(--font-color-nav);
+}
+
+.menu::before{
+    content: '';
+    transform: rotate(45deg);
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: -8px;
+    right: 24px;
+    background-color: var(--background-color);
+    z-index: -1;
+}
+
+.menu ul{
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    color: var(--font-color-nav);
+}
+
+.menu ul li{
+    padding: 10px 20px;
+    transition: .3s;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.menu ul li:hover{
+    background-color: var(--azul-fansour);
+    transition: 0s;
+}
+
+.menu ul li a{
+    text-decoration: none;
+    margin-left: 5px;
+    color: var(--font-color-nav);
+}
+
+@media screen and (max-width: 430px){
+    .nav p{
+        width: 0;
+        visibility: hidden;
+    }
+}
+
+.modal-content{
+    background-color: var(--bs-modal-bg-custom) !important;
+    color: #dcdcdc;
+}
+
+.modal-header{
+    border: none;
+}
+
+form.new_user{
+    max-width: 300px;
+    margin: auto;
+}
+
+form.new_user input::placeholder {
+    color: var(--azul-fansour);
+    opacity: .5; /* Firefox */
+}
+
+.fansour{
+    color: var(--azul-fansour);
+}
+
+.div-info{
+    position: fixed;
+    bottom: 0;
+    right: 2rem;
+    left: 2rem;
+    transition: left 0.1s linear;
+    border-radius: 5px;
+}
+
+.form-label{
+    margin-left: 10px;
+}
