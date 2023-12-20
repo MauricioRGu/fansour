@@ -67,7 +67,7 @@ var binding = function(){
     $('.moeda').mask('000,00', {reverse: true, placeholder: "R$"})
     $('.desconto').mask('00', {reverse: true, placeholder: "%"})
     $('#user_cpf').mask('999.999.999-99',{placeholder: "000.000.000-00"})
-    //$('#user_dt_nascimento').mask('99/99/9999', {placeholder: "00/00/0000"})
+    $('#user_dt_nascimento').mask('99/99/9999', {placeholder: "00/00/0000"})
     var SPMaskBehavior = function (val) {
         return val.replace(/\D/g, '').length === 11 ? '(00) 00000-0000' : '(00) 0000-00009';
       },
