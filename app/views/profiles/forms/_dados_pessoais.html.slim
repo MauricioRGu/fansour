@@ -31,7 +31,8 @@ turbo_frame id='dados_pessoais'
         = form.text_field :telefone, class: "form-control", data: {action: 'blur->settings#naoVazio'}      
       div class="col-form"
         = form.label :cep, class: "form-label"
-          = "CEP"
+          = "CEP " 
+          span class="text-primary" *  
         = form.text_field :cep, class: "form-control", data: {action: "input->settings#preencheCEP"}   
 
       div class="col-form" 
