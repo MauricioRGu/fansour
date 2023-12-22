@@ -3,8 +3,9 @@ div class="d-flex flex-column"
     = image_tag user.avatar, class: "w-100 opacity-75 object-fit-cover img-capa"
   - else
     img class="w-100 opacity-75 object-fit-cover img-capa" src="https://petdoctor.com.br/wp-content/uploads/2021/04/10RacasDeCaesMaisPopularesNoBrasil-Topo-Abr21.jpg"
-    
+
   - if user.capa.present?
     = image_tag user.capa, class: "bg-dark img-avatar p-2 z-0 img-profile"
   - else 
     img class="bg-dark img-avatar p-2 z-0 img-profile" src="https://love.doghero.com.br/wp-content/uploads/2016/10/Beagle-6-300x225.webp"
+    
