@@ -9,7 +9,16 @@ h5 {
 content{
     display: flex;
     justify-content: space-between;
-    padding-top: 40px;
+}
+
+.img-capa{
+    height: 180px;
+}
+
+.img-profile{
+    margin-top: -41px !important;
+    width: 90px !important;
+    height: 90px !important;
 }
 
 .menu-settings{
@@ -87,6 +96,16 @@ content{
 @media screen and (max-width: 768px) {
     content{
         flex-direction: column;
+    }
+
+    .img-capa{
+        height: 110px;
+    }
+    
+    .img-profile{
+        margin-top: -41px !important;
+        width: 80px !important;
+        height: 80px !important;
     }
 
     .menu-settings{
