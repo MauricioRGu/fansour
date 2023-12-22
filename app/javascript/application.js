@@ -4,6 +4,7 @@
 //= require bootstrap
 //= require jquery.mask.min.js
 //= require jquery.easy-autocomplete
+//= require vivus
 
 import "@hotwired/turbo-rails"
 import "controllers"

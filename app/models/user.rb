@@ -15,7 +15,7 @@ class User < ApplicationRecord
   before_create :username
   
   #valida a presença dos campos
-  validates :nome_publico, presence: true
+  #validates :nome_publico, presence: true
 
   #trata dados antes de salvar
   before_update :tratamento
@@ -23,6 +23,9 @@ class User < ApplicationRecord
   def validates
   end
   def tratamento
+    if self.nome_publico.strip == ''
+      error.add("O nome público é requerido.")
+    end
   end
 
   def online?
@@ -44,7 +47,9 @@ class User < ApplicationRecord
 
   #formata data de nascimento
   def dt_nascimento
-    self[:dt_nascimento].strftime('%d/%m/%Y')
+    if self[:dt_nascimento].present?
+      self[:dt_nascimento].strftime('%d/%m/%Y')      
+    end
   end
 
   private
