@@ -32,7 +32,12 @@
           <p>
             <%= current_user.nome_publico %>
           </p>
-          <%= image_tag("avatar-default.png", class: "img-avatar", id: "img-avatar") %>           
+          <% if current_user.avatar.present? %>
+            <%= image_tag(current_user.avatar, class: "img-avatar", id: "img-avatar") %>           
+          <% else %>
+            <%= image_tag("avatar-default.png", class: "img-avatar", id: "img-avatar") %>           
+          <% end %>
+
           <div class="menu menu-hide" id="menu">
             <ul>
               <li>

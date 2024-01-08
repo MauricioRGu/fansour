@@ -56,6 +56,7 @@ class UsersController < ApplicationController
 
   def user_params    
     params.require(:user).permit(:nome_publico,:nome_arroba,:valor1,:desc1,:valor3,:desc3,:valor6,:desc6,:descricao,:instagram,:twitter,:tiktok,:telegram,:site,
-                                  :nome_completo,:email,:cpf,:dt_nascimento,:telefone,:pais,:cep,:estado,:cidade,:bairro,:endereco,:numero,:complemento,:criador)
+                                  :nome_completo,:email,:cpf,:dt_nascimento,:telefone,:pais,:cep,:estado,:cidade,:bairro,:endereco,:numero,:complemento,:criador,
+                                  :avatar,:capa)
   end
 end

@@ -1,11 +1,37 @@
-div class="d-flex flex-column"
-  - if user.avatar.present?
-    = image_tag user.avatar, class: "w-100 opacity-75 object-fit-cover img-capa"
-  - else
-    img class="w-100 opacity-75 object-fit-cover img-capa" src="https://petdoctor.com.br/wp-content/uploads/2021/04/10RacasDeCaesMaisPopularesNoBrasil-Topo-Abr21.jpg"
+div class="d-flex flex-column position-relative"
+  div 
+    - if user.capa.present?
+      = image_tag user.capa, class: "w-100 opacity-75 object-fit-cover img-capa", id: "img-capa"
+    - else  
+      = image_tag "capa-default.png", class: "w-100 opacity-75 object-fit-cover img-capa", id: "img-capa"
+    div id="capa-preview" class="capa-preview overflow-hidden d-none" style="height: 200px; width: 500px;"
 
-  - if user.capa.present?
-    = image_tag user.capa, class: "bg-dark img-avatar p-2 z-0 img-profile"
-  - else 
-    img class="bg-dark img-avatar p-2 z-0 img-profile" src="https://love.doghero.com.br/wp-content/uploads/2016/10/Beagle-6-300x225.webp"
-    
+  div class="z-0"
+    - if user.avatar.present?
+      = image_tag user.avatar, class: "bg-dark img-avatar p-2 z-0 img-profile", id: "img-avatar"
+    - else 
+      = image_tag "avatar-default.png", class: "bg-dark img-avatar p-2 z-0 img-profile", id: "img-avatar"
+  div id="avatar-preview" class="avatar-preview bg-dark overflow-hidden d-none z-0" 
+
+  div class="btn-menu-images d-flex flex-row-reverse position-relative"
+    svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-three-dots-vertical" viewBox="0 0 16 16" id="btn-images-profile"
+      path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0"    
+    div class="menu menu-images menu-hide" id="menu-images"
+      ul
+        li 
+          label for="inputImageAvatar"
+            = "Imagem de perfil"
+          input id="inputImageAvatar" type="file" class="d-none" accept="image/*"
+        li 
+          label for="inputImageCapa"
+            = "Imagem de capa"
+          input id="inputImageCapa" type="file" class="d-none" accept="image/*"
+  
+  div id="img-cropper" class="img-cropper m-2 d-flex flex-column-reverse d-none"
+    div class="img-container"
+      img id="image"
+    div class="m-2 d-flex"  style="justify-content: space-between"
+      button id="btn-confirma" class="btn btn-outline-success"
+        = "Confirmar"
+      button id="btn-cancela" class="btn btn-outline-danger"
+        = "Cancelar"

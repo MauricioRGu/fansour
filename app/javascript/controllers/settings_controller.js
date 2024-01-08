@@ -11,10 +11,228 @@ const debounce = (callback, wait) => {
   };
 };
 
+function uploadFile (event,file,tipo){
+  event.preventDefault();
+  console.log(file)
+  //const filesInput = this.filesInputTarget;
+  //let files = Array.from(filesInput.files);
+
+  let formData = new FormData();
+
+  formData.append("user["+tipo+"]", file);
+  //formData.append("user[descricao]", 'file');
+
+  fetch("/users/1", {
+    method: "PATCH",
+    body: formData,
+    headers: {
+      "X-CSRF-Token": document
+        .querySelector('meta[name="csrf-token"]')
+        ?.getAttribute("content"),
+    },
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => {
+      console.log(data)
+      if (data.result === "success") {
+       
+      }
+    });
+}
+
 // Connects to data-controller="settings"
 export default class extends Controller {
 
+  
+
   initialize() {
+    //função para cortar imagens 
+    var Cropper = window.Cropper;
+    var URL = window.URL || window.webkitURL;
+    var image = document.getElementById('image');
+    var options_crop = {
+      aspectRatio: 1 / 1,
+      preview: NaN,
+      ready: function (e) {
+        console.log(e.type);
+      },
+      cropstart: function (e) {
+        console.log(e.type, e.detail.action);
+      },
+      cropmove: function (e) {
+        console.log(e.type, e.detail.action);
+      },
+      cropend: function (e) {
+        console.log(cropper)
+        console.log(e.type, e.detail.action);
+      },
+      crop: function (e) {
+        var data = e.detail;
+  
+        console.log(e.type);
+        //dataX.value = Math.round(data.x);
+        //dataY.value = Math.round(data.y);
+        //dataHeight.value = Math.round(data.height);
+        //dataWidth.value = Math.round(data.width);
+        //dataRotate.value = typeof data.rotate !== 'undefined' ? data.rotate : '';
+        //dataScaleX.value = typeof data.scaleX !== 'undefined' ? data.scaleX : '';
+        //dataScaleY.value = typeof data.scaleY !== 'undefined' ? data.scaleY : '';
+      },
+      zoom: function (e) {
+        console.log(e.type, e.detail.ratio);
+      }
+    };
+    var cropper = new Cropper(image, options_crop);
+    
+    //necessáriio?
+    var originalImageURL = image.src;
+    var uploadedImageType = 'image/jpeg';
+    var uploadedImageName = 'cropped.jpg';
+    var uploadedImageURL;
+  
+    
+    // avatar
+    var inputImageAvatar = document.getElementById('inputImageAvatar');
+    if (URL) {
+      if (inputImageAvatar){
+        inputImageAvatar.onchange = function () {
+          var files = this.files;
+          var file;
+  
+          if (files && files.length) {
+            file = files[0];
+  
+            if (/^image\/\w+/.test(file.type)) {
+              uploadedImageType = file.type;
+              uploadedImageName = file.name;
+  
+              if (uploadedImageURL) {
+                URL.revokeObjectURL(uploadedImageURL);
+              }
+  
+              image.src = uploadedImageURL = URL.createObjectURL(file);
+              if (cropper) {
+                cropper.destroy();
+              }
+  
+              //preview
+              var pre = document.getElementsByClassName('avatar-preview')              
+              options_crop.preview = pre
+              
+              //alterar o aspecto para capa
+              options_crop.aspectRatio = 1 / 1
+              
+              $("#avatar-preview").toggleClass('d-none');
+              //esconde o menu de imagens
+              $("#menu-images").toggleClass('menu-hide');
+              //mostra a div de cropper
+              $("#img-cropper").toggleClass('d-none')
+              cropper = new Cropper(image, options_crop);
+              inputImageAvatar.value = null;              
+            } else {
+              window.alert('Please choose an image file.');
+            }
+          }
+        }
+      }
+    } else {
+      inputImageAvatar.disabled = true;
+      inputImageAvatar.parentNode.className += ' disabled';
+    }
+
+    //capa
+    var inputImageCapa = document.getElementById('inputImageCapa');
+    if (URL) {
+      if (inputImageCapa){
+        inputImageCapa.onchange = function () {
+          var files = this.files;
+          var file;
+  
+          if (files && files.length) {
+            file = files[0];
+  
+            if (/^image\/\w+/.test(file.type)) {
+              uploadedImageType = file.type;
+              uploadedImageName = file.name;
+  
+              if (uploadedImageURL) {
+                URL.revokeObjectURL(uploadedImageURL);
+              }
+  
+              image.src = uploadedImageURL = URL.createObjectURL(file);
+              if (cropper) {
+                cropper.destroy();
+              }
+  
+              //preview
+              //var pre = document.getElementsByClassName('capa-preview')              
+              options_crop.preview = NaN
+              //$("#capa-preview").toggleClass('d-none');
+
+              //alterar o aspecto para capa
+              options_crop.aspectRatio = NaN
+
+              //esconde o menu de imagens
+              $("#menu-images").toggleClass('menu-hide');
+              //mostra a div de cropper
+              $("#img-cropper").toggleClass('d-none')
+
+              cropper = new Cropper(image, options_crop);
+              inputImageCapa.value = null;
+            } else {
+              window.alert('Please choose an image file.');
+            }
+          }
+        }
+      }
+    } else {
+      inputImageCapa.disabled = true;
+      inputImageCapa.parentNode.className += ' disabled';
+    }
+
+    $("#btn-confirma").on("click",function(e){  
+      var img = ''
+      var canvas = cropper.getCroppedCanvas()
+
+      //capa não tem preview
+      if (cropper.previews){
+        img = document.getElementsByClassName('img-avatar')        
+        for(let i of img){
+          i.src = canvas.toDataURL()
+        }
+        canvas.toBlob((blob) => {
+          uploadFile(e,blob,'avatar')
+        })
+      }else{
+        img = document.getElementById('img-capa')
+        console.log(img)
+        img.src = canvas.toDataURL()
+        canvas.toBlob((blob) => {
+          uploadFile(e,blob,'capa')
+        })
+      }
+
+      
+      //uploadFile(e,canvas.toBlob())
+
+    })
+
+    $("#btn-cancela").on("click",function(e){
+      //esconde a edição da imagem.
+      $("#img-cropper").toggleClass("d-none")
+      $("#avatar-preview").addClass("d-none")
+      $("#capa-preview").addClass("d-none")
+    })
+
+    //habilita o viewer de imagens 
+    var main = document.querySelector('main')
+    var viewer = new Viewer(main,{
+        url: 'src',
+        title: ''
+    })
+
     var options = {
       data: [
         "Abecásia",

@@ -3,12 +3,13 @@ div class='sugestao'
         div class="profile"
             div class="capa"
                 - if user.capa.attached?
-                    = image_tag user.capa.variant(:thumb)
+                    //= #image_tag user.capa.variant( gravity: 'center', draw: 'image Over 0,0 0,0 "/home/mauricio/fansour-clone/app/assets/images/icone.png"'), class: "img-sug-capa"
+                    = image_tag user.capa.variant( gravity: 'East', fill: 'grey', pointsize: '12', font: '/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf', draw: 'text 0,120 "FansOur.com/Mauriciomrox "'), class: "img-sug-capa"
                 - else
                     = image_tag "capa-default.png", class: "img-sug-capa"
             div class="avatar"
                 - if user.avatar.attached?
-                    = image_tag user.avatar.variant(:thumb)
+                    = image_tag user.avatar, class: "img-avatar"
                 - else
                     = image_tag "avatar-default.png", class: "img-avatar"
             div class="data"                            

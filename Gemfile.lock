@@ -277,6 +277,7 @@ DEPENDENCIES
   jbuilder
   jquery-mask-plugin
   jquery-rails
+  mini_magick (~> 4.5, >= 4.5.1)
   puma (~> 5.0)
   rails (~> 7.0.8)
   selenium-webdriver

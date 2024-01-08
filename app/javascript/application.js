@@ -5,6 +5,8 @@
 //= require jquery.mask.min.js
 //= require jquery.easy-autocomplete
 //= require vivus
+//= require viewer
+//= require cropper.min
 
 import "@hotwired/turbo-rails"
 import "controllers"
@@ -25,6 +27,11 @@ var binding = function(){
     $('#img-avatar').on('click',function(e){
         $("#menu").toggleClass('menu-hide')
     })  
+
+    //habilita botão de menu de imagens
+    $("#btn-images-profile").on('click',function(e){
+        $("#menu-images").toggleClass('menu-hide')
+    })
 
     fEscondeMsg
 
@@ -61,7 +68,6 @@ var binding = function(){
         $("#cadastro").on("click",function(e){
             $("#modal-cadastro").modal('show');
         })
-
         
     }
 

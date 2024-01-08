@@ -6,6 +6,26 @@ h5 {
     color: white;    
 }
 
+.menu-images{
+    top: 0 !important;
+    right: 35px !important;
+}
+
+.menu-images::before{
+    top: 4px !important;
+    right: -10px !important;
+}
+
+.btn-menu-images{
+    margin-top: -30px;    
+    & svg:hover{
+        cursor: pointer;
+        color: black;
+        border-radius: 15px;
+        background-color: var(--azul-fansour);
+    }
+}
+
 content{
     display: flex;
     justify-content: space-between;
@@ -13,12 +33,41 @@ content{
 
 .img-capa{
     height: 180px;
+    cursor: pointer;
 }
 
 .img-profile{
     margin-top: -41px !important;
     width: 90px !important;
     height: 90px !important;
+}
+
+.img-container{
+  background-color: #f7f7f7;
+  text-align: center;
+  width: 100%;
+}
+
+.img-container {
+  max-height: 400px;
+  min-height: 200px;
+}
+
+@media (min-width: 768px) {
+  .img-container {
+    min-height: 400px;
+  }
+}
+
+.img-container > img {
+  max-width: 100%;
+}
+
+.avatar-preview{
+    margin: -90px 0px 0px 10px; 
+    border-radius: 50px; 
+    width: 90px; 
+    height: 90px;
 }
 
 .menu-settings{
@@ -106,6 +155,12 @@ content{
         margin-top: -41px !important;
         width: 80px !important;
         height: 80px !important;
+    }
+
+    .avatar-preview{
+        margin: -80px 0px 0px 10px; 
+        width: 80px; 
+        height: 80px;
     }
 
     .menu-settings{
