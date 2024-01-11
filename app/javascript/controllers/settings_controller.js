@@ -214,9 +214,10 @@ export default class extends Controller {
         })
       }
 
-      
-      //uploadFile(e,canvas.toBlob())
-
+      //esconde a edição da imagem.
+      $("#img-cropper").toggleClass("d-none")
+      $("#avatar-preview").addClass("d-none")
+      $("#capa-preview").addClass("d-none")
     })
 
     $("#btn-cancela").on("click",function(e){
