@@ -4,14 +4,12 @@
   <div id="form" class="form-hide">
     <div id="row-form" class="row row-form-hide">
       <%= turbo_frame_tag 'login' do %>
-        <h2>Entrar</h2>
+        <h1 class="mb-3">Entrar</h2>
 
         <%= form_for(resource, as: resource_name, url: session_path(resource_name), data: {turbo_frame: 'login', controller: 'login'}) do |f| %>
-            <%= f.label :email, class: "form-label" %><br />
-            <%= f.email_field :email, class: "form-control", autofocus: true, autocomplete: "email", required: 'required' %>
-            <%= f.label :password, class: "form-label" %><br />
-            <%= f.password_field :password, class: "form-control", autocomplete: "current-password", required: 'required' %>
-          <div class="actions">
+              <%= f.email_field :email, class: "form-control mb-3", autofocus: true, autocomplete: "email", required: 'required', placeholder: "E-mail" %>
+            <%= f.password_field :password, class: "form-control mb-3", autocomplete: "current-password", required: 'required', placeholder: "Senha" %>
+          <div class="actions mb-3">
             <%= f.button "Entrar", class: "btn-login btn", id:"submit-login" %>
           </div>
         <% end %>

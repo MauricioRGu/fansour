@@ -22,4 +22,5 @@ Rails.application.routes.draw do
 
   post 'username/:username', to: 'users#checa_username'
 
+  post ':id', to: 'profiles#image_download'
 end

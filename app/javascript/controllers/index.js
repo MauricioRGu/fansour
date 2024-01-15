@@ -9,3 +9,6 @@ application.register("settings", SettingsController)
 
 import LoginController from "./login_controller"
 application.register("login", LoginController)
+
+import ProfileController from "./profile_controller"
+application.register("profile", ProfileController)

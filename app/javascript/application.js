@@ -21,6 +21,9 @@ var fEscondeMsg = function(){
 }
 
 var binding = function(){
+    //bloqueia o menu de contexto(botão direito do mouse) para  todas as
+    document.addEventListener('contextmenu', event => event.preventDefault())
+
     var url_atual = window.location.href;
 
     //habilita a botão do menu na imagem do avatar
@@ -55,14 +58,14 @@ var binding = function(){
         
         //função para carregar o svg
         function mostraLogo(tempo){
-            new Vivus('logo', { type: 'sync', duration: tempo , file: 'http://localhost:3001/assets/logo-index-a4f7f9b0592c1da89067a1139dd5ebba2e383a7b3a069ee4625e045cb8b99455.svg'}, callBack);
+            new Vivus('logo', { type: 'sync', duration: tempo , file: 'http://localhost:3000/assets/logo-index-a4f7f9b0592c1da89067a1139dd5ebba2e383a7b3a069ee4625e045cb8b99455.svg'}, callBack);
         }
         
         //chamada da função para carregar svg de acordo com o tipo de dispositivo
         if(navigator.userAgentData.mobile){
-            mostraLogo(800);
+            mostraLogo(100);
         }else{
-            mostraLogo(1);
+            mostraLogo(100);
         }
 
         $("#cadastro").on("click",function(e){

@@ -1,0 +1,15 @@
+h5 Segurança
+= form_with(model: @user) do |form|
+  div class="row-form"
+    div class="col-form"
+      = form.label :password, class: "form-label"
+        = "Nova senha "
+        span class="text-primary" *
+      = form.password_field :password, class: "form-control", data: {action: 'blur->settings#naoVazio'}
+    
+      = form.label :password_confirmation, class: "form-label"
+        = "Confirmar nova senha "
+        span class="text-primary" *
+      = form.password_field :password_confirmation, class: "form-control", data: {action: 'blur->settings#naoVazio'}
+    div class="col-form-100"
+      = form.submit class: "btn btn-success", disabled: "disabled"
