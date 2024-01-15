@@ -2,8 +2,11 @@ class ProfilesController < ApplicationController
 
     def image_download
         if current_user
-            file = ActiveStorage::Attachment.find(params[:id])
-            send_data file.download, filename: "file.blob.filename", type: file.blob.content_type, disposition: 'inline'
+            user = User.find_by(nome_arroba: params[:id])            
+            if !user.capa.blob.metadata['width'].present?
+                - user.capa.analyze
+            - point = user.capa.blob.metadata['width'] * 0.028
+            send_data user.capa.variant( gravity: 'South-East', fill: 'grey', pointsize: point, font: '/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf', draw: 'text 0,0 "FansOur.com/'+user.nome_arroba.to_s+' "').dowmload, filename: "filename", type: file.blob.content_type, disposition: 'inline'
         else
             redirect_to "/"
         end

@@ -1,13 +1,13 @@
 content data-controller="profile"
 div class="d-flex flex-column position-relative"
   div 
-    - if user.capa.present?
-      img src="#{user.capa.id}" class="w-100 opacity-75 object-fit-cover img-capa img-get" id="img-capa"
-    - else  
+    - if user.capa.present?      
+      = image_tag "capa-default.png", class: "w-100 opacity-75 object-fit-cover img-capa img-get", id: "img-capa", datasrc: '/' + user.nome_arroba.to_s
+    - else 
       = image_tag "capa-default.png", class: "w-100 opacity-75 object-fit-cover img-capa", id: "img-capa"
-
+      
   div class="z-0"
     - if user.avatar.present?
-      image src="#{user.avatar.id}" class="bg-dark img-avatar p-2 z-0 img-profile img-get" id="img-avatar"
+      = image_tag "avatar-default.png", class: "bg-dark img-avatar p-2 z-0 img-profile img-get", id: "img-avatar", datasrc: '/' + user.nome_arroba.to_s
     - else 
       = image_tag "avatar-default.png", class: "bg-dark img-avatar p-2 z-0 img-profile", id: "img-avatar"
