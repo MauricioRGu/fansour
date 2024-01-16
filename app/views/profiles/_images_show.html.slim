@@ -2,12 +2,18 @@ content data-controller="profile"
 div class="d-flex flex-column position-relative"
   div 
     - if user.capa.present?      
-      = image_tag "capa-default.png", class: "w-100 opacity-75 object-fit-cover img-capa img-get", id: "img-capa", datasrc: '/' + user.nome_arroba.to_s
+      = image_tag "capa-default.png", class: "w-100 opacity-75 object-fit-cover img-capa rounded-bottom-3 img-get", id: "img-capa", datasrc: '/' + user.nome_arroba.to_s + '*'
     - else 
-      = image_tag "capa-default.png", class: "w-100 opacity-75 object-fit-cover img-capa", id: "img-capa"
+      = image_tag "capa-default.png", class: "w-100 opacity-75 object-fit-cover img-capa rounded-bottom-3", id: "img-capa"
       
-  div class="z-0"
+  div class="z-0 d-flex"
     - if user.avatar.present?
-      = image_tag "avatar-default.png", class: "bg-dark img-avatar p-2 z-0 img-profile img-get", id: "img-avatar", datasrc: '/' + user.nome_arroba.to_s
+      = image_tag "avatar-default.png", class: "bg-dark img-avatar p-2 z-0 img-profile rounded-pill img-get", id: "img-avatar", datasrc: '/' + user.nome_arroba.to_s
     - else 
-      = image_tag "avatar-default.png", class: "bg-dark img-avatar p-2 z-0 img-profile", id: "img-avatar"
+      = image_tag "avatar-default.png", class: "bg-dark img-avatar p-2 z-0 img-profile rounded-pill", id: "img-avatar"
+    div class="d-flex flex-column mt-1"
+      = link_to user.nome_arroba, class: "text-body text-decoration-none"
+        h6 class="m-0"
+          = user.nome_publico
+        h7
+          = '@' + user.nome_arroba

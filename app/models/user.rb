@@ -7,10 +7,7 @@ class User < ApplicationRecord
 
   #imagens de perfil e capa
   has_one_attached :avatar
-
-  has_one_attached :capa do |cp| 
-
-  end
+  has_one_attached :capa
 
   #imagens de validação do perfil criador de conteudo
   has_many_attached :validate_creator
