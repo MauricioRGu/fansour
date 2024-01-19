@@ -121,6 +121,10 @@ main{
 }
 
 @media screen and (max-width: 430px){
+    main{
+        margin: 4.5rem 0 2rem;
+    }
+
     .nav p{
         width: 0;
         visibility: hidden;
