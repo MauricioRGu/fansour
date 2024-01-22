@@ -13,5 +13,9 @@
 }
 
 .icon-links{
-  width: 30px;
+  width: 20px;
+  fill: white;
+  & :hover{
+    fill: var(--azul-fansour);
+  }
 }

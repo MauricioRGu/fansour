@@ -23,18 +23,18 @@ div class="d-flex flex-column position-relative"
       = user.descricao
 
   div class="d-flex gap-3 justify-content-start links my-2 px-2"
-    - if user.instagram.strip != ''
+    - if user.instagram.present?
       a href="#{user.instagram}" target="_blank" class="icon-links"
-        = image_tag "instagram.svg", class: "w-100"
-    - if user.twitter.strip != ''
+        = inline_svg_tag "instagram.svg", class: "w-100"
+    - if user.twitter.present?
       a href="#{user.twitter}" target="_blank" class="icon-links"
-        = inline_svg_tag "twitter.svg", class: "bg-black rounded-1 w-100", style:"fill: white;"
-    - if user.tiktok.strip != ''
-      a href="#{user.instagram}" target="_blank" class="icon-links"
-        = image_tag "tiktok.svg", class: "w-100"
-    - if user.telegram.strip != ''
-      a href="#{user.instagram}" target="_blank" class="icon-links"
-        = image_tag "instagram.svg", class: "w-100"
-    - if user.site.strip != ''
-      a href="#{user.instagram}" target="_blank" class="icon-links"
-        = image_tag "instagram.svg", class: "w-100"
+        = inline_svg_tag "twitter.svg", class: "w-100"
+    - if user.tiktok.present?
+      a href="#{user.tiktok}" target="_blank" class="icon-links"
+        = inline_svg_tag "tiktok.svg", class: "w-100"
+    - if user.telegram.present?
+      a href="#{user.telegram}" target="_blank" class="icon-links"
+        = inline_svg_tag "telegram.svg", class: "w-100"
+    - if user.site.present?
+      a href="#{user.site}" target="_blank" class="icon-links"
+        = inline_svg_tag "site.svg", class: "w-100"
