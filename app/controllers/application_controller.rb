@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
     before_action :authenticate_user!
     before_action :debug_header
+    around_action :set_time_zone
 
     #after_action :update_user_online, if: :user_signed_in?
 
@@ -23,5 +24,16 @@ class ApplicationController < ActionController::Base
         else
             
         end
+    end
+
+    def set_time_zone
+        #define o timezone no cookie de sessão do usuário
+        if !cookies[:time_zone].present?
+            ip_address = request.remote_ip
+            location = Geocoder.search('168.227.84.144').first
+            byebug
+            cookies[:time_zone] = location.data['timezone'] if location.present? 
+        end
+        Time.use_zone('America/Sao_Paulo') { yield }
     end
 end

@@ -11,8 +11,18 @@
 import "@hotwired/turbo-rails"
 import "controllers"
 
+//esconde as mensagens da tela após 6s    
+//para reload o load da pagina completa
+setTimeout(function(){
+    $(".div-info").css('left',window.innerWidth + 100)
+    $(".div-info").css('right',0 - (window.innerWidth * 2))
+    $(".div-info").remove();
+    console.log('removeu');
+},6000)
+
 var fEscondeMsg = function(){
     //esconde as mensagens da tela após 2s
+    //para reload do turbo
     setTimeout(function(){
         $(".div-info").css('left',window.innerWidth + 100)
         $(".div-info").css('right',0 - (window.innerWidth * 2))

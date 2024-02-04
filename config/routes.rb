@@ -19,8 +19,16 @@ Rails.application.routes.draw do
   get 'profiles/settings/personal', to: 'profiles#settings'
   get 'profiles/settings/profile', to: 'profiles#settings'
   get 'profiles/settings/security', to: 'profiles#settings'
+  get 'profiles/settings/assinaturas', to: 'profiles#settings'
 
+  #válida se o username já está sendo usado
   post 'username/:username', to: 'users#checa_username'
 
+  #baixa as imagens de capa e avatar em show
   post ':id', to: 'profiles#image_download'
+
+  #rota de criação da assinatura
+  post '/assinaturas/create', to: 'assinaturas#create' 
+  post '/assinaturas/update', to: 'assinaturas#update' 
+  #resources :assinaturas, only: [:create, :update]
 end

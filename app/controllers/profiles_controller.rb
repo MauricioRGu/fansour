@@ -1,4 +1,5 @@
 class ProfilesController < ApplicationController
+    before_action :valida_assinatura, only: %i[ show ]
 
     def image_download
         if current_user
@@ -31,17 +32,11 @@ class ProfilesController < ApplicationController
 
     def show
         @user = User.find_by(nome_arroba: params[:profile], desativado: false)
-        
-        #if @user.present?
-        #    if @user.avatar.attached?
-        #        render plain: url_for(@user.avatar)
-        #    else
-        #        render plain: @user.to_json
-        #    end
-        #else    
-        #    render plain: 'Usuário não encontrado'
-        #end
-
+        if @user.present?
+            #verificar se o usuário é assinante do perfil do criador
+            #@assinante = current_user.assinaturas.where(criador_id: @user.id, dt_fim: (Time.now)..)
+            @assinante = current_user.assinaturas.where(criador_id: @user.id, vencida: false)
+        end
     end
 
     def explore
@@ -64,7 +59,18 @@ class ProfilesController < ApplicationController
         if url == 'security'
             template = 'profiles/security_profile'
         end
-
+        if url == 'assinaturas'   
+            @assinaturas = @user.assinaturas.where(vencida: false)         
+            template = 'profiles/settings_assinaturas'
+        end
         render template: template
     end
+    
+    private
+    def valida_assinatura
+        byebug
+        current_user.assinaturas.where(vencida: false, dt_fim: ...(Time.now)).update(vencida: true)
+        #Assinatura.where(dt_fim: ..(Time.now), vencida: false).update(vencida: true)
+    end
+
 end

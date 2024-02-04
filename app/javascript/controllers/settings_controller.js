@@ -594,6 +594,8 @@ export default class extends Controller {
   }
 
   habilitaForm(){
+    //percorre os campos obrigatórios avaliando 
+    
     if($(".is-invalid").length == 0){
       $("input[name=commit]").prop("disabled",false)
     }else{

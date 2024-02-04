@@ -1,0 +1,24 @@
+div class="bg-success p-2 rounded-3" style="height: 150px; width: 320px;"
+  = link_to "/"+@a.criador.nome_arroba, class: "alert-link", target: "_blank"
+    = "@"+@a.criador.nome_arroba
+  div class="d-flex justify-content-between mt-2"
+    span Inicio:
+    span Fim:
+    span Plano:
+  div class="d-flex gap-4" style="font-size: small; font-weight: 700;"
+    span 
+      = l @a.dt_inicio, format: :diahora
+    span 
+      = l @a.dt_fim, format: :diahora 
+    span 
+      = @a.plan
+  div class="form-check form-switch mt-3"
+    - if @a.renovacao_automatica?
+      input class="form-check-input cursor-pointer" type="checkbox" id="switch#{@index}" identity="#{@a.identity}" data-action="change->assinaturas#setRenovacao" checked="checked" 
+    - else 
+      input class="form-check-input cursor-pointer" type="checkbox" id="switch#{@index}" identity="#{@a.identity}" data-action="change->assinaturas#setRenovacao"
+    label class="form-check-label cursor-pointer" for="switch#{@index}"
+      = "Renovação automática:"
+  div class="d-flex justify-content-end"
+    span class="cursor-pointer small text-secondary-emphasis"
+      = "Cancelar assinatura"

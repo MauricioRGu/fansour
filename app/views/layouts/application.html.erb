@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<html lang="pt-BR">
 <html data-bs-theme="dark">
   <head>
     <title>FansOur</title>
@@ -17,7 +18,7 @@
   <body id="body">
     <% if current_user %>      
       <nav class="nav">
-        <a href="/" class="link-logo">
+        <a href="/" class="link-logo" title="link-logo">
           <svg style="max-width: 200px" viewBox="0 150 550 150" fill="rgb(78, 195, 224)" stroke-width="0" >
             <path  d="M109.79787,207.14104h-44.79787v9.96394h4.78269v35.87018h-4.78269v9.96394h30.21067v-9.96394h-7.25375v-12.51471h14.74663v-10.44221h-14.74663v-13.07269h9.72481v6.13779h12.11615z" ></path>
             <path  d="M164.71911,252.97517l-17.2974,-45.99355h-19.21048l-17.2974,45.99355h-5.10154v9.96394h24.55115v-9.96394h-4.70298l1.3551,-4.94211h17.69596l1.3551,4.94211h-4.78269v9.96394h28.77586v-9.96394zM130.20402,236.71402l5.65952,-17.2974l5.65952,17.2974z" ></path>
@@ -73,7 +74,7 @@
       </nav>
       <main>
         <%= yield %>
-        <%= render 'layouts/flash' %>
+        <%= render "layouts/flash" %>
       </main>
     <% else %>
         <%= yield %>

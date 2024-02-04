@@ -12,3 +12,6 @@ application.register("login", LoginController)
 
 import ProfileController from "./profile_controller"
 application.register("profile", ProfileController)
+
+import AssinaturasController from "./assinaturas_controller"
+application.register("assinaturas", AssinaturasController)

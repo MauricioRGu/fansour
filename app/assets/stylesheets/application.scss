@@ -27,7 +27,7 @@
 }
 
 main{
-    margin: 4.5rem 2rem 2rem 2rem;
+    margin: 4.3rem 2rem 2rem 2rem;
 }
 
 .nav{
@@ -165,4 +165,12 @@ form.new_user input::placeholder {
 
 .form-label{
     margin-left: 10px;
+}
+
+.fullheight{
+    height: 80vh !important;
+}
+
+.cursor-pointer{
+    cursor: pointer !important;
 }

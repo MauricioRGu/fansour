@@ -1,0 +1,24 @@
+div data-controller="assinaturas"
+  div class="assinaturas mt-3 px-2 d-flex flex-column gap-2"
+    div 
+      div 
+        div 
+          input type="hidden" id="criador_id" value="#{user.id}"
+    p class="text-muted h4"
+      = "Escolha o seu plano!"
+    button class="p-2 btn btn-primary d-flex justify-content-between" plan="1" planValue="#{user.valor1Desc}" data-action="click->assinaturas#assina"
+    
+      span 
+        = "1 Mês"
+      span
+        = number_to_currency(user.valor1Desc , :locale => 'pt-BR') + (user.desc1 > 0 ? " (Desconto: #{user.desc1}%)" : "")
+    button class="p-2 btn btn-primary d-flex justify-content-between" plan="3" planValue="#{user.valor3Desc}" data-action="click->assinaturas#assina"
+      span 
+        = "3 Meses"
+      span
+        = number_to_currency(user.valor3Desc, :locale => 'pt-BR') + (user.desc3 > 0 ? " (Desconto: #{user.desc3}%)" : "")
+    button class="p-2 btn btn-primary d-flex justify-content-between" plan="6" planValue="#{user.valor6Desc}" data-action="click->assinaturas#assina"
+      span 
+        = "6 Meses"
+      span
+        = number_to_currency(user.valor6Desc, :locale => 'pt-BR') + (user.desc6 > 0 ? " (Desconto: #{user.desc6}%)" : "")

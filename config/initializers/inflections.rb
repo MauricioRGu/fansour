@@ -14,3 +14,17 @@
 # ActiveSupport::Inflector.inflections(:en) do |inflect|
 #   inflect.acronym "RESTful"
 # end
+
+ActiveSupport::Inflector.inflections(:"pt-BR") do |inflect|
+  inflect.plural(/$/, "s")
+  inflect.plural(/^([a-zA-z]*)a$/i, '\1as')
+  inflect.plural(/(s)$/i, '\1')
+  inflect.plural(/^(paí)s$/i, '\1ses')
+  inflect.plural(/(z|r)$/i, '\1es')
+  inflect.plural(/al$/i,  "ais")
+  inflect.plural(/el$/i,  "eis")
+  inflect.plural(/ol$/i,  "ois")
+  inflect.plural(/ul$/i,  "uis")
+  inflect.plural(/([^aeiou])l$/i, '\1is')
+  inflect.plural(/Mês/,'Meses')
+end

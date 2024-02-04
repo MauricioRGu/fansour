@@ -15,19 +15,13 @@ class User < ApplicationRecord
   #cria nome de usuario antes de criar perfil
   before_create :username
   
-  #valida a presença dos campos
-  #validates :nome_publico, presence: true
-
   #trata dados antes de salvar
   before_update :tratamento
-  before_validation :validates
-  def validates
-  end
-  def tratamento
-    if self.nome_publico.strip == ''
-      error.add("O nome público é requerido.")
-    end
-  end
+
+  #relacionamentos de assinaturas
+  has_many :assinaturas
+  has_many :criador, through: :assinaturas 
+  
 
   def online?
     updated_at > 2.minutes.ago
@@ -46,6 +40,18 @@ class User < ApplicationRecord
     sprintf('%.2f',self[:valor6])
   end
 
+  def valor1Desc
+    return self.valor1.to_f * ((100 - self.desc1.to_f) / 100)
+  end
+
+  def valor3Desc
+    return self.valor3.to_f * ((100 - self.desc3.to_f) / 100)
+  end
+
+  def valor6Desc
+    return self.valor6.to_f * ((100 - self.desc6.to_f) / 100)
+  end
+
   #formata data de nascimento
   def dt_nascimento
     if self[:dt_nascimento].present?
@@ -58,7 +64,7 @@ class User < ApplicationRecord
     #cria nome de usuario automáticamente ao criar a conta
     nome = self.email.split('@')[0].capitalize
     nome = nome.gsub('.','')
-    if User.where(nome_publico: nome).exists?
+    if User.where(nome_arroba: nome).exists?
       nome = nome + Time.now.seconds_until_end_of_day.to_s
     end
     #nome arroba é o link do perfil
@@ -67,5 +73,25 @@ class User < ApplicationRecord
     self.nome_publico = nome
   end
 
+  def tratamento
+    if !self.nome_publico.present?
+      error.add("O nome público é requerido.")
+    end
+
+    #valor de desconto tem que ser 0 se for vazio
+    if !self.desc1.present?
+      self.desc1 = 0
+    end
+
+    if !self.desc3.present?
+      self.desc3 = 0
+    end
+
+    if !self.desc6.present?
+      self.desc6 = 0
+    end
+
+
+  end
 
 end

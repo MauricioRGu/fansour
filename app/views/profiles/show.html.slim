@@ -1,1 +1,12 @@
-== render "profiles/images_show", user: @user
+- if @user.present?
+  == render "profiles/images_show", user: @user
+  - if @user.id != current_user.id && @user.criador && !@assinante.present?
+    == render "profiles/planos_show", user: @user
+  - else 
+    div class="content"
+- else
+  div class="d-flex flex-column justify-content-center align-items-center gap-2 fullheight" 
+    p class="h6"
+      = "Usuário não encontrado"
+    a href="/" class="btn btn-outline-danger text-decoration-none"
+      = "Voltar"

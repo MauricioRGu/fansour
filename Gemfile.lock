@@ -106,6 +106,7 @@ GEM
     erubi (1.12.0)
     execjs (2.9.1)
     ffi (1.16.3)
+    geocoder (1.8.2)
     globalid (1.2.1)
       activesupport (>= 6.1)
     i18n (1.14.1)
@@ -160,6 +161,7 @@ GEM
     nokogiri (1.15.4-x86_64-linux)
       racc (~> 1.4)
     orm_adapter (0.5.0)
+    pg (1.5.4)
     popper_js (2.11.8)
     psych (5.1.1)
       stringio
@@ -277,6 +279,7 @@ DEPENDENCIES
   debug
   devise (~> 4.9)
   devise-i18n (~> 1.12)
+  geocoder (~> 1.8, >= 1.8.2)
   image_processing (~> 1.2)
   importmap-rails
   inline_svg (~> 1.9)
@@ -284,6 +287,7 @@ DEPENDENCIES
   jquery-mask-plugin
   jquery-rails
   mini_magick (~> 4.5, >= 4.5.1)
+  pg (~> 1.5, >= 1.5.4)
   puma (~> 5.0)
   rails (~> 7.0.8)
   selenium-webdriver

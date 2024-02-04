@@ -21,5 +21,10 @@ module Fansour
 
     #define o processador de imagens
     config.active_storage.variant_processor = :mini_magick
+
+    #config.time_zone = 'America/Sao_Paulo'
+
+    #inclui o geocoder para fazer a obtenção do timezone via ip
+    require 'geocoder'
   end
 end

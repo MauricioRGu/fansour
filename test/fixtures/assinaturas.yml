@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: one
+  criador: one
+  dt_inicio: 2024-01-28 19:15:01
+  dt_fim: 2024-01-28 19:15:01
+  valor: 1.5
+
+two:
+  user: two
+  criador: two
+  dt_inicio: 2024-01-28 19:15:01
+  dt_fim: 2024-01-28 19:15:01
+  valor: 1.5

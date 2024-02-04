@@ -1,0 +1,7 @@
+h5 Assinaturas
+div class="d-flex flex-wrap gap-3" data-controller="assinaturas"
+  - if @assinaturas.present?
+    - @assinaturas.each_with_index do |a, index|
+      - @a = a
+      - @index = index
+      == render "assinaturas/view", user: @a, index: @index 

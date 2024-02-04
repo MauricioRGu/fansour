@@ -13,16 +13,16 @@ content data-controller="settings"
           span  
             = "Dados pessoais"
       = link_to '/profiles/settings/security'
-        li class="menu-selected"
+        li
           = inline_svg_tag "icone-security"
           span
             = "Segurança"
       = link_to '/profiles/settings/assinaturas'
-        li 
+        li class="menu-selected"
           = inline_svg_tag "icone-assinatura"
           span
             = "Assinaturas"
   div class="data"
     div
-      == render "profiles/forms/security_profile", user: @user
+      == render "profiles/forms/assinaturas", user: @user
                 

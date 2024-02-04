@@ -30,8 +30,12 @@ class UsersController < ApplicationController
     respond_to do |format|
       if @user.update(params)
         format.turbo_stream {flash.now[:notice] = "Dados atualizados." }
-      else
-        format.turbo_stream {flash.now[:alert] = @user.errors }
+      else 
+        @msg = ''
+        @user.errors.each do |e| 
+          @msg += e.full_message + '<br>'
+        end
+        format.turbo_stream {flash.now[:alert] = @msg }
       end
     end
   end
