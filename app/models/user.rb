@@ -10,8 +10,8 @@ class User < ApplicationRecord
   validates :descricao, presence: true, on: :update, if: -> {self.kind.in? ['profile',nil]}
 
   #valor de assinatura deve ser entre 10 e 200 
-  validates :valor1,  numericality: {greater_than_or_equal_to: 10, message: "O valor mínimo é R$ 10,00"}, on: :update, if: -> {self.kind.in? ['profile',nil]}
-  validates :valor1,  numericality: {less_than_or_equal_to: 200, message: "O valor máximo é R$ 200,00"}, on: :update, if: -> {self.kind.in? ['profile',nil]}
+  validates :valor1,  numericality: {greater_than_or_equal_to: 10, message: "O valor mínimo é R$ 10,00"}, on: :update, if: -> {self.kind.in? ['profile',nil] and self.perfil_criador}
+  validates :valor1,  numericality: {less_than_or_equal_to: 200, message: "O valor máximo é R$ 200,00"}, on: :update, if: -> {self.kind.in? ['profile',nil] and self.perfil_criador}
 
   #descontos terão máximo permitido de 50%
   validates :desc1, numericality: {less_than_or_equal_to: 50, only_integer: true, message: "O máximo de desconto é 50%"}, on: :update, if: -> {self.kind.in? ['profile',nil]}
@@ -21,6 +21,7 @@ class User < ApplicationRecord
   #valida o cpf digitado
   validate :valida_cpf, on: :update
   def valida_cpf
+    return unless self.cpf.present?
     if self.cpf.strip > ''
       if !CPF.valid?(self.cpf)
         errors.add(:cpf,"O CPF digitado é inválido")

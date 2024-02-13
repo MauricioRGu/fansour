@@ -90,7 +90,7 @@ turbo-frame id='settings'
 - if autorizado == ''
   //carrega a modal para enviar os documentos para aprovação do perfil
   div class="modal fade" id="modal-documentos" tabindex="-1" role="dialog" aria-labelledby="ModalDocumentos" aria-hidden="true"
-    div class="modal-dialog modal-dialog-centered" role="document"
+    div class="modal-dialog modal-dialog-centered modal-fullscreen" role="document"
       div class="modal-content"
         div class="modal-header"
           h5 class="modal-title" id="title"
@@ -99,5 +99,4 @@ turbo-frame id='settings'
             span aria-hidden="true"
         div class="modal-body"
           = turbo_frame_tag 'documentos'
-            div class="d-flex"              
-              == render "profiles/forms/docs_autorizacao"
+            == render "profiles/forms/docs_autorizacao"
