@@ -3,7 +3,7 @@ content data-controller="settings"
   div class="menu-settings"
     ul
       = link_to '/profiles/settings/profile'        
-        li
+        li 
           = inline_svg_tag "icone-profile"
           span
             = "Dados do perfil"
@@ -13,21 +13,30 @@ content data-controller="settings"
           span  
             = "Dados pessoais"
       = link_to '/profiles/settings/security'
-        li
+        li 
           = inline_svg_tag "icone-security"
           span
             = "Segurança"
       = link_to '/profiles/settings/assinaturas'
-        li class="menu-selected"
+        li 
           = inline_svg_tag "icone-assinatura"
           span
             = "Assinaturas"
       = link_to '/profiles/settings/check_profile'
-        li 
+        li class="menu-selected"
           = inline_svg_tag "icone-verification" 
           span
             = "Verificação de perfil"
   div class="data"
     div
-      == render "profiles/forms/assinaturas", user: @user
+      - if !@user.checagem_profile.present?
+        turbo-frame id='settings'
+          h5 Status da verificação do perfil
+          div class="alert alert-light alert-dismissible fade show" role="alert"
+            = "Você ainda não enviou os documentos para análise"
+            button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"
+          == render "profiles/forms/docs_autorizacao"
+      - else 
+        span Enviou
+
                 

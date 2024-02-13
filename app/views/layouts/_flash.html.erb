@@ -8,3 +8,14 @@
     <%= alert %>
   </div>
 <% end %>
+<% if flash[:invalido] %>
+  <div role="alert" class="alert alert-dismissible fade show bg-body-secondary bottom-0 mb-2 p-3 position-fixed rounded" style="left: 3rem;right: 3rem;height: 85vh;">
+    <div class="d-flex">
+      <span>
+        <%= flash[:invalido] %>
+      </span>
+      <button class="btn-close lead" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    
+  </div>
+<% end %>

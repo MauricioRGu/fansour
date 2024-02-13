@@ -1,12 +1,26 @@
 Rails.application.routes.draw do
-  resources :posts
-  resources :users, only: [:update]
-  devise_for :users
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")
   devise_scope :user do
     root to: "application#index"
+  end
+
+  #posts
+  resources :posts
+  
+  #users
+  resources :users, only: [:update]
+
+  #customizando as rotas do devise
+  devise_for :users, :skip => [:registrations], path: 'account', 
+    path_names: {
+      sign_in: 'login',
+      sign_out: 'logout',
+      sign_up: 'register'      
+    }
+  as :user do
+    post 'account' => 'devise/registrations#create', :as => 'user_registration'
   end
 
   #visualizar perfil de usuario
@@ -20,6 +34,7 @@ Rails.application.routes.draw do
   get 'profiles/settings/profile', to: 'profiles#settings'
   get 'profiles/settings/security', to: 'profiles#settings'
   get 'profiles/settings/assinaturas', to: 'profiles#settings'
+  get 'profiles/settings/check_profile', to: 'profiles#settings'
 
   #válida se o username já está sendo usado
   post 'username/:username', to: 'users#checa_username'

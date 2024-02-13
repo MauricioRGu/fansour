@@ -1,4 +1,36 @@
 class User < ApplicationRecord
+  #atrubuto usado para saber qual é o formulário que está sendo enviado
+  attribute :kind
+
+  #para o preenchimento dos dados pessoais
+  validates :nome_completo, :cpf, :dt_nascimento, :telefone, :cep, :pais, :estado, :cidade, 
+            :bairro, :endereco, :numero, presence: true, on: :update, if: -> {self.kind.in? ['personal',nil]}
+
+  #para o preenchimento dos dados do perfil
+  validates :descricao, presence: true, on: :update, if: -> {self.kind.in? ['profile',nil]}
+
+  #valor de assinatura deve ser entre 10 e 200 
+  validates :valor1,  numericality: {greater_than_or_equal_to: 10, message: "O valor mínimo é R$ 10,00"}, on: :update, if: -> {self.kind.in? ['profile',nil]}
+  validates :valor1,  numericality: {less_than_or_equal_to: 200, message: "O valor máximo é R$ 200,00"}, on: :update, if: -> {self.kind.in? ['profile',nil]}
+
+  #descontos terão máximo permitido de 50%
+  validates :desc1, numericality: {less_than_or_equal_to: 50, only_integer: true, message: "O máximo de desconto é 50%"}, on: :update, if: -> {self.kind.in? ['profile',nil]}
+  validates :desc3, numericality: {less_than_or_equal_to: 50, only_integer: true, message: "O máximo de desconto é 50%"}, on: :update, if: -> {self.kind.in? ['profile',nil]}
+  validates :desc6, numericality: {less_than_or_equal_to: 50, only_integer: true, message: "O máximo de desconto é 50%"}, on: :update, if: -> {self.kind.in? ['profile',nil]}
+
+  #valida o cpf digitado
+  validate :valida_cpf, on: :update
+  def valida_cpf
+    if self.cpf.strip > ''
+      if !CPF.valid?(self.cpf)
+        errors.add(:cpf,"O CPF digitado é inválido")
+      end
+    end
+  end
+
+  #criação de usuário              
+  validates :email, :nome_arroba, :password, presence: true, on: :create
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -6,11 +38,13 @@ class User < ApplicationRecord
          #:trackable, :timeoutable, :confirmable, :timeout_in => 4.hours
 
   #imagens de perfil e capa
-  has_one_attached :avatar
-  has_one_attached :capa
+  has_one_attached :avatar do |attachable|
+    attachable.variant :thumb, resize_to_limit: [100, 100]
+  end
+  has_one_attached :capa 
 
   #imagens de validação do perfil criador de conteudo
-  has_many_attached :validate_creator
+  has_one :checagem_profile
 
   #cria nome de usuario antes de criar perfil
   before_create :username
@@ -53,10 +87,20 @@ class User < ApplicationRecord
   end
 
   #formata data de nascimento
-  def dt_nascimento
-    if self[:dt_nascimento].present?
-      self[:dt_nascimento].strftime('%d/%m/%Y')      
-    end
+  #def dt_nascimento
+  #  if self[:dt_nascimento].present?
+  #    self[:dt_nascimento].strftime('%d/%m/%Y')      
+  #  end
+  #end
+
+  #checa se o perfil está válido
+  def valido    
+    return self.validate
+  end 
+
+  def aprovacao_criador
+    checagem = self.checagem_profile
+    return '' unless checagem.present?
   end
 
   private
@@ -91,7 +135,7 @@ class User < ApplicationRecord
       self.desc6 = 0
     end
 
-
   end
 
+  
 end

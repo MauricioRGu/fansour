@@ -11,6 +11,231 @@ const debounce = (callback, wait) => {
   };
 };
 
+const options = {
+  data: [
+    "Abecásia",
+    "Afeganistão",
+    "África do Sul",
+    "Albânia",
+    "Alemanha",
+    "Andorra",
+    "Angola",
+    "Antígua e Barbuda",
+    "Arábia Saudita",
+    "Argélia",
+    "Argentina",
+    "Armênia",
+    "Austrália",
+    "Áustria",
+    "Azerbaijão",
+    "Bahamas",
+    "Bahrein (ou Barein, ou Barém)",
+    "Bangladesh",
+    "Barbados",
+    "Bélgica",
+    "Belize",
+    "Benim",
+    "Bielorrússia",
+    "Bolívia",
+    "Bósnia e Herzegovina",
+    "Botswana (ou Botsuana)",
+    "Brasil",
+    "Brunei",
+    "Bulgária",
+    "Burkina Faso (ou Burquina Faso)",
+    "Burundi",
+    "Butão",
+    "Cabo Verde",
+    "Camarões",
+    "Camboja",
+    "Canadá",
+    "Catar (ou Qatar)",
+    "Cazaquistão",
+    "Chade",
+    "Chile",
+    "China",
+    "Chipre",
+    "Cingapura (ou Singapura)",
+    "Colômbia",
+    "Comores",
+    "Congo",
+    "Coreia do Norte",
+    "Coreia do Sul",
+    "Costa do Marfim",
+    "Costa Rica",
+    "Croácia",
+    "Cuba",
+    "Dinamarca",
+    "Djibouti (ou Djibuti)",
+    "Dominica",
+    "Egito",
+    "El Salvador",
+    "Emirados Árabes Unidos",
+    "Equador",
+    "Eritreia",
+    "Escócia",
+    "Eslováquia",
+    "Eslovênia",
+    "Espanha",
+    "Estados Federados da Micronésia",
+    "Estados Unidos da América",
+    "Estônia",
+    "Eswatini (ou Essuatíni, ou Suazilândia)",
+    "Etiópia",
+    "Fiji",
+    "Filipinas",
+    "Finlândia",
+    "França",
+    "Gabão",
+    "Gâmbia",
+    "Gana",
+    "Geórgia",
+    "Granada",
+    "Grécia",
+    "Guatemala",
+    "Guiana",
+    "Guiné",
+    "Guiné-Bissau",
+    "Guiné Equatorial",
+    "Haiti",
+    "Holanda",
+    "Honduras",
+    "Hungria",
+    "Iêmen",
+    "Índia",
+    "Indonésia",
+    "Inglaterra",
+    "Irã (ou Irão)",
+    "Iraque",
+    "Irlanda do Norte",
+    "Irlanda",
+    "Islândia",
+    "Israel",
+    "Itália",
+    "Jamaica",
+    "Japão",
+    "Jordânia",
+    "Países com K",
+    "Kiribati (ou Quiribati)",
+    "Kosovo",
+    "Kuwait",
+    "Laos",
+    "Lesoto",
+    "Letônia",
+    "Líbano",
+    "Libéria",
+    "Líbia",
+    "Liechtenstein (ou Listenstaine)",
+    "Lituânia",
+    "Luxemburgo",
+    "Macedônia do Norte",
+    "Madagascar (ou Madagáscar)",
+    "Malásia",
+    "Malawi (ou Malauí)",
+    "Maldivas",
+    "Mali",
+    "Malta",
+    "Marrocos",
+    "Marshall",
+    "Maurícia",
+    "Mauritânia",
+    "México",
+    "Mianmar",
+    "Micronésia",
+    "Moçambique",
+    "Moldávia",
+    "Mônaco",
+    "Mongólia",
+    "Montenegro",
+    "Namíbia",
+    "Nauru",
+    "Nepal",
+    "Nicarágua",
+    "Níger",
+    "Nigéria",
+    "Noruega",
+    "Nova Zelândia",
+    "Omã",
+    "Ossétia do Sul",
+    "País de Gales",
+    "Países Baixos",
+    "Palau",
+    "Palestina",
+    "Panamá",
+    "Papua-Nova Guiné",
+    "Paquistão",
+    "Paraguai",
+    "Peru",
+    "Polônia",
+    "Portugal",
+    "Qatar (ou Catar)",
+    "Quênia",
+    "Quirguistão",
+    "Quiribati (ou Kiribati)",
+    "Reino Unido",
+    "República Árabe Saaraui Democrática",
+    "República Centro-Africana",
+    "República Democrática do Congo",
+    "República do Congo",
+    "República Dominicana",
+    "República Tcheca (ou Tchéquia)",
+    "República Turca de Chipre do Norte",
+    "Romênia",
+    "Ruanda",
+    "Rússia",
+    "Salomão",
+    "Samoa",
+    "San Marino (ou São Marinho)",
+    "Santa Lúcia",
+    "São Cristóvão e Névis (ou São Cristóvão e Neves)",
+    "São Tomé e Príncipe",
+    "São Vicente e Granadinas",
+    "Senegal",
+    "Serra Leoa",
+    "Sérvia",
+    "Seychelles (ou Seicheles)",
+    "Singapura (ou Cingapura)",
+    "Síria",
+    "Somália",
+    "Sri Lanka",
+    "Suazilândia (ou Eswatini, ou Essuatíni)",
+    "Sudão do Sul",
+    "Sudão",
+    "Suécia",
+    "Suíça",
+    "Suriname",
+    "Tailândia",
+    "Taiwan",
+    "Tajiquistão (ou Tadjiquistão)",
+    "Tanzânia",
+    "Tchéquia (ou República Tcheca)",
+    "Timor-Leste",
+    "Togo",
+    "Tonga",
+    "Trinidad e Tobago",
+    "Tunísia",
+    "Turcomenistão (ou Turquemenistão)",
+    "Turquia",
+    "Tuvalu",
+    "Ucrânia",
+    "Uganda",
+    "Uruguai",
+    "Uzbequistão",
+    "Vanuatu",
+    "Vaticano",
+    "Venezuela",
+    "Vietnã (ou Vietname)",
+    "Zâmbia",
+    "Zimbábue"
+  ],
+  list: {
+    match: {
+      enabled: true
+    }
+  }
+
+}
+
 function uploadFile (event,file,tipo){
   event.preventDefault();
   console.log(file)
@@ -44,9 +269,6 @@ function uploadFile (event,file,tipo){
 
 // Connects to data-controller="settings"
 export default class extends Controller {
-
-  
-
   initialize() {
     //função para cortar imagens 
     var Cropper = window.Cropper;
@@ -234,230 +456,46 @@ export default class extends Controller {
         title: ''
     })
 
-    var options = {
-      data: [
-        "Abecásia",
-        "Afeganistão",
-        "África do Sul",
-        "Albânia",
-        "Alemanha",
-        "Andorra",
-        "Angola",
-        "Antígua e Barbuda",
-        "Arábia Saudita",
-        "Argélia",
-        "Argentina",
-        "Armênia",
-        "Austrália",
-        "Áustria",
-        "Azerbaijão",
-        "Bahamas",
-        "Bahrein (ou Barein, ou Barém)",
-        "Bangladesh",
-        "Barbados",
-        "Bélgica",
-        "Belize",
-        "Benim",
-        "Bielorrússia",
-        "Bolívia",
-        "Bósnia e Herzegovina",
-        "Botswana (ou Botsuana)",
-        "Brasil",
-        "Brunei",
-        "Bulgária",
-        "Burkina Faso (ou Burquina Faso)",
-        "Burundi",
-        "Butão",
-        "Cabo Verde",
-        "Camarões",
-        "Camboja",
-        "Canadá",
-        "Catar (ou Qatar)",
-        "Cazaquistão",
-        "Chade",
-        "Chile",
-        "China",
-        "Chipre",
-        "Cingapura (ou Singapura)",
-        "Colômbia",
-        "Comores",
-        "Congo",
-        "Coreia do Norte",
-        "Coreia do Sul",
-        "Costa do Marfim",
-        "Costa Rica",
-        "Croácia",
-        "Cuba",
-        "Dinamarca",
-        "Djibouti (ou Djibuti)",
-        "Dominica",
-        "Egito",
-        "El Salvador",
-        "Emirados Árabes Unidos",
-        "Equador",
-        "Eritreia",
-        "Escócia",
-        "Eslováquia",
-        "Eslovênia",
-        "Espanha",
-        "Estados Federados da Micronésia",
-        "Estados Unidos da América",
-        "Estônia",
-        "Eswatini (ou Essuatíni, ou Suazilândia)",
-        "Etiópia",
-        "Fiji",
-        "Filipinas",
-        "Finlândia",
-        "França",
-        "Gabão",
-        "Gâmbia",
-        "Gana",
-        "Geórgia",
-        "Granada",
-        "Grécia",
-        "Guatemala",
-        "Guiana",
-        "Guiné",
-        "Guiné-Bissau",
-        "Guiné Equatorial",
-        "Haiti",
-        "Holanda",
-        "Honduras",
-        "Hungria",
-        "Iêmen",
-        "Índia",
-        "Indonésia",
-        "Inglaterra",
-        "Irã (ou Irão)",
-        "Iraque",
-        "Irlanda do Norte",
-        "Irlanda",
-        "Islândia",
-        "Israel",
-        "Itália",
-        "Jamaica",
-        "Japão",
-        "Jordânia",
-        "Países com K",
-        "Kiribati (ou Quiribati)",
-        "Kosovo",
-        "Kuwait",
-        "Laos",
-        "Lesoto",
-        "Letônia",
-        "Líbano",
-        "Libéria",
-        "Líbia",
-        "Liechtenstein (ou Listenstaine)",
-        "Lituânia",
-        "Luxemburgo",
-        "Macedônia do Norte",
-        "Madagascar (ou Madagáscar)",
-        "Malásia",
-        "Malawi (ou Malauí)",
-        "Maldivas",
-        "Mali",
-        "Malta",
-        "Marrocos",
-        "Marshall",
-        "Maurícia",
-        "Mauritânia",
-        "México",
-        "Mianmar",
-        "Micronésia",
-        "Moçambique",
-        "Moldávia",
-        "Mônaco",
-        "Mongólia",
-        "Montenegro",
-        "Namíbia",
-        "Nauru",
-        "Nepal",
-        "Nicarágua",
-        "Níger",
-        "Nigéria",
-        "Noruega",
-        "Nova Zelândia",
-        "Omã",
-        "Ossétia do Sul",
-        "País de Gales",
-        "Países Baixos",
-        "Palau",
-        "Palestina",
-        "Panamá",
-        "Papua-Nova Guiné",
-        "Paquistão",
-        "Paraguai",
-        "Peru",
-        "Polônia",
-        "Portugal",
-        "Qatar (ou Catar)",
-        "Quênia",
-        "Quirguistão",
-        "Quiribati (ou Kiribati)",
-        "Reino Unido",
-        "República Árabe Saaraui Democrática",
-        "República Centro-Africana",
-        "República Democrática do Congo",
-        "República do Congo",
-        "República Dominicana",
-        "República Tcheca (ou Tchéquia)",
-        "República Turca de Chipre do Norte",
-        "Romênia",
-        "Ruanda",
-        "Rússia",
-        "Salomão",
-        "Samoa",
-        "San Marino (ou São Marinho)",
-        "Santa Lúcia",
-        "São Cristóvão e Névis (ou São Cristóvão e Neves)",
-        "São Tomé e Príncipe",
-        "São Vicente e Granadinas",
-        "Senegal",
-        "Serra Leoa",
-        "Sérvia",
-        "Seychelles (ou Seicheles)",
-        "Singapura (ou Cingapura)",
-        "Síria",
-        "Somália",
-        "Sri Lanka",
-        "Suazilândia (ou Eswatini, ou Essuatíni)",
-        "Sudão do Sul",
-        "Sudão",
-        "Suécia",
-        "Suíça",
-        "Suriname",
-        "Tailândia",
-        "Taiwan",
-        "Tajiquistão (ou Tadjiquistão)",
-        "Tanzânia",
-        "Tchéquia (ou República Tcheca)",
-        "Timor-Leste",
-        "Togo",
-        "Tonga",
-        "Trinidad e Tobago",
-        "Tunísia",
-        "Turcomenistão (ou Turquemenistão)",
-        "Turquia",
-        "Tuvalu",
-        "Ucrânia",
-        "Uganda",
-        "Uruguai",
-        "Uzbequistão",
-        "Vanuatu",
-        "Vaticano",
-        "Venezuela",
-        "Vietnã (ou Vietname)",
-        "Zâmbia",
-        "Zimbábue"
-      ],
-      list: {
-        match: {
-          enabled: true
-        }
-      }
 
-    }
+    //this.apply_functions()
+  }
+
+  connect() {    
+    this.apply_functions()
+
+    this.element.addEventListener("turbo:submit-start", (event) => {
+      //criar uma visualização de loading
+      let form = $(event.currentTarget)
+      let text = 'Salvando'
+
+      //define o texto no botão
+      form.find('span[role=status]').html(text)
+
+      //habilita o spinner
+      form.find('.spinner-border').toggleClass('visually-hidden')
+      console.log('start')
+    }) 
+    this.element.addEventListener("turbo:submit-end", (event) => {
+      if(event.detail.success){
+        //criar uma visualização de loading
+        let form = $(event.currentTarget)
+        let text = 'Salvar'
+
+        //define o texto no botão
+        form.find('span[role=status]').html(text)
+
+        //habilita o spinner
+        form.find('.spinner-border').toggleClass('visually-hidden')
+      }
+      console.log('end')
+    }) 
+
+    this.element.addEventListener('turbo:frame-render',(event)=>{
+      this.apply_functions()
+    })
+  }
+
+  apply_functions(){
     $("#user_pais").easyAutocomplete(options)
 
     // this will ensure that the API does not get called too much
@@ -465,45 +503,28 @@ export default class extends Controller {
     this.checaUsername = debounce(this.checaUsername.bind(this), 1000);
   }
 
-  connect() {
-    $(".form-control").on("blur",(event) =>{
-      this.habilitaForm()
-    })
-  }
-
   //funções do perfil 
 
   preencheValor1() {
     let valor = $('#user_valor1').val().replace(',','.')
     let valid = true
+    let feedback = $("#user_valor1").closest('div').children('.invalid-feedback')
+    
+    if(feedback.length == 0){
+      $("#user_valor1").closest('div').append('<div class="invalid-feedback"></div>')
+    }
 
     if (valor > 200){
       $("#user_valor1").removeClass("is-valid")
       $("#user_valor1").addClass("is-invalid")
-
-      if($("#v1-feedback").length == 0){
-        $("#user_valor1").closest('div').append("<div id='v1-feedback' class='invalid-feedback max'>O valor máximo é R$ 200,00</div>")
-      }else{
-        if(!$("#v1-feedback").hasClass('max')){
-          $("#v1-feedback").remove()
-          $("#user_valor1").closest('div').append("<div id='v1-feedback' class='invalid-feedback max'>O valor máximo é R$ 200,00</div>")
-        }
-      }
+      $("#user_valor1").closest('div').children('.invalid-feedback').html('O valor máximo é R$ 200,00')
       valid = false
     } 
 
     if(valor < 10){
       $("#user_valor1").removeClass("is-valid");
       $("#user_valor1").addClass("is-invalid");
-
-      if($("#v1-feedback").length == 0){
-        $("#user_valor1").closest('div').append("<div id='v1-feedback' class='invalid-feedback min'>O valor mínimo é R$ 10,00</div>")
-      }else{
-        if(!$("#v1-feedback").hasClass('min')){
-          $("#v1-feedback").remove()
-          $("#user_valor1").closest('div').append("<div id='v1-feedback' class='invalid-feedback min'>O valor mínimo é R$ 10,00</div>")
-        }
-      }
+      $("#user_valor1").closest('div').children('.invalid-feedback').html('O valor mínimo é R$ 10,00')      
       valid = false
     }
 
@@ -567,19 +588,43 @@ export default class extends Controller {
     });
   }
 
-  preencheDesc1(event){
-    let valor = $("#user_valor1")
-    let desc = $("#user_desc1")
-  }
+  preencheDesconto(event){
+    let field = $(event.currentTarget)
+    let parent = $(event.currentTarget).closest('div') 
+    let feedback = parent.children('.invalid-feedback')
 
-  preencheDesc3(event){
-    let valor = $("#user_valor3")
-    let desc = $("#user_desc3")
-  }
+    function ajustaClasse(valid){
+      if(valid){
+        field.removeClass('is-invalid')
+        field.addClass('is-valid')
+      }else{
+        field.removeClass('is-valid')
+        field.addClass('is-invalid')
+      }
+    }
 
-  preencheDesc6(event){
-    let valor = $("#user_valor6")
-    let desc = $("#user_desc6")
+    if(field.val() > 50){
+      if (feedback.length == 0){
+        parent.append('<div class="invalid-feedback"></div>')
+        feedback = parent.children('.invalid-feedback')
+      }
+      
+      feedback.html('O máximo é 50%')
+
+      ajustaClasse(false)
+      field.val(50)
+
+      setTimeout(() => {
+        ajustaClasse(true)
+      }, 3000);
+    }else if(feedback.length > 0){
+      ajustaClasse(true)
+    }
+    
+    if (field.val() == ''){
+      field.val(0)
+      ajustaClasse(true)
+    }
   }
 
   naoVazio(event){
@@ -591,15 +636,17 @@ export default class extends Controller {
       $("#"+id).removeClass("is-invalid");
       $("#"+id).addClass("is-valid");
     }
+
+    this.habilitaForm()
   }
 
   habilitaForm(){
     //percorre os campos obrigatórios avaliando 
-    
+    console.log($(".is-invalid").length)
     if($(".is-invalid").length == 0){
-      $("input[name=commit]").prop("disabled",false)
+      $("#btn-send").prop("disabled",false)
     }else{
-      $("input[name=commit]").prop("disabled",true)
+      $("#btn-send").prop("disabled",true)
     }
   }
 
@@ -648,5 +695,14 @@ export default class extends Controller {
         alert("CEP não encontrado.");
     }
     });
+  }
+
+  habilita_criador(event){
+    let check = $(event.currentTarget.checked)
+    let dt_autoriza = $("#dt_autorizado").val()
+    if (event.currentTarget.checked && dt_autoriza == ''){    
+      event.currentTarget.checked = false
+      $('#modal-documentos').modal('show')
+    } 
   }
 }

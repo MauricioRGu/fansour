@@ -1,15 +1,23 @@
-h5 Segurança
-= form_with(model: @user) do |form|
-  div class="row-form"
-    div class="col-form"
-      = form.label :password, class: "form-label"
-        = "Nova senha "
-        span class="text-primary" *
-      = form.password_field :password, class: "form-control", data: {action: 'blur->settings#naoVazio'}
-    
-      = form.label :password_confirmation, class: "form-label"
-        = "Confirmar nova senha "
-        span class="text-primary" *
-      = form.password_field :password_confirmation, class: "form-control", data: {action: 'blur->settings#naoVazio'}
-    div class="col-form-100"
-      = form.submit class: "btn btn-success", disabled: "disabled"
+turbo-frame id='settings'
+  h5 Segurança
+  div class="alert alert-light alert-dismissible fade show" role="alert"
+    = "Após a troca da senha, será necessário refazer o login."
+    button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"
+  = form_with(model: @user) do |form|
+    - form.object.valid?
+    div class="row-form"
+      div class="col-form"
+        = form.label :password, class: "form-label"
+          = "Nova senha "
+          span class="text-primary" *
+        = form.password_field :password, class: "form-control", data: {action: 'blur->settings#naoVazio'}
+      
+        = form.label :password_confirmation, class: "form-label"
+          = "Confirmar nova senha "
+          span class="text-primary" *
+        = form.password_field :password_confirmation, class: "form-control", data: {action: 'blur->settings#naoVazio'}
+      div class="col-form-100"
+        button id="btn-send" type="submit" class="btn btn-success" disabled="disabled"
+            span class="spinner-border spinner-grow-sm visually-hidden" aria-hidden="true"
+            span role="status" class="mx-2"
+              = "Salvar"

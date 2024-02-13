@@ -1,0 +1,2 @@
+module ChecagemProfilesHelper
+end

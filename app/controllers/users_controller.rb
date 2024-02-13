@@ -3,6 +3,7 @@ class UsersController < ApplicationController
 
   def update 
     params = user_params
+    partial = 'dados_pessoais'
     if params[:valor1].present? #tratamento para dados do profile 
       #ajusta os parametros de valores
       if params[:valor1].include?(',')
@@ -25,17 +26,30 @@ class UsersController < ApplicationController
       else
         params[:valor6] += ".00"
       end
+
+      #ajusta os campos de desconto, caso não estejam presentes
+      if params[:desc1].strip == ''
+        params[:desc1] = 0
+      end
+      if params[:desc3].strip == ''
+        params[:desc3] = 0
+      end
+      if params[:desc6].strip == ''
+        params[:desc6] = 0
+      end
+
+      partial = 'dados_profile'
+    end
+
+    if params[:password].present?
+      partial = 'security_profile'
     end
 
     respond_to do |format|
       if @user.update(params)
         format.turbo_stream {flash.now[:notice] = "Dados atualizados." }
       else 
-        @msg = ''
-        @user.errors.each do |e| 
-          @msg += e.full_message + '<br>'
-        end
-        format.turbo_stream {flash.now[:alert] = @msg }
+        format.html {render partial: "profiles/forms/#{partial}", location: @user, status: :unprocessable_entity}
       end
     end
   end
@@ -60,7 +74,7 @@ class UsersController < ApplicationController
 
   def user_params    
     params.require(:user).permit(:nome_publico,:nome_arroba,:valor1,:desc1,:valor3,:desc3,:valor6,:desc6,:descricao,:instagram,:twitter,:tiktok,:telegram,:site,
-                                  :nome_completo,:email,:cpf,:dt_nascimento,:telefone,:pais,:cep,:estado,:cidade,:bairro,:endereco,:numero,:complemento,:criador,
-                                  :avatar,:capa,:password, :password_confirmation)
+                                  :nome_completo,:email,:cpf,:dt_nascimento,:telefone,:pais,:cep,:estado,:cidade,:bairro,:endereco,:numero,:complemento,:perfil_criador,
+                                  :avatar,:capa,:password, :password_confirmation, :kind)
   end
 end

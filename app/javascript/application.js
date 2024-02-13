@@ -11,15 +11,7 @@
 import "@hotwired/turbo-rails"
 import "controllers"
 
-//esconde as mensagens da tela após 6s    
-//para reload o load da pagina completa
-setTimeout(function(){
-    $(".div-info").css('left',window.innerWidth + 100)
-    $(".div-info").css('right',0 - (window.innerWidth * 2))
-    $(".div-info").remove();
-    console.log('removeu');
-},6000)
-
+//função que serve o turbo e o document ready
 var fEscondeMsg = function(){
     //esconde as mensagens da tela após 2s
     //para reload do turbo
@@ -29,6 +21,12 @@ var fEscondeMsg = function(){
         $(".div-info").remove();
     },6000)
 }
+
+//para reload o load da pagina completa
+$(document).ready(function(){
+    //esconde as mensagens da tela  
+    fEscondeMsg()
+})
 
 var binding = function(){
     //bloqueia o menu de contexto(botão direito do mouse) para  todas as
@@ -46,10 +44,11 @@ var binding = function(){
         $("#menu-images").toggleClass('menu-hide')
     })
 
-    fEscondeMsg
+    //esconde as mensagens da tela
+    fEscondeMsg()
 
     //se é a pagina de login inclui o js da pagina
-    if(url_atual.includes('sign_in')){
+    if(url_atual.includes('login')){
         //quando o elemento do id form finalizar as transições, executa a intrução  
         $('#form').one('webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend',function(e){
             $("#row-form").removeClass("row-form-hide")
@@ -87,7 +86,7 @@ var binding = function(){
     $('.moeda').mask('000,00', {reverse: true, placeholder: "R$"})
     $('.desconto').mask('00', {reverse: true, placeholder: "%"})
     $('#user_cpf').mask('999.999.999-99',{placeholder: "000.000.000-00"})
-    $('#user_dt_nascimento').mask('99/99/9999', {placeholder: "00/00/0000"})
+    //$('#user_dt_nascimento').mask('99/99/9999', {placeholder: "00/00/0000"})
     var SPMaskBehavior = function (val) {
         return val.replace(/\D/g, '').length === 11 ? '(00) 00000-0000' : '(00) 0000-00009';
       },

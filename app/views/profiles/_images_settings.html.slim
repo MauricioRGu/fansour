@@ -10,7 +10,7 @@ div class="d-flex flex-column position-relative"
     - if user.avatar.present?
       = image_tag user.avatar, class: "bg-dark img-avatar p-2 z-0 img-profile rounded-circle", id: "img-avatar"
     - else 
-      = image_tag "avatar-default.png", class: "bg-dark img-avatar p-2 z-0 img-profile", id: "img-avatar"
+      = image_tag "avatar-default.png", class: "bg-dark img-avatar p-2 z-0 img-profile rounded-circle", id: "img-avatar"
   div id="avatar-preview" class="avatar-preview bg-dark overflow-hidden d-none z-0 rounded-circle" 
 
   div class="btn-menu-images d-flex flex-row-reverse position-relative"

@@ -10,7 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_02_01_002117) do
+ActiveRecord::Schema[7.0].define(version: 2024_02_12_113408) do
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -54,6 +57,16 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_01_002117) do
     t.index ["user_id"], name: "index_assinaturas_on_user_id"
   end
 
+  create_table "checagem_profiles", force: :cascade do |t|
+    t.boolean "analisado", default: false
+    t.boolean "aprovado", default: false
+    t.string "observacao"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_checagem_profiles_on_user_id"
+  end
+
   create_table "posts", force: :cascade do |t|
     t.string "descricao"
     t.datetime "created_at", null: false
@@ -81,7 +94,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_01_002117) do
     t.string "bairro"
     t.integer "numero"
     t.string "complemento"
-    t.boolean "criador", default: false
+    t.boolean "perfil_criador", default: false
     t.datetime "dt_verificacao"
     t.boolean "publico", default: false
     t.boolean "desativado", default: false
@@ -114,4 +127,5 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_01_002117) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "assinaturas", "users"
   add_foreign_key "assinaturas", "users", column: "criador_id"
+  add_foreign_key "checagem_profiles", "users"
 end

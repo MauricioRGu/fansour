@@ -22,6 +22,11 @@ content data-controller="settings"
           = inline_svg_tag "icone-assinatura"
           span
             = "Assinaturas"
+      = link_to '/profiles/settings/check_profile'
+        li 
+          = inline_svg_tag "icone-verification" 
+          span
+            = "Verificação de perfil"
   div class="data"
     div
       == render "profiles/forms/dados_profile", user: @user

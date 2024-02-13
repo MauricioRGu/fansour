@@ -1,6 +1,7 @@
-turbo_frame id='dados_pessoais'
-  h5 Dados Pessoais
+turbo-frame id='settings'
+  h5 Dados Pessoais 
   = form_with(model: @user) do |form|
+    - form.object.valid?
     div class="row-form"
       div class="col-form"
         = form.label :nome_completo, class: "form-label"
@@ -22,18 +23,18 @@ turbo_frame id='dados_pessoais'
         = form.label :dt_nascimento, class: "form-label" 
           = "Data de Nascimento "
           span class="text-primary" *
-        = form.text_field :dt_nascimento, class: "form-control", data: {action: 'blur->settings#naoVazio'}
+        = form.date_field :dt_nascimento, class: "form-control", data: {action: 'blur->settings#naoVazio'}
       
       div class="col-form"
         = form.label :telefone, class: "form-label"
           = "Telefone "
           span class="text-primary" *        
-        = form.text_field :telefone, class: "form-control", data: {action: 'blur->settings#naoVazio'}      
+        = form.text_field :telefone, class: "form-control", data: {action: 'blur->settings#naoVazio'}     
       div class="col-form"
         = form.label :cep, class: "form-label"
           = "CEP " 
           span class="text-primary" *  
-        = form.text_field :cep, class: "form-control", data: {action: "input->settings#preencheCEP"}   
+        = form.text_field :cep, class: "form-control", data: {action: "input->settings#preencheCEP blur->settings#habilitaForm"}   
 
       div class="col-form" 
         = form.label :pais, class: "form-label"
@@ -70,14 +71,10 @@ turbo_frame id='dados_pessoais'
 
       div class="col-form" 
         = form.label :complemento, class: "form-label"
-        = form.text_field :complemento, class: "form-control"
+        = form.text_field :complemento, class: "form-control", data: {action: 'blur->settings#habilitaForm'}
 
       div class="col-form-100"
-        = form.check_box :criador, class: "form-check-input"
-        = form.label :criador, class: "form-label"
-          = "Tornar o perfil criador"
-        
-
-      div class="col-form"
-        = form.submit class: "btn btn-success", disabled: "disabled"
-          = "Salvar"
+        button id="btn-send" type="submit" class="btn btn-success" disabled="disabled"
+          span class="spinner-border spinner-grow-sm visually-hidden" aria-hidden="true"
+          span role="status" class="mx-2"
+            = "Salvar"

@@ -1,6 +1,6 @@
 - if @user.present?
   == render "profiles/images_show", user: @user
-  - if @user.id != current_user.id && @user.criador && !@assinante.present?
+  - if @user.id != current_user.id && @user.perfil_criador && !@assinante.present?
     == render "profiles/planos_show", user: @user
   - else 
     div class="content"

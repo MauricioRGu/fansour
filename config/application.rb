@@ -26,5 +26,7 @@ module Fansour
 
     #inclui o geocoder para fazer a obtenção do timezone via ip
     require 'geocoder'
+    #inclui o cpf_cnpj para fazer as validações de cpf
+    require 'cpf_cnpj'
   end
 end

@@ -13,6 +13,7 @@
     <script src="https://cdn.jsdelivr.net/npm/vivus@latest/dist/vivus.min.js"></script>
     
     <%= stylesheet_link_tag "application", media: "all", "data-turbolinks-track": "reload" %>
+    <meta name="turbo-refresh-scroll" content="preserve">
   </head>
 
   <body id="body">
@@ -34,7 +35,7 @@
             <%= current_user.nome_publico %>
           </p>
           <% if current_user.avatar.present? %>
-            <%= image_tag(current_user.avatar, class: "img-avatar", id: "img-avatar") %>           
+            <%= image_tag(current_user.avatar.variant(:thumb), class: "img-avatar", id: "img-avatar") %>           
           <% else %>
             <%= image_tag("avatar-default.png", class: "img-avatar", id: "img-avatar") %>           
           <% end %>

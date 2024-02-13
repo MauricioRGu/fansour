@@ -1,6 +1,10 @@
-turbo_frame id='dados_pessoais'
+- autorizado = @user.aprovacao_criador
+turbo-frame id='settings'
   h5 Dados do Perfil
   = form_with(model: @user) do |form|
+    - form.object.valid?
+    
+    = form.hidden_field :kind, value: 'profile'
     div class="row-form"
       div class="col-form"
         = form.label :nome_publico, class: "form-label"
@@ -11,17 +15,16 @@ turbo_frame id='dados_pessoais'
         = form.label :nome_arroba, class: "form-label"
           = "Seu @ "
           span class="text-primary" *
-        = form.text_field :nome_arroba, class: "form-control obrigatorio", required: "required", data: {action: 'input->settings#checaUsername'}
-      
+        = form.text_field :nome_arroba, class: "form-control obrigatorio", required: "required", data: {action: 'input->settings#checaUsername blur->settings#naoVazio'}
       div class="col-form" 
         = form.label :valor1, class: "form-label"
           = "Plano 1 mês (R$) "
           span class="text-primary" *
-        = form.text_field :valor1, class: "form-control moeda obrigatorio", required: "required", data: {action: 'keyup->settings#preencheValor1'}
+        = form.text_field :valor1, class: "form-control moeda obrigatorio", required: "required", data: {action: 'keyup->settings#preencheValor1 blur->settings#habilitaForm'}
       div class="col-form" 
         = form.label :desc1, class: "form-label"
           = "Desconto 1 mês (%)"
-        = form.text_field :desc1, class: "form-control desconto", data: {action: 'keyup->settings#preencheDesc1'} 
+        = form.text_field :desc1, class: "form-control desconto", data: {action: 'keyup->settings#preencheDesconto blur->settings#habilitaForm'} 
       
       div class="col-form" 
         = form.label :valor3, class: "form-label"
@@ -30,7 +33,7 @@ turbo_frame id='dados_pessoais'
       div class="col-form" 
         = form.label :desc3, class: "form-label"
           = "Desconto 3 meses (%)"
-        = form.text_field :desc3, class: "form-control desconto", data: {action: 'keyup->settings#preencheDesc3'} 
+        = form.text_field :desc3, class: "form-control desconto", data: {action: 'keyup->settings#preencheDesconto blur->settings#habilitaForm'} 
 
       div class="col-form" 
         = form.label :valor6, class: "form-label"
@@ -39,7 +42,7 @@ turbo_frame id='dados_pessoais'
       div class="col-form" 
         = form.label :desc6, class: "form-label"
           = "Desconto 6 meses (%)"
-        = form.text_field :desc6, class: "form-control desconto", data: {action: 'keyup->settings#preencheDesc6'}  
+        = form.text_field :desc6, class: "form-control desconto", data: {action: 'keyup->settings#preencheDesconto blur->settings#habilitaForm'}  
      
       div class="col-form-100"
         = form.label :descricao, class: "form-label"
@@ -50,27 +53,51 @@ turbo_frame id='dados_pessoais'
       div class="col-form"
         = form.label :instagram, class: "form-label"
           = "Link do Instagram"
-        = form.text_field :instagram, class: "form-control"
+        = form.text_field :instagram, class: "form-control", data: {action: 'blur->settings#habilitaForm'}
 
       div class="col-form"
         = form.label :twitter, class: "form-label"
           = "Link do Twitter"
-        = form.text_field :twitter, class: "form-control"
+        = form.text_field :twitter, class: "form-control", data: {action: 'blur->settings#habilitaForm'}
 
       div class="col-form"
         = form.label :tiktok, class: "form-label"
           = "Link do TikTok"
-        = form.text_field :tiktok, class: "form-control"
+        = form.text_field :tiktok, class: "form-control", data: {action: 'blur->settings#habilitaForm'}
 
       div class="col-form"
         = form.label :telegram, class: "form-label"
           = "Link do Telegram"
-        = form.text_field :telegram, class: "form-control"
+        = form.text_field :telegram, class: "form-control", data: {action: 'blur->settings#habilitaForm'}
 
       div class="col-form"
         = form.label :site, class: "form-label"
           = "Link do seu site"
-        = form.text_field :site, class: "form-control"
+        = form.text_field :site, class: "form-control", data: {action: 'blur->settings#habilitaForm'}
 
       div class="col-form-100"
-        = form.submit class: "btn btn-success", disabled: "disabled"
+        = form.check_box :perfil_criador, class: "form-check-input", data: {action: 'change->settings#habilita_criador'}
+        = form.label :perfil_criador, class: "form-label"
+          = "Tornar o perfil criador"
+        input type="hidden" id="dt_autorizado" value="#{autorizado}"
+
+      div class="col-form-100"
+        button id="btn-send" type="submit" class="btn btn-success" disabled="disabled"
+          span class="spinner-border spinner-grow-sm visually-hidden" aria-hidden="true"
+          span role="status" class="mx-2"
+            = "Salvar"
+
+- if autorizado == ''
+  //carrega a modal para enviar os documentos para aprovação do perfil
+  div class="modal fade" id="modal-documentos" tabindex="-1" role="dialog" aria-labelledby="ModalDocumentos" aria-hidden="true"
+    div class="modal-dialog modal-dialog-centered" role="document"
+      div class="modal-content"
+        div class="modal-header"
+          h5 class="modal-title" id="title"
+            = "Solicitação de autorização"
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+            span aria-hidden="true"
+        div class="modal-body"
+          = turbo_frame_tag 'documentos'
+            div class="d-flex"              
+              == render "profiles/forms/docs_autorizacao"

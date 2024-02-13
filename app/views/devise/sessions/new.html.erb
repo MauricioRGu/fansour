@@ -10,7 +10,10 @@
               <%= f.email_field :email, class: "form-control mb-3", autofocus: true, autocomplete: "email", required: 'required', placeholder: "E-mail" %>
             <%= f.password_field :password, class: "form-control mb-3", autocomplete: "current-password", required: 'required', placeholder: "Senha" %>
           <div class="actions mb-3">
-            <%= f.button "Entrar", class: "btn-login btn", id:"submit-login" %>
+            <button name="button" type="submit" class="btn-login btn" id="submit-login">
+              <span class="spinner-border spinner-grow-sm visually-hidden" aria-hidden="true"></span>
+              <span role="status">Entrar</span>
+            </button>
           </div>
         <% end %>
         <% if notice %>
@@ -39,7 +42,22 @@
         </button>
       </div>
       <div class="modal-body">
-        <%= render "devise/registrations/new" %>
+        <%= turbo_frame_tag 'cadastro' do %>
+          <%= form_for(resource, as: resource_name, url: registration_path(resource_name), data: {turbo_frame: 'cadastro', controller: 'login'}) do |f| %>    
+              <%= f.email_field :email, class: "form-control", autocomplete: "email", placeholder: "E-mail", required: "required" %><br />
+              <% if @minimum_password_length %>
+              <em>(<%= @minimum_password_length %> caracteres no minímo)</em><br />
+              <% end %>
+              <%= f.password_field :password, class: "form-control", autocomplete: "new-password", placeholder: "Senha", required: "required" %><br />
+              <%= f.password_field :password_confirmation, class: "form-control", autocomplete: "new-password", placeholder: "Confirme a senha", required: "required" %><br />
+            <div class="actions">
+              <button name="button" type="submit" class="btn-login btn" id="submit-login">
+                <span class="spinner-border spinner-grow-sm visually-hidden" aria-hidden="true"></span>
+                <span role="status">Cadastrar</span>
+              </button>
+            </div>
+          <% end %>
+        <% end %>
       </div>
     </div>
   </div>
