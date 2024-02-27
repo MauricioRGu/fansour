@@ -12,6 +12,7 @@ turbo-frame id='settings'
           span class="text-primary" *
         = form.password_field :password, class: "form-control", data: {action: 'blur->settings#naoVazio'}
       
+      div class="col-form"
         = form.label :password_confirmation, class: "form-label"
           = "Confirmar nova senha "
           span class="text-primary" *

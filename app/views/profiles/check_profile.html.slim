@@ -27,16 +27,12 @@ content data-controller="settings"
           = inline_svg_tag "icone-verification" 
           span
             = "Verificação de perfil"
-  div class="data"
+  div class="data p-2"
     div
+      h5 Status da verificação do perfil
       - if !@user.checagem_profile.present?
-        turbo-frame id='settings'
-          h5 Status da verificação do perfil
-          div class="alert alert-light alert-dismissible fade show" role="alert"
-            = "Você ainda não enviou os documentos para análise"
-            button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"
-          == render "profiles/forms/docs_autorizacao"
+        == render "profiles/forms/docs_autorizacao"
       - else 
-        span Enviou
+        == render "checagem_profiles/view", checagem: @user.checagem_profile.last
 
                 

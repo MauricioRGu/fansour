@@ -455,18 +455,19 @@ export default class extends Controller {
         url: 'src',
         title: ''
     })
-
-
-    //this.apply_functions()
   }
 
   connect() {    
     this.apply_functions()
 
+    //evento disparado antes de enviar o formulario
     this.element.addEventListener("turbo:submit-start", (event) => {
       //criar uma visualização de loading
       let form = $(event.currentTarget)
       let text = 'Salvando'
+      if(event.currentTarget.attributes.label != undefined){
+        text = 'Enviando'
+      }
 
       //define o texto no botão
       form.find('span[role=status]').html(text)
@@ -475,6 +476,8 @@ export default class extends Controller {
       form.find('.spinner-border').toggleClass('visually-hidden')
       console.log('start')
     }) 
+
+    //função disparada após a finalização da resposta do formulario
     this.element.addEventListener("turbo:submit-end", (event) => {
       if(event.detail.success){
         //criar uma visualização de loading
@@ -486,12 +489,40 @@ export default class extends Controller {
 
         //habilita o spinner
         form.find('.spinner-border').toggleClass('visually-hidden')
-      }
-      console.log('end')
+      }else{
+        //criar uma visualização de loading
+        let form = $(event.currentTarget)
+        let text = 'Finalizar e enviar'
+
+        //define o texto no botão
+        form.find('span[role=status]').html(text)
+
+        //habilita o spinner
+        form.find('.spinner-border').toggleClass('visually-hidden')
+      }      
     }) 
 
+    document.addEventListener('turbo:before-fetch-response', (event) => {
+      const fetchResponse = event.detail.fetchResponse;
+      const url = fetchResponse.response.url.split('/');      
+      if(url[url.length - 1] == 'checagem_profiles'){
+        console.log(fetchResponse.response.url)
+        if (!fetchResponse.succeeded){
+          alert('erro')
+          //cancela o evento posterior, que seria a substituição do turbo frame
+          event.preventDefault()
+        }
+      }
+    });
+
+    //função disparada após os frames serem substituidos pelo turbo
     this.element.addEventListener('turbo:frame-render',(event)=>{
       this.apply_functions()
+    })
+
+    //função disparada antes de mudar de slide do carousel
+    this.element.addEventListener('slide.bs.carousel', event => {
+      this.trata_carousel(event)
     })
   }
 
@@ -501,6 +532,120 @@ export default class extends Controller {
     // this will ensure that the API does not get called too much
     // the wait time (300) is in milliseconds so adjust as needed
     this.checaUsername = debounce(this.checaUsername.bind(this), 1000);
+  }
+
+  trata_carousel(event){
+    console.log(event);
+    if(event.from < event.to){
+      //não pode pular uma etapa que não teve anexo
+      if(event.to - event.from > 1){
+        alert('Você não pode pular etapas. Avance para a etapa ' + (event.from + 2) )
+        event.preventDefault()
+        return
+      }
+      //se está avançando, checa se já anexou
+      let input = document.querySelector('#doc-'+event.from)
+      if(input.value == ''){
+        alert('Selecione um arquivo para avançar.')
+        event.preventDefault()
+      }
+    }
+  }
+
+  change_file(event){    
+    let btn = $(event.target.attributes.btn.value)
+    let preview = $(event.target.attributes.preview.value)
+    let preview_final = $(event.target.attributes.preview.value+'-final')
+    let form = $(event.target.attributes.formUpload.value)
+    console.log(event.target.files)
+    function limpaForm(){
+      form.removeClass('d-none')
+      preview.prop('src','')
+      preview_final.prop('src','')
+      preview.addClass('d-none')  
+      btn.addClass('d-none')
+    }
+    if(event.target.value != ''){
+      var file = event.target.files[0]
+      //checa o tamanho do arquivo, maximo em 9.5Mb      
+      if(file.size > 10000000){
+        alert('O tamanho do arquivo não pode ultrapassar 10Mb.')
+        event.target.value = ''
+        limpaForm()
+        return;
+      }
+      if (/^image\/\w+/.test(file.type)){
+        //tudo certo mostra a imagem anexada
+        form.addClass('d-none')
+        preview.prop('src', URL.createObjectURL(file))
+        preview_final.prop('src', URL.createObjectURL(file))
+        preview.removeClass('d-none')      
+        btn.removeClass('d-none')
+      }
+    }else{
+      limpaForm()
+    }
+  }
+
+  submit_solicitacao(){
+    let doc0 = document.getElementById("doc-0")
+    let doc1 = document.getElementById("doc-1")
+    let doc2 = document.getElementById("doc-2")
+
+    console.log(doc0)
+    console.log(doc1)
+    console.log(doc2)
+    
+    //testa os anexos
+    if(doc0.files.length == 0){
+      alert("Atenção, está faltando anexar a frente do documento.")
+      return
+    }
+    if(doc1.files.length == 0){
+      alert("Atenção, está faltando anexar o verso do documento.")
+      return
+    }
+    if(doc2.files.length == 0){
+      alert("Atenção, está faltando anexar a selfie com o documento.")
+      return
+    }
+
+    if(!/^image\/\w+/.test(doc0.files[0].type)){
+      alert('Atenção, arquivo da frente do documento está inválido.')
+      return
+    }
+    if(!/^image\/\w+/.test(doc1.files[0].type)){
+      alert('Atenção, arquivo do verso do documento está inválido.')
+      return
+    }
+    if(!/^image\/\w+/.test(doc2.files[0].type)){
+      alert('Atenção, arquivo de selfie com o documento está inválido.')
+      return
+    }
+
+  //passou as validações, monta o formulario
+  let formData = new FormData();
+
+  formData.append("checagem_profile[doc_frente]", doc0.files[0]);
+  formData.append("checagem_profile[doc_verso]", doc1.files[0]);
+  formData.append("checagem_profile[doc_selfie]", doc2.files[0]);
+
+  fetch("/checagem_profiles", {
+    method: "POST",
+    body: formData,
+    headers: {
+      "X-CSRF-Token": this.getMetaValue("csrf-token")
+    },
+  }).then((response) => {
+      return response.json();
+    })
+    .then((data) => {
+      console.log(data)
+      if (data.result === "success") {
+      
+      }
+    });
+
   }
 
   //funções do perfil 

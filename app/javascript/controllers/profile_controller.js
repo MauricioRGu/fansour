@@ -4,7 +4,7 @@ export default class extends Controller {
   connect() {
     let imgs = document.querySelectorAll(".img-get")
     for(let img of imgs){
-      fetch(img.attributes.datasrc.value, {
+      fetch('image'+img.attributes.datasrc.value, {
       method: "POST",
       body: "",
       headers: {

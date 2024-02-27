@@ -40,10 +40,11 @@ Rails.application.routes.draw do
   post 'username/:username', to: 'users#checa_username'
 
   #baixa as imagens de capa e avatar em show
-  post ':id', to: 'profiles#image_download'
+  post 'image/:id', to: 'profiles#image_download'
 
   #rota de criação da assinatura
   post '/assinaturas/create', to: 'assinaturas#create' 
   post '/assinaturas/update', to: 'assinaturas#update' 
-  #resources :assinaturas, only: [:create, :update]
+  
+  resources :checagem_profiles, only: [:create, :update]
 end

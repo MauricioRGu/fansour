@@ -45,7 +45,7 @@ class User < ApplicationRecord
   has_one_attached :capa 
 
   #imagens de validação do perfil criador de conteudo
-  has_one :checagem_profile
+  has_many :checagem_profile
 
   #cria nome de usuario antes de criar perfil
   before_create :username
