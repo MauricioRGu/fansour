@@ -1,4 +1,4 @@
-- autorizado = @user.aprovacao_criador
+- autorizado = @user.dt_verificacao
 turbo-frame id='settings'
   h5 Dados do Perfil
   = form_with(model: @user) do |form|
@@ -48,7 +48,7 @@ turbo-frame id='settings'
         = form.label :descricao, class: "form-label"
           = "Descrição do perfil "
           span class="text-primary" *
-        = form.text_area :descricao, class: "form-control obrigatorio", data: {action: 'blur->settings#naoVazio'}
+        = form.text_area :descricao, class: "form-control obrigatorio", style: "height: 150px;", data: {action: 'blur->settings#naoVazio'}
 
       div class="col-form"
         = form.label :instagram, class: "form-label"
@@ -76,9 +76,9 @@ turbo-frame id='settings'
         = form.text_field :site, class: "form-control", data: {action: 'blur->settings#habilitaForm'}
 
       div class="col-form-100"
-        = form.check_box :perfil_criador, class: "form-check-input", data: {action: 'change->settings#habilita_criador'}
         = form.label :perfil_criador, class: "form-label"
           = "Tornar o perfil criador"
+        = form.check_box :perfil_criador, class: "form-check-input", data: {action: 'change->settings#habilita_criador change->settings#habilitaForm'}
         input type="hidden" id="dt_autorizado" value="#{autorizado}"
 
       div class="col-form-100"
@@ -87,7 +87,7 @@ turbo-frame id='settings'
           span role="status" class="mx-2"
             = "Salvar"
 
-- if autorizado == ''
+- if !autorizado.present?
   //carrega a modal para enviar os documentos para aprovação do perfil
   div class="modal fade" id="modal-documentos" tabindex="-1" role="dialog" aria-labelledby="ModalDocumentos" aria-hidden="true"
     div class="modal-dialog modal-dialog-centered modal-fullscreen" role="document"
@@ -99,4 +99,8 @@ turbo-frame id='settings'
             span aria-hidden="true"
         div class="modal-body"
           = turbo_frame_tag 'checagem'
-            == render "profiles/forms/docs_autorizacao"
+            - check = @user.checagem_profile.last
+            - if check.present?
+              == render "checagem_profiles/view", checagem: @user.checagem_profile.last
+            - else
+              == render "profiles/forms/docs_autorizacao"

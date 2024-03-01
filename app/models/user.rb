@@ -29,6 +29,26 @@ class User < ApplicationRecord
     end
   end
 
+  #valida se o usuário realmente foi validado para se tornar criador
+  validate :valida_criador, on: :update
+  def valida_criador
+    if self.perfil_criador
+      checagem = self.checagem_profile.last
+      if checagem.present?      
+        if !checagem.analisado
+          errors.add(:perfil_criador,"Seu perfil está em análise.")
+          return
+        end
+        if !checagem.aprovado
+          errors.add(:perfil_criador,"Análise de perfil negada. Envie novamente os documentos.")
+          return
+        end
+      else
+        errors.add(:perfil_criador,"Falta envio de documentos.")
+      end
+    end
+  end
+
   #criação de usuário              
   validates :email, :nome_arroba, :password, presence: true, on: :create
 
@@ -98,11 +118,6 @@ class User < ApplicationRecord
   def valido    
     return self.validate
   end 
-
-  def aprovacao_criador
-    checagem = self.checagem_profile
-    return '' unless checagem.present?
-  end
 
   private
   def username

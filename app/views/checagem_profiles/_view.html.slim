@@ -1,12 +1,13 @@
 turbo-frame id='checagem'
   div class="d-flex flex-column mt-5 p-4 p-sm-0 gap-4"
-    - if !checagem.analisado
+    - checagem = @checagem unless checagem.present?
+    - if checagem.analisado
       - if checagem.aprovado 
         = image_tag "verified.png", class: "m-auto", style: "max-width: 180px" 
         span class="text-center"
           = "Parabéns! O seu perfil está aprovado e pode se tornar criador."
       - else 
-        h1 Recusado
+        == render "profiles/forms/docs_autorizacao", recusado: "sim"
     - else    
       = image_tag("check-docs.png", class: "m-auto", style: "max-width: 180px;")
       span class="text-center"

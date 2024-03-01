@@ -1,7 +1,15 @@
 turbo-frame id='checagem'
-  div class="alert alert-light alert-dismissible fade show" role="alert"
-    = "Você ainda não enviou os documentos para análise"
-    button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"
+  - if defined?(recusado)
+    div class="alert alert-danger alert-dismissible fade show" role="alert"
+      = "Desculpe, sua solicitação foi negada. Verifique a observação abaixo e envie nova solicitação:"
+      br
+      br
+      span class="text-secondary"
+        = @user.checagem_profile.last.observacao
+  - else
+    div class="alert alert-light alert-dismissible fade show" role="alert"
+      = "Você ainda não enviou os documentos para análise"
+      button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"
   = form_with url: "/checagem_profiles", method: :post, multipart: true, label: "Entrando"  do |f|  
     div class="d-flex flex-column"
       p class="h5 mb-3 d-none"

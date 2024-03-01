@@ -6,6 +6,7 @@ class ChecagemProfile < ApplicationRecord
   has_one_attached :doc_selfie
 
   before_create :checa_existencia
+  before_update :trata_resposta
 
   private
 
@@ -14,4 +15,12 @@ class ChecagemProfile < ApplicationRecord
     return unless !ChecagemProfile.find_by(user_id: self.user_id).present?
   end
   
+  def trata_resposta
+    if self.analisado && self.aprovado
+      self.user.update(dt_verificacao: DateTime.now)
+    else
+      self.user.update(dt_verificacao: nil)
+    end
+  end
+
 end

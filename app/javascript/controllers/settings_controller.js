@@ -845,9 +845,16 @@ export default class extends Controller {
   habilita_criador(event){
     let check = $(event.currentTarget.checked)
     let dt_autoriza = $("#dt_autorizado").val()
+    
+    //se não tem data de autorização, mostra a modal 
     if (event.currentTarget.checked && dt_autoriza == ''){    
       event.currentTarget.checked = false
       $('#modal-documentos').modal('show')
     } 
+    //limpa
+    if(!event.currentTarget.checked && event.currentTarget.classList.contains('is-invalid')){
+      console.log('limp')
+      event.currentTarget.classList.remove('is-invalid')
+    }
   }
 }
