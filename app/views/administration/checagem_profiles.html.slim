@@ -1,0 +1,55 @@
+content class="d-flex gap-3 justify-content-start" data-controller="administration"
+  == render 'menu', selected: 'checagem_profiles' 
+  div class="d-flex flex-wrap gap-3 justify-content-center justify-content-md-start mt-md-2"     
+    - @checagens.each do |c|
+      div class="card" style="width: 300px;" id="card#{c.id}"
+        div class="carousel slide flex-grow-1 d-flex align-items-center" id="carousel#{c.id}" data-ride="carousel"
+          div class="carousel-indicators"
+            div class="active" data-bs-target="#carousel#{c.id}" data-bs-slide-to="0" aria-current="true" aria-label="Slide 1"
+              span 
+            div class=""  data-bs-target="#carousel#{c.id}" data-bs-slide-to="1" aria-label="Slide 2"
+              span 
+            div class=""  data-bs-target="#carousel#{c.id}" data-bs-slide-to="2" aria-label="Slide 3"
+              span
+          div class="carousel-inner" data-action="click->administration#show"
+            div class="carousel-item active" 
+              = image_tag c.doc_frente, loading: 'lazy', class:"w-100", style:"cursor: zoom-in;", title:"Frente"
+            div class="carousel-item"
+              = image_tag c.doc_verso, loading: 'lazy', class:"w-100", style:"cursor: zoom-in;", title:"Verso"
+            div class="carousel-item"
+              = image_tag c.doc_selfie, loading: 'lazy', class:"w-100", style:"cursor: zoom-in;", title:"Selfie"
+          button class="carousel-control-prev" type="button" data-bs-target="#carousel#{c.id}" data-bs-slide="prev"
+            span class="carousel-control-prev-icon" aria-hidden="true"
+            span class="visually-hidden" 
+              = "Previous"
+          
+          button class="carousel-control-next" type="button" data-bs-target="#carousel#{c.id}" data-bs-slide="next"
+            span class="carousel-control-next-icon" aria-hidden="true"
+            span class="visually-hidden"
+              = "Next"
+          
+        div class="card-body flex-grow-0" 
+          strong 
+            = c.user.nome_completo 
+          br
+          strong
+            = "@"+c.user.nome_arroba
+          br
+          strong
+            = c.user.cpf
+          br
+          strong
+            = l(c.user.dt_nascimento)
+          br
+          div class="form-floating mt-1"
+            textarea class="form-control" id="input#{c.id}" placeholder="Observação:"
+            label for="input#{c.id}"
+              = "Observação:"
+          div class="float-end mt-2"
+            //botões para confirmar ou negar
+            button class="btn btn-sm btn-danger mx-2" data-action="administration#nega" target="#{c.id}" label="n#{c.id}"
+              = "Negar"  
+              span class="spinner-border spinner-grow-sm visually-hidden mx-1" aria-hidden="true" id="n#{c.id}"
+            button class="btn btn-sm btn-success" data-action="administration#aprova" target="#{c.id}" label="a#{c.id}"
+              = "Aprovar"  
+              span class="spinner-border spinner-grow-sm visually-hidden mx-1" aria-hidden="true" id="a#{c.id}"

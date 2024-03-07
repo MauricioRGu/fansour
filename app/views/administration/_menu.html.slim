@@ -1,0 +1,11 @@
+aside 
+  div class="menu-settings"
+    ul class="p-0" style="list-style: none;"
+      li 
+        = link_to '/adm/index', class:"text-decoration-none #{selected == 'index' ? 'menu-selected' : ''}"          
+          p class="m-0" 
+            = "Dashboard"
+      li 
+        = link_to '/adm/checagem_profiles', class:"text-decoration-none #{selected == 'checagem_profiles' ? 'menu-selected' : ''}"
+          p class="m-0" 
+              = "Chegagem Profiles"

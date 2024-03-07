@@ -1,5 +1,5 @@
 class AssinaturasController < ApplicationController
-  before_action :set_post, only: %i[ update ]
+  before_action :set_assinatura, only: %i[ update ]
 
   def create
     respond_to do |format|
@@ -31,7 +31,7 @@ class AssinaturasController < ApplicationController
   end
       
   private
-  def set_post 
+  def set_assinatura 
     identity = params[:identity]
     id = Assinatura.identity_decode(identity,'Assinatura')
     @assinatura = Assinatura.find(id)

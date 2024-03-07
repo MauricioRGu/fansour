@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_02_12_113408) do
+ActiveRecord::Schema[7.0].define(version: 2024_03_01_021422) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -116,6 +116,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_12_113408) do
     t.string "tiktok"
     t.string "telegram"
     t.string "site"
+    t.string "type_user"
     t.index ["cpf"], name: "index_users_on_cpf", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["nome_arroba"], name: "index_users_on_nome_arroba", unique: true

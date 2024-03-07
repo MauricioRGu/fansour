@@ -6,6 +6,16 @@ class User < ApplicationRecord
   validates :nome_completo, :cpf, :dt_nascimento, :telefone, :cep, :pais, :estado, :cidade, 
             :bairro, :endereco, :numero, presence: true, on: :update, if: -> {self.kind.in? ['personal',nil]}
 
+  #valida a idade 
+  validate :idade, on: :update
+  def idade
+    return unless self.dt_nascimento.present?
+    now = Time.now.utc.to_date
+    if now.year - self.dt_nascimento.year - ((now.month > self.dt_nascimento.month || (now.month == self.dt_nascimento.month && now.day >= self.dt_nascimento.day)) ? 0 : 1) < 18
+      errors.add(:dt_nascimento, "Você precisa ter 18 anos.")
+    end
+  end
+
   #para o preenchimento dos dados do perfil
   validates :descricao, presence: true, on: :update, if: -> {self.kind.in? ['profile',nil]}
 
@@ -25,6 +35,9 @@ class User < ApplicationRecord
     if self.cpf.strip > ''
       if !CPF.valid?(self.cpf)
         errors.add(:cpf,"O CPF digitado é inválido")
+      end
+      if User.where(cpf: self.cpf).where.not(id: self.id).present? 
+        errors.add(:cpf, "Esse CPF já está em uso em outra conta.")
       end
     end
   end

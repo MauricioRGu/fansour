@@ -15,3 +15,6 @@ application.register("profile", ProfileController)
 
 import AssinaturasController from "./assinaturas_controller"
 application.register("assinaturas", AssinaturasController)
+
+import AdminsController from "./administration_controller"
+application.register("administration", AdminsController)

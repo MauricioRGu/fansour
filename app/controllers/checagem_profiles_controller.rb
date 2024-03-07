@@ -1,7 +1,4 @@
 class ChecagemProfilesController < ApplicationController
-  before_action :autoriza, only: %i[ edit update ]
-  before_action :set_checagem, only: %i[ edit update ]  
-
   def create
     if !current_user.checagem_profile.present?
       @checagem = ChecagemProfile.new(checagem_params)
@@ -20,15 +17,6 @@ class ChecagemProfilesController < ApplicationController
   end
   
   private
-    def autoriza
-      #criar autorizacao na atualização ou deleção
-    end
-
-    # Use callbacks to share common setup or constraints between actions.
-    def set_checagem
-      @checagem = ChecagemProfiles.find(params[:id])
-    end
-
     # Only allow a list of trusted parameters through.
     def checagem_params
       params.require(:checagem_profile).permit(:observacao, :aprovado, :doc_frente, :doc_verso, :doc_selfie)

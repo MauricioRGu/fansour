@@ -46,5 +46,11 @@ Rails.application.routes.draw do
   post '/assinaturas/create', to: 'assinaturas#create' 
   post '/assinaturas/update', to: 'assinaturas#update' 
   
-  resources :checagem_profiles, only: [:create, :update]
+  resources :checagem_profiles, only: [:create]
+
+  #centro de administração
+  get 'adm/index', to: 'administration#index'
+  get 'adm/checagem_profiles', to: 'administration#checagem_profiles'
+  post 'adm/update_checagem_profiles', to: 'administration#update_checagem_profiles'
+  
 end
