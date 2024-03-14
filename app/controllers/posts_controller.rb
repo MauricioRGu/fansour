@@ -36,6 +36,7 @@ class PostsController < ApplicationController
 
   # PATCH/PUT /posts/1 or /posts/1.json
   def update
+    return unless @post.present?
     respond_to do |format|
       if @post.update(post_params)
         format.html { redirect_to post_url(@post), notice: "Post was successfully updated." }
@@ -60,11 +61,11 @@ class PostsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_post
-      @post = Post.find(params[:id])
+      @post = Post.find(params[:id]).where(user_id: current_user.id)
     end
 
     # Only allow a list of trusted parameters through.
     def post_params
-      params.require(:post).permit(:descricao)
+      params.require(:post).permit(:descricao,)
     end
 end

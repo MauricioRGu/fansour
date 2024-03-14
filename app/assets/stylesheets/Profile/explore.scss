@@ -19,7 +19,7 @@
     z-index: -1;
     width: 100%;
     height: 100%;
-    opacity: .6;
+    opacity: .4;
 }
 
 .img-sug-capa{
@@ -30,7 +30,8 @@
     border-radius: 10px;
 }
 
-.data{
+.info{
+    text-wrap: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     & a{
