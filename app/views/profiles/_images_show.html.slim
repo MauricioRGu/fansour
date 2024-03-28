@@ -8,9 +8,9 @@ div class="d-flex flex-column position-relative"
       
   div class="z-0 d-flex"
     - if user.avatar.present?
-      = image_tag "avatar-default.png", class: "bg-dark img-avatar p-2 z-0 img-profile rounded-pill img-get", id: "img-avatar", datasrc: '/' + user.nome_arroba.to_s
+      = image_tag "avatar-default.png", class: "bg-body img-avatar p-2 z-0 img-profile rounded-pill img-get", id: "img-avatar", datasrc: '/' + user.nome_arroba.to_s
     - else 
-      = image_tag "avatar-default.png", class: "bg-dark img-avatar p-2 z-0 img-profile rounded-pill", id: "img-avatar"
+      = image_tag "avatar-default.png", class: "bg-body img-avatar p-2 z-0 img-profile rounded-pill", id: "img-avatar"
     div class="d-flex flex-column mt-1"
       = link_to user.nome_arroba, class: "text-body text-decoration-none"
         h5 class="m-0"

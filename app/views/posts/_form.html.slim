@@ -1,6 +1,8 @@
+p class="border-bottom pt-3 px-3 text-bold text-secondary"
+  = "Nova publicação"
 div class="border container p-3 rounded-1"
   = form_with(model: @post) do |form|
-    - if @post.errors.any?
+    - if @post && @post.errors.any?
       div style="color: red"
         h2 = "#{pluralize(@post.errors.count, "error")} prohibited this post from being saved:"
         ul
@@ -8,12 +10,19 @@ div class="border container p-3 rounded-1"
             li = error.full_message
 
     div
-      = form.text_area :descricao, placeholder:"Descrição do seu post...", class:"form-control-plaintext", style:"resize: none; min-height: 90px;", required:"required"
+      = form.text_area :descricao, placeholder:"Descrição do seu post...", class:"form-control-plaintext text-body-secondary", style:"resize: none; min-height: 90px;", required:"required"
 
     div class="d-flex flex-column-reverse flex-sm-row gap-2"
       div
         input type="submit" value="Publicar" disabled="disabled"
-      div class="d-flex justify-content-end w-100"
-        = inline_svg_tag "site.svg", style:"width: 30px;"
-     
-        
+      div class="buttons d-flex justify-content-end gap-3 w-100" style="fill: var(--bs-gray-500);"
+        = form.hidden_field :preco, value:""
+        = form.hidden_field :dt_post, value:''
+        = form.hidden_field :comentario, value:true
+        = form.hidden_field :comentario, value:true
+        = inline_svg_tag "add-image.svg", style:"width: 30px; height: 30px;"
+        = inline_svg_tag "add-voice.svg", style:"width: 30px; height: 30px;"
+        = inline_svg_tag "price.svg", style:"width: 30px; height: 30px;"
+        = inline_svg_tag "chat-off.svg", style:"width: 30px; height: 30px;"
+        = inline_svg_tag "agenda-post.svg", style:"width: 30px; height: 30px;"     
+        = inline_svg_tag "pin.svg", style:"width: 30px; height: 30px;"     

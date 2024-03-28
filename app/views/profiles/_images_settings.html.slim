@@ -8,10 +8,10 @@ div class="d-flex flex-column position-relative"
 
   div class="z-0"
     - if user.avatar.present?
-      = image_tag user.avatar, class: "bg-dark img-avatar p-2 z-0 img-profile rounded-circle", id: "img-avatar"
+      = image_tag user.avatar, class: "bg-body img-avatar p-2 z-0 img-profile rounded-circle", id: "img-avatar"
     - else 
-      = image_tag "avatar-default.png", class: "bg-dark img-avatar p-2 z-0 img-profile rounded-circle", id: "img-avatar"
-  div id="avatar-preview" class="avatar-preview bg-dark overflow-hidden d-none z-0 rounded-circle" 
+      = image_tag "avatar-default.png", class: "bg-body img-avatar p-2 z-0 img-profile rounded-circle", id: "img-avatar"
+  div id="avatar-preview" class="avatar-preview bg-body overflow-hidden d-none z-0 rounded-circle" 
 
   div class="btn-menu-images d-flex flex-row-reverse position-relative"
     svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-three-dots-vertical" viewBox="0 0 16 16" id="btn-images-profile"

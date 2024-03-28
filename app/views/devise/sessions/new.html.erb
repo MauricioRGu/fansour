@@ -8,11 +8,11 @@
 
         <%= form_for(resource, as: resource_name, url: session_path(resource_name), data: {turbo_frame: 'login', controller: 'login'}) do |f| %>
           <div class="form-floating">
-            <%= f.email_field :email, class: "form-control mb-3 bg-transparent", autofocus: true, autocomplete: "email", required: 'required', placeholder: "E-mail" %>
+            <%= f.email_field :email, class: "form-control mb-3", autofocus: true, autocomplete: "email", required: 'required', placeholder: "E-mail" %>
             <%= f.label :email %>
           </div>  
           <div class="form-floating">  
-            <%= f.password_field :password, class: "form-control mb-3 bg-transparent", autocomplete: "current-password", required: 'required', placeholder: "Senha" %>
+            <%= f.password_field :password, class: "form-control mb-3", autocomplete: "current-password", required: 'required', placeholder: "Senha" %>
             <%= f.label :password %>
           </div>  
           <div class="actions mb-3">

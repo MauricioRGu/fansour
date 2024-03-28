@@ -18,7 +18,7 @@ div class='sugestao'
                 - else
                     = image_tag "avatar-default.png", class: "img-avatar"
             div class="info"                            
-                = link_to '/'+user.nome_arroba
+                = link_to '/'+user.nome_arroba, class:"text-body"
                     span
                         = user.nome_publico
                     br

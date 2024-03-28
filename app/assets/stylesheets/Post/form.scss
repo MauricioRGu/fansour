@@ -1,0 +1,8 @@
+.buttons{
+
+  & svg:hover{
+    fill: var(--azul-fansour);
+    transform: translateY(-1px);
+    cursor: pointer;
+  }
+}
