@@ -18,3 +18,6 @@ application.register("assinaturas", AssinaturasController)
 
 import AdminsController from "./administration_controller"
 application.register("administration", AdminsController)
+
+import PostsController from "./posts_controller"
+application.register("posts", PostsController)

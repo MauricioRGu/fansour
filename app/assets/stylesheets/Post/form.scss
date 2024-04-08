@@ -5,4 +5,8 @@
     transform: translateY(-1px);
     cursor: pointer;
   }
+
+  & .active{
+    fill: var(--azul-fansour);
+  }
 }
