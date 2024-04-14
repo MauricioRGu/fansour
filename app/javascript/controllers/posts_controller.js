@@ -68,7 +68,9 @@ export default class extends Controller {
 
         let now = new Date
         let agendamento = Date.parse(data.value+' '+hora.value)
+        let dtAgendamento = new Date(agendamento)
         let minutos = Math.round(agendamento - now.getTime()) / 60000
+
         if(minutos < 30){
             alert("A programação deve ter no mínimo 30 minutos.")
             return
@@ -76,14 +78,12 @@ export default class extends Controller {
 
         //passou nas validações 
         //seta o input e mostra a informação sobre a programação
-        if(minutos < 1440){//
+        if(now.getDate() == dtAgendamento.getDate()){//
             label.children[0].innerHTML = 'Agendado para hoje ás ' + hora.value
-        }
-
-        if(minutos < 2880){
+        }else if((now.getDate() + 1) == dtAgendamento.getDate()){
             label.children[0].innerHTML = 'Agendado para amanhã ás ' + hora.value
         }else{
-            label.children[0].innerHTML = 'Agendado para ' + data.value + ' ás ' + hora.value
+            label.children[0].innerHTML = 'Agendado para ' + dtAgendamento.toLocaleDateString()+' ás '+dtAgendamento.toLocaleTimeString().substr(0,5)
         }
 
         document.getElementById('dt_post').value = data.value+' '+hora.value
@@ -98,6 +98,20 @@ export default class extends Controller {
         document.getElementById('dt_post').value = ''
         document.getElementById('btn-agenda').classList.remove("active");
         document.getElementById('label-agendamento').classList.add('d-none')
+    }
+
+    preco(){
+        let modal = document.getElementById('modal-valor')
+        $(modal).modal('show')
+    }
+
+    valida_price(){
+        console.log('')
+        return 
+    }
+
+    setPrice(){
+        let valor = document.getElementById('')
     }
 
 }

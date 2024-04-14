@@ -27,7 +27,7 @@ div class="container" data-controller="posts"
           = form.hidden_field :fixado, value:false
           = inline_svg_tag "add-image.svg", style:"width: 25px; height: 25px;"
           = inline_svg_tag "add-voice.svg", style:"width: 25px; height: 25px;"
-          = inline_svg_tag "price.svg", style:"width: 25px; height: 25px;"
+          = inline_svg_tag "price.svg", style:"width: 25px; height: 25px;", id:"btn-price", data:{action:"click->posts#preco"}
           = inline_svg_tag "chat-off.svg", style:"width: 25px; height: 25px;", id:"btn-comentario", data:{action:"click->posts#comentarios"}
           = inline_svg_tag "agenda-post.svg", style:"width: 25px; height: 25px;", id:"btn-agenda", data:{action:"click->posts#agendamento"}     
           = inline_svg_tag "pin.svg", style:"width: 25px; height: 25px;", id:"btn-fixa", data:{action:"click->posts#fixado"}
@@ -54,4 +54,23 @@ div class="container" data-controller="posts"
             input type="time" id="hora" class="form-control"
           div class="w-100"
             button class="btn btn-sm btn-outline-info w-100 mt-4" data-action="click->posts#setAgendamento"
+              = "Aplicar"
+
+  div class="modal fade" id="modal-valor" tabindex="-1" role="dialog" aria-labelledby="ModalValor" aria-hidden="true"
+    div class="modal-dialog modal-dialog-centered" role="document"
+      div class="modal-content" style="background-color: var(--bs-body-bg) !important;"
+        div class="modal-header"
+          h6 class="modal-title text-body-secondary" id="title"
+            = "Valor da assinatura"
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+            span aria-hidden="true"
+        div class="modal-body align-items-center d-flex flex-column gap-3 text-body-secondary"
+          h6 class="p-3 rounded text-bg-info"
+            = "Informe o valor que será cobrado para a assinatura dessa publicação:"
+          div class="input-group w-100" style="max-width:160px;"
+            span class="input-group-text text-bg-info"R$              
+            input type="number" id="preco" class="form-control" max="999" data-action="keyup->posts#valida_price"
+            span class="input-group-text text-bg-info",00
+          div class="w-100"
+            button class="btn btn-sm btn-outline-info w-100 mt-4" data-action="click->posts#setPrice"
               = "Aplicar"
