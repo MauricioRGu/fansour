@@ -19,6 +19,7 @@
   <body id="body">
     <% if current_user %>      
       <nav class="nav">
+      <div id="menu-background" class="bg-black bg-opacity-50 z-n1 menu-hide" style="position: fixed;top: 4rem; bottom: 0; left: 0;right: 0;"></div>
         <a href="/" class="link-logo" title="link-logo">
           <svg style="max-width: 200px" viewBox="0 150 550 150" fill="rgb(78, 195, 224)" stroke-width="0" >
             <path  d="M109.79787,207.14104h-44.79787v9.96394h4.78269v35.87018h-4.78269v9.96394h30.21067v-9.96394h-7.25375v-12.51471h14.74663v-10.44221h-14.74663v-13.07269h9.72481v6.13779h12.11615z" ></path>
@@ -40,7 +41,7 @@
             <%= image_tag("avatar-default.png", class: "img-avatar", id: "img-avatar") %>           
           <% end %>
 
-          <div class="menu menu-hide" id="menu">
+          <div class="menu menu-hide" id="menu">            
             <ul>
               <li>
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">

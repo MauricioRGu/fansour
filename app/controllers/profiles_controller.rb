@@ -40,6 +40,10 @@ class ProfilesController < ApplicationController
     end
 
     def explore
+        #criar grupos de exploração, 
+        #mostrar 30 usuários de cada 
+        #top da semana 
+        #
         if current_user 
             @users = User.where.not(id: current_user.id).where(desativado: false, perfil_criador: true)
         else

@@ -37,7 +37,14 @@ var binding = function(){
     //habilita a botão do menu na imagem do avatar
     $('#img-avatar').on('click',function(e){
         $("#menu").toggleClass('menu-hide')
-    })  
+        $("#menu-background").toggleClass('menu-hide')
+    }) 
+    
+    //clica fora do menu
+    $('#menu-background').on('click',function(e){
+        $("#menu").toggleClass('menu-hide')
+        $("#menu-background").toggleClass('menu-hide')
+    }) 
 
     //habilita botão de menu de imagens
     $("#btn-images-profile").on('click',function(e){

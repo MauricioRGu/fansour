@@ -14,7 +14,7 @@
 
 .icon-links{
   width: 20px;
-  fill: white;
+  fill: var(--bs-gray-500);
   & :hover{
     fill: var(--azul-fansour);
   }
