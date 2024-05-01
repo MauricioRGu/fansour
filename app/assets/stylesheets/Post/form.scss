@@ -10,3 +10,10 @@
     fill: var(--azul-fansour);
   }
 }
+
+.bg-preview{
+  height: 100% !important;
+  & :hover{
+    height: 50% !important;
+  }
+}

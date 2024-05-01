@@ -237,7 +237,7 @@ class DirectUploadController {
             this.source.midiasTarget.insertAdjacentHTML("beforeend", `
                 <div id="preview-${this.id}" class="d-flex flex-column-reverse justify-content-center position-relative preview rounded-3" style="background: url(${this.url_file});width: 100px;height: 100px;background-size: cover;">
                     <label id="btn-close-${this.id}" data-action="click->posts#removeFile" data-input="input-${this.id}" class="btn-close cursor-pointer d-none position-absolute z-3" style="top: 0;right: 0;"></label>
-                    <div id="" class="bg-black opacity-50 position-absolute rounded-2 w-100"></div>
+                    <div id="" class="bg-preview bg-black opacity-50 position-absolute rounded-2 w-100"></div>
                     <div class="m-2 progress" style="height: 12px;opacity: 85%;">
                         <div id="progress-${this.id}" class="progress-bar" style="width: 0%;"></div>
                     </div>
@@ -246,8 +246,8 @@ class DirectUploadController {
         }
         if(this.file.type.split('/')[0].toLowerCase() == 'video'){                
             this.source.midiasTarget.insertAdjacentHTML("beforeend", `
-                <div id="preview-${this.id}" class="d-flex flex-column-reverse justify-content-center position-relative preview rounded-3" width: 100px;height: 100px;background-size: cover;">
-                    <video controls="" autoplay="" name="media"><source src="${this.url_file}" type="${this.file.type}"></video>
+                <div id="preview-${this.id}" class="d-flex flex-column-reverse justify-content-center position-relative preview rounded-3" style="width: 100px;height: 100px;background-size: cover;">
+                    <video controls class="h-100 rounded-3"><source src="${this.url_file}" type="${this.file.type}"></video>
                     <label id="btn-close-${this.id}" data-action="click->posts#removeFile" data-input="input-${this.id}" class="btn-close cursor-pointer d-none position-absolute z-3" style="top: 0;right: 0;"></label>
                     <div id="" class="bg-black opacity-50 position-absolute rounded-2 w-100"></div>
                     <div class="m-2 progress" style="height: 12px;opacity: 85%;">
