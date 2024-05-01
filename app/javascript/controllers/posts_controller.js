@@ -1,60 +1,55 @@
 //= require jquery
-//= require activestorage
-//import { DirectUpload } from "@rails/activestorage"
+
 import { Controller } from "@hotwired/stimulus"
+import { DirectUpload } from "@rails/activestorage"
 
 
-const input = document.querySelector('input')
-
-// Vincular ao arquivo solto - use o onDrop em um elemento pai ou use uma
-//  biblioteca com o Dropzone
-const onDrop = (event) => {
-    event.preventDefault()
-    const files = event.dataTransfer.files;
-    Array.from(files).forEach(file => uploadFile(file))
-}
-
-// Vincular à seleção de arquivo normal
-input.addEventListener('change', (event) => {
-    Array.from(input.files).forEach(file => uploadFile(file))
-    // você pode limpar os arquivos selecionados da entrada
-    input.value = null
-})
-
-const uploadFile = (file) => {
-    // seu formulário precisa do file_field direct_upload: true, que
-    //  fornece o data-direct-upload-url, data-direct-upload-token
-    // e data-direct-upload-attachment-name
-    const url = input.dataset.directUploadUrl
-    const token = input.dataset.directUploadToken
-    const attachmentName = input.dataset.directUploadAttachmentName
-    const upload = new DirectUpload(file, url, token, attachmentName)
-
-    upload.create((error, blob) => {
-        if (error) {
-        // Trata o erro
-        } else {
-        // Adiciona uma entrada oculta apropriadamente nomeada ao formulário com o
-        //  valor blob.signed_id, assim os blob ids podem ser
-        //  transmitidos no fluxo normal de upload
-        const hiddenField = document.createElement('input')
-        hiddenField.setAttribute("type", "hidden");
-        hiddenField.setAttribute("value", blob.signed_id);
-        hiddenField.name = input.name
-        document.querySelector('form').appendChild(hiddenField)
-        }
-    })
-}
   
 
 export default class extends Controller {
-    connect(){        
+    static targets = ["input","midias"]
+
+    connect(){      
+        this.inputTarget.disabled = false  
+        const input = document.querySelector('input[type=file]')
+       
+        // Vincular à seleção de arquivo normal
+        input.addEventListener('change', (event) => {
+            //Array.from(input.files).forEach(file => uploadFile(file))
+            Array.from(input.files).forEach(file => {
+                createDirectUploadController(this, file).start();
+            })
+            // você pode limpar os arquivos selecionados da entrada
+            input.value = null
+        })
+        
+        const uploadFile = (file) => {
+            // seu formulário precisa do file_field direct_upload: true, que
+            //  fornece o data-direct-upload-url, data-direct-upload-token
+            // e data-direct-upload-attachment-name
+            const url = input.dataset.directUploadUrl
+            const token = input.dataset.directUploadToken
+            const attachmentName = input.dataset.directUploadAttachmentName
+            const upload = new DirectUpload(file, url, token, attachmentName)
+        
+            upload.create((error, blob) => {
+                if (error) {
+                // Trata o erro
+                } else {
+                // Adiciona uma entrada oculta apropriadamente nomeada ao formulário com o
+                //  valor blob.signed_id, assim os blob ids podem ser
+                //  transmitidos no fluxo normal de upload
+                const hiddenField = document.createElement('input')
+                hiddenField.setAttribute("type", "hidden");
+                hiddenField.setAttribute("value", blob.signed_id);
+                hiddenField.name = input.name
+                document.querySelector('form').appendChild(hiddenField)
+                }
+            })
+        }
+
         this.element.addEventListener("turbo:submit-start", (event) => {
-            let form = $(event.currentTarget)
-            let text = 'Cadastrando'
-            if(event.currentTarget.attributes[0].value == 'login'){
-                text = 'Entrando'
-            }
+            let form = $(event.currentTarget)           
 
             //define o texto no botão
             form.find('span[role=status]').html(text)
@@ -64,8 +59,7 @@ export default class extends Controller {
         })    
         
         this.element.addEventListener("turbo:submit-end", (event) => {
-            console.log(event)
-            this.checaLogin(event)
+            alert('turbo:submit-end')
         })    
 
         //habilita os tooltips
@@ -198,4 +192,103 @@ export default class extends Controller {
     addFile(){
         document.getElementById('anexos').click()
     }
+
+    removeFile(event){
+        let input = document.getElementById(event.target.dataset.input)
+        input.disabled = true
+        event.target.parentNode.classList.add('d-none')
+    }
+    
+}
+
+class DirectUploadController {
+    constructor(source, file) {        
+        this.directUpload = createDirectUpload(file, source.inputTarget.dataset.directUploadUrl, this);
+        this.source = source;
+        this.file = file;
+        this.id = (new Date).getTime();
+        this.url_file = URL.createObjectURL(file)
+    }
+
+    start() {
+        this.file.controller = this;
+        this.hiddenInput = this.createHiddenInput();
+        this.preview = this.createPreview();
+        this.directUpload.create((error, attributes) => {
+            if (error) {
+                remove(this.hiddenInput);
+            } else {
+                this.hiddenInput.value = attributes.signed_id;
+                setTimeout(() => {                    
+                    document.getElementById(`progress-${this.id}`).parentNode.classList.add('d-none')
+                    document.getElementById(`btn-close-${this.id}`).classList.remove('d-none')
+                }, "2000");
+            }
+        });
+    }
+
+    createPreview(){
+        // imagens
+        var fileExtension_img = ['jpeg', 'jpg', 'png', 'gif', 'bmp'];
+        //videos         
+        var fileExtension_vid = ['mp4', 'mpeg', 'wmv', 'mov', 'avi'];
+        console.log(this.file.type)
+        if(this.file.type.split('/')[0].toLowerCase() == 'image'){                
+            this.source.midiasTarget.insertAdjacentHTML("beforeend", `
+                <div id="preview-${this.id}" class="d-flex flex-column-reverse justify-content-center position-relative preview rounded-3" style="background: url(${this.url_file});width: 100px;height: 100px;background-size: cover;">
+                    <label id="btn-close-${this.id}" data-action="click->posts#removeFile" data-input="input-${this.id}" class="btn-close cursor-pointer d-none position-absolute z-3" style="top: 0;right: 0;"></label>
+                    <div id="" class="bg-black opacity-50 position-absolute rounded-2 w-100"></div>
+                    <div class="m-2 progress" style="height: 12px;opacity: 85%;">
+                        <div id="progress-${this.id}" class="progress-bar" style="width: 0%;"></div>
+                    </div>
+                </div>`
+            )
+        }
+        if(this.file.type.split('/')[0].toLowerCase() == 'video'){                
+            this.source.midiasTarget.insertAdjacentHTML("beforeend", `
+                <div id="preview-${this.id}" class="d-flex flex-column-reverse justify-content-center position-relative preview rounded-3" width: 100px;height: 100px;background-size: cover;">
+                    <video controls="" autoplay="" name="media"><source src="${this.url_file}" type="${this.file.type}"></video>
+                    <label id="btn-close-${this.id}" data-action="click->posts#removeFile" data-input="input-${this.id}" class="btn-close cursor-pointer d-none position-absolute z-3" style="top: 0;right: 0;"></label>
+                    <div id="" class="bg-black opacity-50 position-absolute rounded-2 w-100"></div>
+                    <div class="m-2 progress" style="height: 12px;opacity: 85%;">
+                        <div id="progress-${this.id}" class="progress-bar" style="width: 0%;"></div>
+                    </div>
+                </div>`
+            )
+        }
+    }
+
+    createHiddenInput() {
+        const input = document.createElement("input");
+        input.type = "hidden";
+        input.name = this.source.inputTarget.name;
+        input.id = `input-${this.id}`
+        document.querySelector('form').appendChild(input)
+        return input;
+    }
+
+    directUploadWillStoreFileWithXHR(xhr) {
+        this.bindProgressEvent(xhr);
+    }
+
+    bindProgressEvent(xhr) {
+        this.xhr = xhr;
+        this.xhr.upload.addEventListener("progress", event =>
+        this.uploadRequestDidProgress(event)
+        );
+    }
+
+    uploadRequestDidProgress(event) {
+        const element = document.getElementById(`progress-${this.id}`);
+        const progress = (event.loaded / event.total) * 100;
+        element.style.width = `${progress}%`
+    }
+}
+  
+function createDirectUploadController(source, file) {
+    return new DirectUploadController(source, file);
+}
+  
+function createDirectUpload(file, url, controller) {
+    return new DirectUpload(file, url, controller);
 }

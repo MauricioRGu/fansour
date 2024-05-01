@@ -110,3 +110,7 @@ var binding = function(){
 //sempre que o turbo carregar, readiciona o evento de escuta.
 document.addEventListener("turbo:load",binding);
 document.addEventListener("turbo:submit-end",fEscondeMsg);
+document.addEventListener("direct-upload:progress", event => {
+    const { id, progress } = event.detail
+    console.log(progress)
+  })
