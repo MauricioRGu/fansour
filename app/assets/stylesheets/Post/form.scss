@@ -11,9 +11,10 @@
   }
 }
 
-.bg-preview{
-  height: 100% !important;
-  & :hover{
-    height: 50% !important;
-  }
+.bg-preview:hover{
+  opacity: 60% !important;
+}
+
+div.bg-preview:has(div.btn-close:hover){
+  opacity: 60% !important;
 }

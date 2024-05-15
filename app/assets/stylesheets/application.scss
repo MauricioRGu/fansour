@@ -17,15 +17,15 @@
  @import 'bootstrap';
 
 :root{
-    --background-color: #1b1a29;
-    --background-color-50: #1b1a2950;
+    --background-color: #1e1e23;
+    --background-color-50: #1e1e2350;
     --font-color-nav: white;
     --azul-fansour: #4ec3e0;
 
     //sobrepondo bootstrap
     --bs-modal-bg-custom: #1b1c21; //fundo da modal
-    --bs-body-bg: #141423;
-    --bs-body-bg-rgb: 20, 20, 35;
+    --bs-body-bg:#17171c;
+    --bs-body-bg-rgb: 23, 23, 28;
 }
 
 main{

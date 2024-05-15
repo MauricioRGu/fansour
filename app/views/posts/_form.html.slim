@@ -1,5 +1,5 @@
 div class="container" data-controller="posts"
-  p class="pt-3 text-bold text-secondary"
+  p class="pt-3 text-bold text-secondary" data-action="click->posts#addToast"
     = "Nova publicação"
   div class="border container p-3 rounded-1"
     = form_with(model: @post) do |form|
@@ -79,3 +79,4 @@ div class="container" data-controller="posts"
               = "Aplicar"
             button class="btn btn-sm btn-danger w-100 mt-1 d-none" id="btn-clean-price" data-action="click->posts#clearPrice"
               = "Remover preço"
+  div id="toast-container" class="toast-container position-fixed bottom-0 end-0 p-3"

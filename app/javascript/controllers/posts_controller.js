@@ -196,7 +196,37 @@ export default class extends Controller {
     removeFile(event){
         let input = document.getElementById(event.target.dataset.input)
         input.disabled = true
-        event.target.parentNode.classList.add('d-none')
+        event.target.parentNode.parentNode.classList.add('d-none')
+        this.addToast(event.target.dataset.input,event.target.parentNode.parentNode.id)
+    }
+
+    restauraFile(event){
+        let input = document.getElementById(event.target.dataset.input)
+        let preview = document.getElementById(event.target.dataset.preview)
+        input.disabled = false
+        preview.classList.remove('d-none')
+        event.target.parentNode.parentNode.classList.remove('show')
+    }
+
+    addToast(input,preview){
+        let id = 'toast-'+input.split('-')[1]
+        let toast = document.getElementById(id)
+        if(toast){
+            toast.classList.add('show')
+        }else{
+            document.getElementById('toast-container').insertAdjacentHTML('beforeend',`
+                <div id="${id}" class="toast w-100" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="toast-body">
+                        Mídia deletada. 
+                        <span data-input="${input}" data-preview="${preview}" data-action="click->posts#restauraFile" class="btn-link cursor-pointer link-info mx-2">Restaurar</span>
+                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                </div>
+            `)
+        }
+
+        const toastElList = document.querySelectorAll(`#${id}`)
+        const toastList = [...toastElList].map(toastEl => toastEl.classList.add('show'))
     }
     
 }
@@ -232,12 +262,13 @@ class DirectUploadController {
         var fileExtension_img = ['jpeg', 'jpg', 'png', 'gif', 'bmp'];
         //videos         
         var fileExtension_vid = ['mp4', 'mpeg', 'wmv', 'mov', 'avi'];
-        console.log(this.file.type)
+        console.log(this.file)
         if(this.file.type.split('/')[0].toLowerCase() == 'image'){                
             this.source.midiasTarget.insertAdjacentHTML("beforeend", `
                 <div id="preview-${this.id}" class="d-flex flex-column-reverse justify-content-center position-relative preview rounded-3" style="background: url(${this.url_file});width: 100px;height: 100px;background-size: cover;">
-                    <label id="btn-close-${this.id}" data-action="click->posts#removeFile" data-input="input-${this.id}" class="btn-close cursor-pointer d-none position-absolute z-3" style="top: 0;right: 0;"></label>
-                    <div id="" class="bg-preview bg-black opacity-50 position-absolute rounded-2 w-100"></div>
+                    <div id="" class="bg-preview bg-black position-absolute rounded-2 w-100 h-100 opacity-0">
+                        <label id="btn-close-${this.id}" data-action="click->posts#removeFile" data-input="input-${this.id}" class="btn-close cursor-pointer position-absolute z-3" style="top: 0;right: 0;"></label>
+                    </div>
                     <div class="m-2 progress" style="height: 12px;opacity: 85%;">
                         <div id="progress-${this.id}" class="progress-bar" style="width: 0%;"></div>
                     </div>
@@ -247,9 +278,10 @@ class DirectUploadController {
         if(this.file.type.split('/')[0].toLowerCase() == 'video'){                
             this.source.midiasTarget.insertAdjacentHTML("beforeend", `
                 <div id="preview-${this.id}" class="d-flex flex-column-reverse justify-content-center position-relative preview rounded-3" style="width: 100px;height: 100px;background-size: cover;">
-                    <video controls class="h-100 rounded-3"><source src="${this.url_file}" type="${this.file.type}"></video>
-                    <label id="btn-close-${this.id}" data-action="click->posts#removeFile" data-input="input-${this.id}" class="btn-close cursor-pointer d-none position-absolute z-3" style="top: 0;right: 0;"></label>
-                    <div id="" class="bg-black opacity-50 position-absolute rounded-2 w-100"></div>
+                    <video controls class="h-100 rounded-3"><source src="${this.url_file}" type="${this.file.type}"></video>                    
+                    <div id="" class="bg-preview bg-black d-none position-absolute rounded-2 w-100 h-100 opacity-75">
+                        <label id="btn-close-${this.id}" data-action="click->posts#removeFile" data-input="input-${this.id}" class="btn-close cursor-pointer d-none position-absolute z-3" style="top: 0;right: 0;"></label>
+                    </div>
                     <div class="m-2 progress" style="height: 12px;opacity: 85%;">
                         <div id="progress-${this.id}" class="progress-bar" style="width: 0%;"></div>
                     </div>

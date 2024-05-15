@@ -12,8 +12,9 @@ a{
   height: 100%;
   display: flex;
   justify-content: space-around;
-  background-color: rgb(17, 17, 31);
+  //background-color: rgb(17, 17, 31);
   background-image: radial-gradient(circle closest-side, rgba(255, 255, 255, 0.07) 0%, rgba(255, 255, 255, 0) 100%);
+  overflow: auto;
 }
 
 #logo{
@@ -33,6 +34,7 @@ a{
   justify-content: center;
   align-items: center;
   flex-direction: row;
+  min-height: 400px;
 }
 
 .form-hide{
@@ -72,6 +74,7 @@ a{
     align-items: center;
   }
   #form{
+    margin: 0 !important;
     padding: 50px 25px;
     width: 100%;
     max-height: 100%;
