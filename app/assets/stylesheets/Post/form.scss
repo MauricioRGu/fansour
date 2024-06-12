@@ -18,3 +18,16 @@
 div.bg-preview:has(div.btn-close:hover){
   opacity: 60% !important;
 }
+
+.play-button{
+  margin: 40%;
+  width: 20px;
+  height: 20px; 
+  position: absolute; 
+  cursor: pointer;
+  fill: currentColor;
+}
+
+.play-button:hover{
+  fill: var(--azul-fansour) !important;
+}

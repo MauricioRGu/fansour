@@ -4,15 +4,15 @@ import { Controller } from "@hotwired/stimulus"
 import { DirectUpload } from "@rails/activestorage"
 
 
-  
+
 
 export default class extends Controller {
-    static targets = ["input","midias"]
+    static targets = ["input", "midias"]
 
-    connect(){      
-        this.inputTarget.disabled = false  
+    connect() {
+        this.inputTarget.disabled = false
         const input = document.querySelector('input[type=file]')
-       
+
         // Vincular à seleção de arquivo normal
         input.addEventListener('change', (event) => {
             //Array.from(input.files).forEach(file => uploadFile(file))
@@ -22,7 +22,7 @@ export default class extends Controller {
             // você pode limpar os arquivos selecionados da entrada
             input.value = null
         })
-        
+
         const uploadFile = (file) => {
             // seu formulário precisa do file_field direct_upload: true, que
             //  fornece o data-direct-upload-url, data-direct-upload-token
@@ -31,149 +31,149 @@ export default class extends Controller {
             const token = input.dataset.directUploadToken
             const attachmentName = input.dataset.directUploadAttachmentName
             const upload = new DirectUpload(file, url, token, attachmentName)
-        
+
             upload.create((error, blob) => {
                 if (error) {
-                // Trata o erro
+                    // Trata o erro
                 } else {
-                // Adiciona uma entrada oculta apropriadamente nomeada ao formulário com o
-                //  valor blob.signed_id, assim os blob ids podem ser
-                //  transmitidos no fluxo normal de upload
-                const hiddenField = document.createElement('input')
-                hiddenField.setAttribute("type", "hidden");
-                hiddenField.setAttribute("value", blob.signed_id);
-                hiddenField.name = input.name
-                document.querySelector('form').appendChild(hiddenField)
+                    // Adiciona uma entrada oculta apropriadamente nomeada ao formulário com o
+                    //  valor blob.signed_id, assim os blob ids podem ser
+                    //  transmitidos no fluxo normal de upload
+                    const hiddenField = document.createElement('input')
+                    hiddenField.setAttribute("type", "hidden");
+                    hiddenField.setAttribute("value", blob.signed_id);
+                    hiddenField.name = input.name
+                    document.querySelector('form').appendChild(hiddenField)
                 }
             })
         }
 
         this.element.addEventListener("turbo:submit-start", (event) => {
-            let form = $(event.currentTarget)           
+            let form = $(event.currentTarget)
 
             //define o texto no botão
             form.find('span[role=status]').html(text)
 
             //habilita o spinner
             form.find('.spinner-border').toggleClass('visually-hidden')
-        })    
-        
+        })
+
         this.element.addEventListener("turbo:submit-end", (event) => {
             alert('turbo:submit-end')
-        })    
+        })
 
         //habilita os tooltips
         const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
         const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
     }
 
-    valida_post(){
+    valida_post() {
         let desc = document.getElementById('descricao')
         let btn = document.getElementById('submit')
         btn.disabled = desc.value == ''
     }
 
-    fixado(){
+    fixado() {
         let input = document.getElementById('fixado')
-        let btn = document.getElementById('btn-fixa')     
+        let btn = document.getElementById('btn-fixa')
         input.value = input.value == 'false' ? true : false
         btn.classList.toggle("active");
     }
 
-    comentarios(){
+    comentarios() {
         let input = document.getElementById('comentario')
-        let btn = document.getElementById('btn-comentario')     
+        let btn = document.getElementById('btn-comentario')
         input.value = input.value == 'false' ? true : false
         btn.classList.toggle("active");
     }
 
-    agendamento(){
+    agendamento() {
         let modal = document.getElementById('modal-agendamento')
         $(modal).modal('show');
     }
 
-    setAgendamento(){
+    setAgendamento() {
         let data = document.getElementById('data')
         let hora = document.getElementById('hora')
         let btn = document.getElementById('btn-agenda')
         let label = document.getElementById('label-agendamento')
 
-        if(data.value == ''){
+        if (data.value == '') {
             alert("Selecione uma data!")
             data.focus()
             return
         }
 
-        if(hora.value == ''){
+        if (hora.value == '') {
             alert("Selecione a hora!")
             hora.focus()
             return
         }
 
         let now = new Date
-        let agendamento = Date.parse(data.value+' '+hora.value)
+        let agendamento = Date.parse(data.value + ' ' + hora.value)
         let dtAgendamento = new Date(agendamento)
         let minutos = Math.round(agendamento - now.getTime()) / 60000
 
-        if(minutos < 30){
+        if (minutos < 30) {
             alert("A programação deve ter no mínimo 30 minutos.")
             return
         }
 
         //passou nas validações 
         //seta o input e mostra a informação sobre a programação
-        if(now.getDate() == dtAgendamento.getDate()){//
+        if (now.getDate() == dtAgendamento.getDate()) {//
             label.children[0].innerHTML = 'Agendado para hoje ás ' + hora.value
-        }else if((now.getDate() + 1) == dtAgendamento.getDate()){
+        } else if ((now.getDate() + 1) == dtAgendamento.getDate()) {
             label.children[0].innerHTML = 'Agendado para amanhã ás ' + hora.value
-        }else{
-            label.children[0].innerHTML = 'Agendado para ' + dtAgendamento.toLocaleDateString()+' ás '+dtAgendamento.toLocaleTimeString().substr(0,5)
+        } else {
+            label.children[0].innerHTML = 'Agendado para ' + dtAgendamento.toLocaleDateString() + ' ás ' + dtAgendamento.toLocaleTimeString().substr(0, 5)
         }
 
-        document.getElementById('dt_post').value = data.value+' '+hora.value
+        document.getElementById('dt_post').value = data.value + ' ' + hora.value
         btn.classList.add("active");
         label.classList.remove('d-none')
-        
+
         //fecha a modal
         $('#modal-agendamento').modal('hide')
     }
 
-    cancelaAgendamento(){
+    cancelaAgendamento() {
         document.getElementById('dt_post').value = ''
         document.getElementById('btn-agenda').classList.remove("active");
         document.getElementById('label-agendamento').classList.add('d-none')
     }
 
-    preco(){
+    preco() {
         let modal = document.getElementById('modal-valor')
         $(modal).modal('show')
     }
 
-    setPrice(){
+    setPrice() {
         let edtValor = document.getElementById('edtpreco')
         let inputValor = document.getElementById('preco')
         let error = document.getElementById('error-price')
         let modal = document.getElementById('modal-valor')
         let btn = document.getElementById('btn-price')
         let btn_c = document.getElementById('btn-clean-price')
-        
-        if(edtValor.value < 10){
+
+        if (edtValor.value < 10) {
             edtValor.focus()
             error.classList.remove('d-none')
             error.classList.add('show')
             edtValor.value = ''
-        }else{
+        } else {
             error.classList.remove('show')
-            btn.classList.add('active')      
+            btn.classList.add('active')
             let tooltip = bootstrap.Tooltip.getInstance(btn)
-            tooltip.setContent({'.tooltip-inner':'R$ '+edtValor.value+',00'})
+            tooltip.setContent({ '.tooltip-inner': 'R$ ' + edtValor.value + ',00' })
             inputValor.value = edtValor.value
             btn_c.classList.remove('d-none')
-            $(modal).modal('hide')            
+            $(modal).modal('hide')
         }
     }
 
-    clearPrice(){
+    clearPrice() {
         let edtValor = document.getElementById('edtpreco')
         let inputValor = document.getElementById('preco')
         let modal = document.getElementById('modal-valor')
@@ -184,23 +184,23 @@ export default class extends Controller {
         edtValor.value = ''
         inputValor.value = ''
         btn.classList.remove('active')
-        tooltip.setContent({'.tooltip-inner':'Preço R$ '})
+        tooltip.setContent({ '.tooltip-inner': 'Preço R$ ' })
         btn_c.classList.add('d-none')
         $(modal).modal('hide')
     }
 
-    addFile(){
+    addFile() {
         document.getElementById('anexos').click()
     }
 
-    removeFile(event){
+    removeFile(event) {
         let input = document.getElementById(event.target.dataset.input)
         input.disabled = true
         event.target.parentNode.parentNode.classList.add('d-none')
-        this.addToast(event.target.dataset.input,event.target.parentNode.parentNode.id)
+        this.addToast(event.target.dataset.input, event.target.parentNode.parentNode.id)
     }
 
-    restauraFile(event){
+    restauraFile(event) {
         let input = document.getElementById(event.target.dataset.input)
         let preview = document.getElementById(event.target.dataset.preview)
         input.disabled = false
@@ -208,13 +208,13 @@ export default class extends Controller {
         event.target.parentNode.parentNode.classList.remove('show')
     }
 
-    addToast(input,preview){
-        let id = 'toast-'+input.split('-')[1]
+    addToast(input, preview) {
+        let id = 'toast-' + input.split('-')[1]
         let toast = document.getElementById(id)
-        if(toast){
+        if (toast) {
             toast.classList.add('show')
-        }else{
-            document.getElementById('toast-container').insertAdjacentHTML('beforeend',`
+        } else {
+            document.getElementById('toast-container').insertAdjacentHTML('beforeend', `
                 <div id="${id}" class="toast w-100" role="alert" aria-live="assertive" aria-atomic="true">
                     <div class="toast-body">
                         Mídia deletada. 
@@ -228,28 +228,71 @@ export default class extends Controller {
         const toastElList = document.querySelectorAll(`#${id}`)
         const toastList = [...toastElList].map(toastEl => toastEl.classList.add('show'))
     }
-    
+
+    play_pause(event){   
+        if(event.target.tagName == 'svg'){     
+            this.play_pause_act(document.getElementById(event.target.dataset.video),event.target)
+        }else{
+            this.play_pause_act(document.getElementById(event.target.parentNode.dataset.video),event.target.parentNode)
+        }
+    }
+
+    play_pause_act(video,button){
+        if(video.paused){   
+            video.play()            
+            button.getElementsByTagName('polygon')[0].classList.add('d-none')
+            button.getElementsByTagName('polygon')[1].classList.remove('d-none')
+        }else{
+            video.pause()
+            button.getElementsByTagName('polygon')[0].classList.remove('d-none')
+            button.getElementsByTagName('polygon')[1].classList.add('d-none')
+        }
+    }
+
+    emoji(){
+        $("#emoji-post").toggleClass('show');
+    }
 }
 
 class DirectUploadController {
-    constructor(source, file) {        
+    constructor(source, file) {
         this.directUpload = createDirectUpload(file, source.inputTarget.dataset.directUploadUrl, this);
         this.source = source;
         this.file = file;
         this.id = (new Date).getTime();
         this.url_file = URL.createObjectURL(file)
+        /*if(this.file.type.split('/')[0].toLowerCase() == 'video'){
+            this.snapshot = (v) => {
+                var canvas = document.createElement('canvas');
+                var ctx = canvas.getContext('2d');
+                console.log(video)
+                console.log(v)
+                ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+                this.frame = canvas.toDataURL('image/png')
+                console.log(canvas.toDataURL('image/png'))
+                video.removeEventListener('canplay', this.snapshot);
+            };
+            var video = document.createElement('video');
+            video.src = this.url_file;
+            video.addEventListener('canplay', this.snapshot);
+        }*/
     }
+    
+    
 
     start() {
         this.file.controller = this;
         this.hiddenInput = this.createHiddenInput();
-        this.preview = this.createPreview();
+        this.preview = this.createPreview();       
+    }
+
+    upload(){
         this.directUpload.create((error, attributes) => {
             if (error) {
                 remove(this.hiddenInput);
             } else {
                 this.hiddenInput.value = attributes.signed_id;
-                setTimeout(() => {                    
+                setTimeout(() => {
                     document.getElementById(`progress-${this.id}`).parentNode.classList.add('d-none')
                     document.getElementById(`btn-close-${this.id}`).classList.remove('d-none')
                 }, "2000");
@@ -257,13 +300,13 @@ class DirectUploadController {
         });
     }
 
-    createPreview(){
+    async createPreview() {
         // imagens
         var fileExtension_img = ['jpeg', 'jpg', 'png', 'gif', 'bmp'];
         //videos         
         var fileExtension_vid = ['mp4', 'mpeg', 'wmv', 'mov', 'avi'];
-        console.log(this.file)
-        if(this.file.type.split('/')[0].toLowerCase() == 'image'){                
+        //console.log(this.file)
+        if (this.file.type.split('/')[0].toLowerCase() == 'image') {
             this.source.midiasTarget.insertAdjacentHTML("beforeend", `
                 <div id="preview-${this.id}" class="d-flex flex-column-reverse justify-content-center position-relative preview rounded-3" style="background: url(${this.url_file});width: 100px;height: 100px;background-size: cover;">
                     <div id="" class="bg-preview bg-black position-absolute rounded-2 w-100 h-100 opacity-0">
@@ -275,19 +318,81 @@ class DirectUploadController {
                 </div>`
             )
         }
-        if(this.file.type.split('/')[0].toLowerCase() == 'video'){                
-            this.source.midiasTarget.insertAdjacentHTML("beforeend", `
-                <div id="preview-${this.id}" class="d-flex flex-column-reverse justify-content-center position-relative preview rounded-3" style="width: 100px;height: 100px;background-size: cover;">
-                    <video controls class="h-100 rounded-3"><source src="${this.url_file}" type="${this.file.type}"></video>                    
-                    <div id="" class="bg-preview bg-black d-none position-absolute rounded-2 w-100 h-100 opacity-75">
-                        <label id="btn-close-${this.id}" data-action="click->posts#removeFile" data-input="input-${this.id}" class="btn-close cursor-pointer d-none position-absolute z-3" style="top: 0;right: 0;"></label>
-                    </div>
-                    <div class="m-2 progress" style="height: 12px;opacity: 85%;">
-                        <div id="progress-${this.id}" class="progress-bar" style="width: 0%;"></div>
-                    </div>
-                </div>`
-            )
+        if (this.file.type.split('/')[0].toLowerCase() == 'video') {
+            try {
+                // get the frame at 1.5 seconds of the video file
+                const cover = await this.getVideoCover(this.file)
+                const cover_url = URL.createObjectURL(cover)
+                // print out the result image blob
+                this.source.midiasTarget.insertAdjacentHTML("beforeend", `
+                    <div id="preview-${this.id}" style="position: relative; width: 100px; height: 100px;">
+                        <div class="h-100 position-absolute rounded shadow w-100" style="background: url(${cover_url});background-size: cover;border: inset 1px black;filter: blur(1px);z-index: -1;"></div>
+                        <video id="video-${this.id}" class="h-100 position-absolute rounded-3 w-100"><source src="${this.url_file}" type="${this.file.type}"></video>                    
+                        <div class="bg-black bg-preview h-100 opacity-0 position-absolute rounded-2 w-100">
+                            <label id="btn-close-${this.id}" data-action="click->posts#removeFile" data-input="input-${this.id}" class="btn-close cursor-pointer d-none position-absolute z-3" style="top: 0;right: 0;"></label>
+                            <svg class="play-button" data-action="click->posts#play_pause" data-video="video-${this.id}">
+                                <polygon points="0,0 20,10 0,20" ></polygon>
+                                <polygon points="0,0 20,0 20,20 0,20" class="d-none"></polygon>
+                            </svg>
+                        </div>
+                        <div class="m-2 progress" style="margin-top: 44px !important; height: 12px;opacity: 85%;">
+                            <div id="progress-${this.id}" class="progress-bar" style="width: 0%;"></div>
+                        </div>                        
+                    </div>`
+                )
+                const video = document.getElementById(`video-${this.id}`)
+                video.addEventListener('ended',()=>{
+                    video.parentElement.getElementsByClassName('play-button')[0].getElementsByTagName('polygon')[0].classList.remove('d-none')
+                    video.parentElement.getElementsByClassName('play-button')[0].getElementsByTagName('polygon')[1].classList.add('d-none')
+                })
+            } catch (ex) {
+                console.log("ERROR: ", ex)
+            }
+                        
         }
+        this.upload()
+    }
+
+    getVideoCover(file, seekTo = 0.0) {
+        return new Promise((resolve, reject) => {
+            // load the file to a video player
+            const videoPlayer = document.createElement('video');
+            videoPlayer.setAttribute('src', URL.createObjectURL(file));
+            videoPlayer.load();
+            videoPlayer.addEventListener('error', (ex) => {
+                reject("error when loading video file", ex);
+            });
+            // load metadata of the video to get video duration and dimensions
+            videoPlayer.addEventListener('loadedmetadata', () => {
+                // seek to user defined timestamp (in seconds) if possible
+                if (videoPlayer.duration < seekTo) {
+                    reject("video is too short.");
+                    return;
+                }
+                // delay seeking or else 'seeked' event won't fire on Safari
+                setTimeout(() => {
+                  videoPlayer.currentTime = seekTo;
+                }, 200);
+                // extract video thumbnail once seeking is complete
+                videoPlayer.addEventListener('seeked', () => {
+                    // define a canvas to have the same dimension as the video
+                    const canvas = document.createElement("canvas");
+                    canvas.width = videoPlayer.videoWidth;
+                    canvas.height = videoPlayer.videoHeight;
+                    // draw the video frame to canvas
+                    const ctx = canvas.getContext("2d");
+                    ctx.drawImage(videoPlayer, 0, 0, canvas.width, canvas.height);
+                    // return the canvas image as a blob
+                    ctx.canvas.toBlob(
+                        blob => {
+                            resolve(blob);
+                        },
+                        "image/jpeg",
+                        0.75 /* quality */
+                    );
+                });
+            });
+        });
     }
 
     createHiddenInput() {
@@ -306,7 +411,7 @@ class DirectUploadController {
     bindProgressEvent(xhr) {
         this.xhr = xhr;
         this.xhr.upload.addEventListener("progress", event =>
-        this.uploadRequestDidProgress(event)
+            this.uploadRequestDidProgress(event)
         );
     }
 
@@ -316,11 +421,12 @@ class DirectUploadController {
         element.style.width = `${progress}%`
     }
 }
-  
+
 function createDirectUploadController(source, file) {
     return new DirectUploadController(source, file);
 }
-  
+
 function createDirectUpload(file, url, controller) {
     return new DirectUpload(file, url, controller);
 }
+

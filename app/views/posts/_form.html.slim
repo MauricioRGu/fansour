@@ -1,4 +1,4 @@
-div class="container" data-controller="posts"
+div class="container" data-controller="posts"  
   p class="pt-3 text-bold text-secondary" data-action="click->posts#addToast"
     = "Nova publicação"
   div class="border container p-3 rounded-1"
@@ -27,12 +27,22 @@ div class="container" data-controller="posts"
           = form.hidden_field :dt_post, value:''
           = form.hidden_field :comentario, value:true
           = form.hidden_field :fixado, value:false
-          = inline_svg_tag "add-image.svg", style:"width: 25px; height: 25px;",data:{action:"click->posts#addFile",bs_toggle:"tooltip",bs_title:"Adicionar arquivo"}
+          div 
+            = inline_svg_tag "add-image.svg", style:"width: 25px; height: 25px;",data:{action:"click->posts#addFile",bs_toggle:"tooltip",bs_title:"Adicionar arquivo"}
           /*= inline_svg_tag "add-voice.svg", style:"width: 25px; height: 25px;",data:{action:"click->posts#addVoice",bs_toggle:"tooltip",bs_title:"Adiciona Audio"}
-          = inline_svg_tag "price.svg", style:"width: 25px; height: 25px;", id:"btn-price", data:{action:"click->posts#preco",bs_toggle:"tooltip",bs_title:"Preço R$"}
-          = inline_svg_tag "chat-off.svg", style:"width: 25px; height: 25px;", id:"btn-comentario", data:{action:"click->posts#comentarios",bs_toggle:"tooltip",bs_title:"Desabilita comentários"}
-          = inline_svg_tag "agenda-post.svg", style:"width: 25px; height: 25px;", id:"btn-agenda", data:{action:"click->posts#agendamento",bs_toggle:"tooltip",bs_title:"Agenda postagem"}     
-          = inline_svg_tag "pin.svg", style:"width: 25px; height: 25px;", id:"btn-fixa", data:{action:"click->posts#fixado",bs_toggle:"tooltip",bs_title:"Fixa postagem"}
+          div 
+            = inline_svg_tag "emoji.svg", style:"width: 25px; height: 25px;", id:"btn-emoji", data:{action:"click->posts#emoji", bs_toggle:"tooltip",bs_title:"Inserir emoji"}
+            div id="emoji-post" class="picker-emoji position-absolute" style="left: 50%;"
+              == render 'helper/emojis'
+          div 
+            = inline_svg_tag "price.svg", style:"width: 25px; height: 25px;", id:"btn-price", data:{action:"click->posts#preco",bs_toggle:"tooltip",bs_title:"Preço R$"}
+          div 
+            = inline_svg_tag "chat-off.svg", style:"width: 25px; height: 25px;", id:"btn-comentario", data:{action:"click->posts#comentarios",bs_toggle:"tooltip",bs_title:"Desabilita comentários"}
+          div 
+            = inline_svg_tag "agenda-post.svg", style:"width: 25px; height: 25px;", id:"btn-agenda", data:{action:"click->posts#agendamento",bs_toggle:"tooltip",bs_title:"Agenda postagem"}     
+          div 
+            = inline_svg_tag "pin.svg", style:"width: 25px; height: 25px;", id:"btn-fixa", data:{action:"click->posts#fixado",bs_toggle:"tooltip",bs_title:"Fixa postagem"}
+          
 
   div class="modal fade" id="modal-agendamento" tabindex="-1" role="dialog" aria-labelledby="ModalAgendamento" aria-hidden="true"
     div class="modal-dialog modal-dialog-centered" role="document"
