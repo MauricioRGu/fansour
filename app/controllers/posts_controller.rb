@@ -25,8 +25,9 @@ class PostsController < ApplicationController
     @post.user_id = current_user.id
     respond_to do |format|
       if @post.save
-        format.html { redirect_to post_url(@post), notice: "Post was successfully created." }
-        format.json { render :show, status: :created, location: @post }
+        format.turbo_stream {flash.now[:notice] = "Post criado com sucesso.", status: :unprocessable_entity }
+        #format.html { redirect_to post_url(@post), notice: "Post was successfully created." }
+        #format.json { render :show, status: :created, location: @post }
       else
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @post.errors, status: :unprocessable_entity }
@@ -39,8 +40,9 @@ class PostsController < ApplicationController
     return unless @post.present?
     respond_to do |format|
       if @post.update(post_params)
-        format.html { redirect_to post_url(@post), notice: "Post was successfully updated." }
-        format.json { render :show, status: :ok, location: @post }
+        format.turbo_stream {flash.now[:notice] = "Post criado com sucesso." }
+        #format.html { redirect_to post_url(@post), notice: "Post was successfully updated." }
+        #format.json { render :show, status: :ok, location: @post }
       else
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @post.errors, status: :unprocessable_entity }
@@ -66,6 +68,6 @@ class PostsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def post_params
-      params.require(:post).permit(:descricao,)
+      params.permit(:descricao,:preco,:dt_post,:comentario,:fixado,anexos:[])
     end
 end

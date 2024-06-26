@@ -3,22 +3,24 @@
     display: none;
   }
 
-  emoji-picker{
-    right: 5rem;
+  @media screen and (min-width: 768px){
+    .picker-emoji{
+      right: 5rem;
+    }
   }
 
   @media screen and (max-width: 768px) {
-    emoji-picker{
+    .picker-emoji{
         left: 50%;
         transform: translateX(-50%);
     }
   }
-
-
 </style>
-<div>
+<div id="emoji-post" class="picker-emoji position-absolute">
   <emoji-picker 
-    locale="ptBr"
+    data-target="<%= target %>"
+    id="emoji-picker-<%= target %>"
+    locale="BR"
     data-source="https://cdn.jsdelivr.net/npm/emoji-picker-element-data@%5E1/pt/cldr-native/data.json"
     skin-tone-emoji="👍️"
   ></emoji-picker>
@@ -31,14 +33,10 @@
 
   document.addEventListener('DOMContentLoaded', async () => {
     const picker = $('emoji-picker')
-    //const pre = $('pre')
-    const onEvent = e => {
-      console.log(e)
-      //pre.style.display = 'block'
-      //pre.innerHTML = `Event: ${JSON.stringify(e.type)}\n\nData:\n\n${JSON.stringify(e.detail, null, 2)}`
+    const edit = document.getElementById(picker.dataset.target)
+    const onEvent = e => {   
+      edit.value = edit.value + e.detail.unicode
     }
     picker.addEventListener('emoji-click', onEvent)
-    picker.addEventListener('skin-tone-change', onEvent)
-
   })
 </script>

@@ -4,6 +4,9 @@
     == render "profiles/planos_show", user: @user
   - else 
     div class="content"
+      - @posts.each do |d|
+        p
+          = d.descricao
 - else
   div class="d-flex flex-column justify-content-center align-items-center gap-2 fullheight" 
     p class="h6"

@@ -52,14 +52,17 @@ export default class extends Controller {
             let form = $(event.currentTarget)
 
             //define o texto no botão
-            form.find('span[role=status]').html(text)
+            //form.find('span[role=status]').html(text)
 
             //habilita o spinner
             form.find('.spinner-border').toggleClass('visually-hidden')
         })
 
         this.element.addEventListener("turbo:submit-end", (event) => {
-            alert('turbo:submit-end')
+            let form = $(event.currentTarget)
+            console.log(event)
+            //desabilita o spinner
+            form.find('.spinner-border').toggleClass('visually-hidden')
         })
 
         //habilita os tooltips

@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  has_many :post
+
   #atrubuto usado para saber qual é o formulário que está sendo enviado
   attribute :kind
 

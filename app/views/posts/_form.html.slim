@@ -1,8 +1,8 @@
 div class="container" data-controller="posts"  
-  p class="pt-3 text-bold text-secondary" data-action="click->posts#addToast"
+  p class="pt-3 text-bold text-secondary"
     = "Nova publicação"
   div class="border container p-3 rounded-1"
-    = form_with(model: @post) do |form|
+    = form_with(model: @post, url:"/posts") do |form|
       - if @post && @post.errors.any?
         div style="color: red"
           h2 = "#{pluralize(@post.errors.count, "error")} prohibited this post from being saved:"
@@ -20,8 +20,11 @@ div class="container" data-controller="posts"
           = form.file_field :anexos, multiple: true, direct_upload: true, class:"d-none", data:{posts_target:"input"}, accept:"image/*"
 
       div class="d-flex flex-column-reverse flex-sm-row gap-2"
-        div
-          input type="submit" class="btn btn-sm btn-login" value="Publicar" disabled="disabled" id="submit"
+        div class="actions"
+          button name="button" type="submit" class="align-items-center btn btn-login btn-sm d-flex gap-2 justify-content-center" id="submit" disabled="disabled"
+            span class="spinner-border spinner-grow-sm visually-hidden" aria-hidden="true"
+            span role="status" 
+              = "Publicar"
         div class="buttons d-flex gap-3 justify-content-center justify-content-sm-end w-100" style="fill: var(--bs-gray-500);"
           = form.hidden_field :preco, value:""
           = form.hidden_field :dt_post, value:''
@@ -32,8 +35,7 @@ div class="container" data-controller="posts"
           /*= inline_svg_tag "add-voice.svg", style:"width: 25px; height: 25px;",data:{action:"click->posts#addVoice",bs_toggle:"tooltip",bs_title:"Adiciona Audio"}
           div 
             = inline_svg_tag "emoji.svg", style:"width: 25px; height: 25px;", id:"btn-emoji", data:{action:"click->posts#emoji", bs_toggle:"tooltip",bs_title:"Inserir emoji"}
-            div id="emoji-post" class="picker-emoji position-absolute" style="left: 50%;"
-              == render 'helper/emojis'
+            == render 'helper/emojis', target:"descricao"
           div 
             = inline_svg_tag "price.svg", style:"width: 25px; height: 25px;", id:"btn-price", data:{action:"click->posts#preco",bs_toggle:"tooltip",bs_title:"Preço R$"}
           div 

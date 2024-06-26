@@ -36,6 +36,7 @@ class ProfilesController < ApplicationController
             #verificar se o usuário é assinante do perfil do criador
             #@assinante = current_user.assinaturas.where(criador_id: @user.id, dt_fim: (Time.now)..)
             @assinante = current_user.assinaturas.where(criador_id: @user.id, vencida: false)
+            @posts = @user.post 
         end
     end
 
