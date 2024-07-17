@@ -2,9 +2,43 @@
 
 import { Controller } from "@hotwired/stimulus"
 import { DirectUpload } from "@rails/activestorage"
+import { Picker } from "emoji-picker-element"
+import insertText from "insert-text-at-cursor"
 
-
-
+const pt_BR = {
+    categoriesLabel: 'Categorias',
+    emojiUnsupportedMessage: 'Seu navegador não suporta emojis coloridos.',
+    favoritesLabel: 'Favoritos',
+    loadingMessage: 'Carregando…',
+    networkErrorMessage: 'Não foi possível carregar o emoji.',
+    regionLabel: 'Seletor de emoji',
+    searchDescription: 'Quando os resultados da pesquisa estiverem disponíveis, pressione para cima ou para baixo para selecionar e “enter” para escolher.',
+    searchLabel: 'Procurar',
+    searchResultsLabel: 'Resultados da pesquisa',
+    skinToneDescription: 'Quando expandido, pressione para cima ou para baixo para selecionar e “enter” para escolher.',
+    skinToneLabel: 'Escolha um tom de pele (atualmente {skinTone})',
+    skinTonesLabel: 'Tons dasd  d pele',
+    skinTones: [
+      'Padrão',
+      'Claro',
+      'Claro médio',
+      'Médio',
+      'Escuro médio',
+      'Escuro'
+    ],
+    categories: {
+      custom: 'Personalizar',
+      'smileys-emotion': 'Carinhas e emoticons',
+      'people-body': 'Pessoas e corpo',
+      'animals-nature': 'Animais e natureza',
+      'food-drink': 'Alimentos e bebidas',
+      'travel-places': 'Viagem e lugares',
+      activities: 'Atividades',
+      objects: 'Objetos',
+      symbols: 'Símbolos',
+      flags: 'Bandeiras'
+    }
+}
 
 export default class extends Controller {
     static targets = ["input", "midias"]
@@ -61,6 +95,8 @@ export default class extends Controller {
         this.element.addEventListener("turbo:submit-end", (event) => {
             let form = $(event.currentTarget)
             console.log(event)
+            //limpar formulário se foi criado o post
+            
             //desabilita o spinner
             form.find('.spinner-border').toggleClass('visually-hidden')
         })
@@ -253,6 +289,22 @@ export default class extends Controller {
     }
 
     emoji(){
+        let edit = document.getElementById("emoji-post")
+        if(edit.dataset.picker == undefined){
+            const picker = new Picker({
+                i18n: pt_BR,
+                emojiVersion: 15.0,
+                dataSource: "https://cdn.jsdelivr.net/npm/emoji-picker-element-data@%5E1/pt/cldr-native/data.json",
+                skinToneEmoji: "🫶",
+                locale: "pt_BR"               
+            }) 
+            edit.appendChild(picker)
+            edit.dataset.picker = true
+            picker.addEventListener('emoji-click', event => {
+                console.log(event.detail); // will log something like the above
+                insertText(document.getElementById('descricao'), event.detail.unicode)
+            });
+        }        
         $("#emoji-post").toggleClass('show');
     }
 }

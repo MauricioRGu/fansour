@@ -4,12 +4,12 @@
 //= require bootstrap
 //= require jquery.mask.min.js
 //= require jquery.easy-autocomplete
-//= require vivus
 //= require viewer
 //= require cropper.min
 
 import "@hotwired/turbo-rails"
 import "controllers"
+import Vivus from "vivus"
 
 //função que serve o turbo e o document ready
 var fEscondeMsg = function(){
@@ -110,7 +110,7 @@ var binding = function(){
 //sempre que o turbo carregar, readiciona o evento de escuta.
 document.addEventListener("turbo:load",binding);
 document.addEventListener("turbo:submit-end",fEscondeMsg);
-document.addEventListener("direct-upload:progress", event => {
+/*document.addEventListener("direct-upload:progress", event => {
     const { id, progress } = event.detail
     console.log(progress)
-  })
+  })*/

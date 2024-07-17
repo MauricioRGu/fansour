@@ -4,9 +4,17 @@
     == render "profiles/planos_show", user: @user
   - else 
     div class="content"
-      - @posts.each do |d|
-        p
-          = d.descricao
+      - if @posts.present?
+        - @posts.each do |d|
+          p class="profile-description mt-1 px-2 bg-success"
+            = d.descricao.to_s + ' - ' + l(d.created_at, format: :diahora)
+            - d.anexos.each do |a|
+              - if a.image?
+                = image_tag(a)
+              - if a.video?
+                = url_for(a)
+      - else 
+        p Nenhuma Postagem.
 - else
   div class="d-flex flex-column justify-content-center align-items-center gap-2 fullheight" 
     p class="h6"

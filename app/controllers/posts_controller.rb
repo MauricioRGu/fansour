@@ -25,7 +25,7 @@ class PostsController < ApplicationController
     @post.user_id = current_user.id
     respond_to do |format|
       if @post.save
-        format.turbo_stream {flash.now[:notice] = "Post criado com sucesso.", status: :unprocessable_entity }
+        format.turbo_stream {flash.now[:notice] = "Post criado com sucesso."}
         #format.html { redirect_to post_url(@post), notice: "Post was successfully created." }
         #format.json { render :show, status: :created, location: @post }
       else

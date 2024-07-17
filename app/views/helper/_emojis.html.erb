@@ -1,6 +1,12 @@
 <style>
+  .picker-emoji{
+    overflow: hidden;
+    max-height: 400px;
+    transition: max-height .5s ease-in-out;
+  }  
+
   .picker-emoji:not(.show){
-    display: none;
+    max-height: 0;
   }
 
   @media screen and (min-width: 768px){
@@ -17,26 +23,22 @@
   }
 </style>
 <div id="emoji-post" class="picker-emoji position-absolute">
-  <emoji-picker 
+  <emoji
     data-target="<%= target %>"
     id="emoji-picker-<%= target %>"
     locale="BR"
     data-source="https://cdn.jsdelivr.net/npm/emoji-picker-element-data@%5E1/pt/cldr-native/data.json"
     skin-tone-emoji="👍️"
-  ></emoji-picker>
+  ></emoji>
 </div>
-<script type="module">
-  import 'https://cdn.jsdelivr.net/npm/emoji-picker-element@^1/picker.js'
-  import 'https://cdn.jsdelivr.net/npm/emoji-picker-element@^1/database.js' // avoid extra round-trip
-
-  const $ = document.querySelector.bind(document)
-
-  document.addEventListener('DOMContentLoaded', async () => {
-    const picker = $('emoji-picker')
+<script>
+  
+  /*document.addEventListener('DOMContentLoaded', async () => {
+    const picker =  document.querySelector('emoji-picker')
     const edit = document.getElementById(picker.dataset.target)
     const onEvent = e => {   
       edit.value = edit.value + e.detail.unicode
     }
     picker.addEventListener('emoji-click', onEvent)
-  })
+  })*/
 </script>
