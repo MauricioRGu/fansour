@@ -8,6 +8,8 @@ Rails.application.routes.draw do
 
   #posts
   resources :posts, only: [:new, :create, :destroy]
+  post 'posts/curtir', to: 'posts#curtir'
+  post 'posts/descurtir', to: 'posts#descurtir'
   
   #users
   resources :users, only: [:update]
@@ -36,7 +38,7 @@ Rails.application.routes.draw do
   get 'profiles/settings/assinaturas', to: 'profiles#settings'
   get 'profiles/settings/check_profile', to: 'profiles#settings'
 
-  #válida se o username já está sendo usado
+  #valída se o username já está sendo usado
   post 'username/:username', to: 'users#checa_username'
 
   #baixa as imagens de capa e avatar em show
@@ -46,6 +48,7 @@ Rails.application.routes.draw do
   post '/assinaturas/create', to: 'assinaturas#create' 
   post '/assinaturas/update', to: 'assinaturas#update' 
   
+  #checagem de perfil para se tornar criador 
   resources :checagem_profiles, only: [:create]
 
   #centro de administração

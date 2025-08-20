@@ -1,0 +1,48 @@
+div class="profile-description mt-2 p-2 rounded text-bg-dark position-relative" data-controller="posts"
+  div class="d-flex justify-content-between" 
+    div
+      = image_tag post.user.avatar.variant(:thumb), loading: 'lazy', class: 'img-avatar'
+      span class="float-end" 
+        = post.user.nome_arroba        
+    span 
+      = l(post.created_at, format: :diahora)
+      - if post.fixado? && fixar
+        = inline_svg_tag "pin.svg", style:"width: 25px;height: 25px;fill: white;"
+      - if post.user_id == current_user.id 
+        = inline_svg_tag "tree-dots-vertical.svg", class:"cursor-pointer position-absolute", style:"width:20px;height:20px;bottom:10px;right:10px;"
+  div class="p-2" 
+    = post.descricao.to_s
+  div class="carousel slide flex-grow-1 d-flex align-items-center" id="carousel#{post.id}" data-ride="carousel"      
+    div class="carousel-inner" style="max-height:500px;" data-action="click->posts#show" id="gallery#{post.id}"
+      - @active = 'active'
+      - post.anexos.each do |a|
+        div class="carousel-item #{@active}" 
+          - if a.image?
+            - if a.blob.metadata['height'] > 500
+              = image_tag a, loading: 'lazy', class:"d-block m-auto", style:"cursor: zoom-in;", height:"500px"
+            - else
+              = image_tag a, loading: 'lazy', class:"d-block m-auto w-100", style:"cursor: zoom-in;"
+          - if a.video?
+            video controls='controls' width='100%' height="#{a.blob.metadata['height'] > 500 ? '500px' : ''}"
+              source src="#{url_for(a)}"
+          - @active = ''
+    - if post.anexos.count > 1
+      button class="carousel-control-prev" type="button" data-bs-target="#carousel#{post.id}" data-bs-slide="prev"
+        span class="carousel-control-prev-icon" aria-hidden="true"
+        span class="visually-hidden" 
+          = "Previous"      
+      button class="carousel-control-next" type="button" data-bs-target="#carousel#{post.id}" data-bs-slide="next"
+        span class="carousel-control-next-icon" aria-hidden="true"
+        span class="visually-hidden"
+          = "Next"
+  div class="d-flex p-3 gap-1"
+    - if post.curtidas.where(user_id: current_user.id).present?
+      = inline_svg_tag "heart-full.svg", data:{action:"click->posts#descurtir", post_id: post.id}, style: "fill:var(--bs-red);width:25px;height:25px;", class: "cursor-pointer"
+    - else
+      = inline_svg_tag "heart.svg", data:{action:"click->posts#curtir", post_id: post.id}, style: "fill:var(--azul-fansour);width:25px;height:25px;", class: "cursor-pointer"
+    - if post.comentario
+      = inline_svg_tag "comments.svg", data_post: post.id, style: "fill:var(--azul-fansour);width:25px;height:25px;", class: "cursor-pointer"
+    - else
+      = inline_svg_tag "chat-off.svg", style: "fill:var(--bs-gray);width:25px;height:25px;", class: ""
+    = inline_svg_tag "price.svg", data_post: post.id, style: "fill:var(--azul-fansour);width:25px;height:25px;", class: "cursor-pointer"
+    

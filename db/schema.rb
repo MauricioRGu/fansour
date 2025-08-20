@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_03_12_013300) do
+ActiveRecord::Schema[7.0].define(version: 2025_02_11_232537) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -65,6 +65,15 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_12_013300) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_checagem_profiles_on_user_id"
+  end
+
+  create_table "curtidas", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "post_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["post_id"], name: "index_curtidas_on_post_id"
+    t.index ["user_id"], name: "index_curtidas_on_user_id"
   end
 
   create_table "posts", force: :cascade do |t|
@@ -135,5 +144,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_12_013300) do
   add_foreign_key "assinaturas", "users"
   add_foreign_key "assinaturas", "users", column: "criador_id"
   add_foreign_key "checagem_profiles", "users"
+  add_foreign_key "curtidas", "posts"
+  add_foreign_key "curtidas", "users"
   add_foreign_key "posts", "users"
 end

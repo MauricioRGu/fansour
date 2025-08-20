@@ -1,94 +1,96 @@
-div class="container" data-controller="posts"  
-  p class="pt-3 text-bold text-secondary"
-    = "Nova publicação"
-  div class="border container p-3 rounded-1"
-    = form_with(model: @post, url:"/posts") do |form|
-      - if @post && @post.errors.any?
-        div style="color: red"
-          h2 = "#{pluralize(@post.errors.count, "error")} prohibited this post from being saved:"
-          ul
-            - @post.errors.each do |error|
-              li = error.full_message
+div class="" data-controller="posts"  
+  details 
+    summary 
+      span class="pt-3 text-bold text-secondary"
+        = "Nova publicação"
+    div class="border container p-3 rounded-1"
+      = form_with(model: @post, url:"/posts") do |form|
+        - if @post && @post.errors.any?
+          div style="color: red"
+            h2 = "#{pluralize(@post.errors.count, "error")} prohibited this post from being saved:"
+            ul
+              - @post.errors.each do |error|
+                li = error.full_message
 
-      div
-        label id="label-agendamento" class="align-items-center d-flex justify-content-between p-2 rounded text-bg-success text-center w-100 mb-3 d-none"
-          span
-            = "Agendado para 06/04/2024 10:00"
-          label class="btn-close cursor-pointer m-0 p-0" data-action="click->posts#cancelaAgendamento"
-        = form.text_area :descricao, placeholder:"Descrição do seu post...", class:"mb-3 form-control-plaintext text-body-secondary", style:"resize: none; min-height: 90px;", required:"required", data:{action: "blur->posts#valida_post"}
-        div id="midias" class="d-flex flex-wrap gap-2 mb-3" data-posts-target="midias"
-          = form.file_field :anexos, multiple: true, direct_upload: true, class:"d-none", data:{posts_target:"input"}, accept:"image/*"
+        div
+          label id="label-agendamento" class="align-items-center d-flex justify-content-between p-2 rounded text-bg-success text-center w-100 mb-3 d-none"
+            span
+              = "Agendado para 06/04/2024 10:00"
+            label class="btn-close cursor-pointer m-0 p-0" data-action="click->posts#cancelaAgendamento"
+          = form.text_area :descricao, placeholder:"Descrição do seu post...", class:"mb-3 form-control-plaintext text-body-secondary", style:"resize: none; min-height: 90px;", required:"required", data:{action: "blur->posts#valida_post"}
+          div id="midias" class="d-flex flex-wrap gap-2 mb-3" data-posts-target="midias"
+            = form.file_field :anexos, multiple: true, direct_upload: true, class:"d-none", data:{posts_target:"input"}, accept:"image/*,video/*"
 
-      div class="d-flex flex-column-reverse flex-sm-row gap-2"
-        div class="actions"
-          button name="button" type="submit" class="align-items-center btn btn-login btn-sm d-flex gap-2 justify-content-center" id="submit" disabled="disabled"
-            span class="spinner-border spinner-grow-sm visually-hidden" aria-hidden="true"
-            span role="status" 
-              = "Publicar"
-        div class="buttons d-flex gap-3 justify-content-center justify-content-sm-end w-100" style="fill: var(--bs-gray-500);"
-          = form.hidden_field :preco, value:""
-          = form.hidden_field :dt_post, value:''
-          = form.hidden_field :comentario, value:true
-          = form.hidden_field :fixado, value:false
-          div 
-            = inline_svg_tag "add-image.svg", style:"width: 25px; height: 25px;",data:{action:"click->posts#addFile",bs_toggle:"tooltip",bs_title:"Adicionar arquivo"}
-          /*= inline_svg_tag "add-voice.svg", style:"width: 25px; height: 25px;",data:{action:"click->posts#addVoice",bs_toggle:"tooltip",bs_title:"Adiciona Audio"}
-          div 
-            = inline_svg_tag "emoji.svg", style:"width: 25px; height: 25px;", id:"btn-emoji", data:{action:"click->posts#emoji", bs_toggle:"tooltip",bs_title:"Inserir emoji"}
-            == render 'helper/emojis', target:"descricao"
-          div 
-            = inline_svg_tag "price.svg", style:"width: 25px; height: 25px;", id:"btn-price", data:{action:"click->posts#preco",bs_toggle:"tooltip",bs_title:"Preço R$"}
-          div 
-            = inline_svg_tag "chat-off.svg", style:"width: 25px; height: 25px;", id:"btn-comentario", data:{action:"click->posts#comentarios",bs_toggle:"tooltip",bs_title:"Desabilita comentários"}
-          div 
-            = inline_svg_tag "agenda-post.svg", style:"width: 25px; height: 25px;", id:"btn-agenda", data:{action:"click->posts#agendamento",bs_toggle:"tooltip",bs_title:"Agenda postagem"}     
-          div 
-            = inline_svg_tag "pin.svg", style:"width: 25px; height: 25px;", id:"btn-fixa", data:{action:"click->posts#fixado",bs_toggle:"tooltip",bs_title:"Fixa postagem"}
-          
+        div class="d-flex flex-column-reverse flex-sm-row gap-2"
+          div class="actions"
+            button name="button" type="submit" class="align-items-center btn btn-login btn-sm d-flex gap-2 justify-content-center" id="submit" disabled="disabled"
+              span class="spinner-border spinner-grow-sm visually-hidden" aria-hidden="true"
+              span role="status" 
+                = "Publicar"
+          div class="buttons d-flex gap-3 justify-content-center justify-content-sm-end w-100" style="fill: var(--bs-gray-500);"
+            = form.hidden_field :preco, value:""
+            = form.hidden_field :dt_post, value:''
+            = form.hidden_field :comentario, value:true
+            = form.hidden_field :fixado, value:false
+            div 
+              = inline_svg_tag "add-image.svg", style:"width: 25px; height: 25px;",data:{action:"click->posts#addFile",bs_toggle:"tooltip",bs_title:"Adicionar arquivo"}
+            /*= inline_svg_tag "add-voice.svg", style:"width: 25px; height: 25px;",data:{action:"click->posts#addVoice",bs_toggle:"tooltip",bs_title:"Adiciona Audio"}
+            div 
+              = inline_svg_tag "emoji.svg", style:"width: 25px; height: 25px;", id:"btn-emoji", data:{action:"click->posts#emoji", bs_toggle:"tooltip",bs_title:"Inserir emoji"}
+              == render 'helper/emojis', target:"descricao"
+            div 
+              = inline_svg_tag "price.svg", style:"width: 25px; height: 25px;", id:"btn-price", data:{action:"click->posts#preco",bs_toggle:"tooltip",bs_title:"Preço R$"}
+            div 
+              = inline_svg_tag "chat-off.svg", style:"width: 25px; height: 25px;", id:"btn-comentario", data:{action:"click->posts#comentarios",bs_toggle:"tooltip",bs_title:"Desabilita comentários"}
+            div 
+              = inline_svg_tag "agenda-post.svg", style:"width: 25px; height: 25px;", id:"btn-agenda", data:{action:"click->posts#agendamento",bs_toggle:"tooltip",bs_title:"Agenda postagem"}     
+            div 
+              = inline_svg_tag "pin.svg", style:"width: 25px; height: 25px;", id:"btn-fixa", data:{action:"click->posts#fixado",bs_toggle:"tooltip",bs_title:"Fixa postagem"}
+            
 
-  div class="modal fade" id="modal-agendamento" tabindex="-1" role="dialog" aria-labelledby="ModalAgendamento" aria-hidden="true"
-    div class="modal-dialog modal-dialog-centered" role="document"
-      div class="modal-content" style="background-color: var(--bs-body-bg) !important;"
-        div class="modal-header"
-          h6 class="modal-title text-body-secondary" id="title"
-            = "Agendamento da publicação"
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-            span aria-hidden="true"
-        div class="modal-body align-items-center d-flex flex-column gap-3 text-body-secondary"
-          h6 class="p-3 rounded text-bg-info"
-            = "Selecione a data e hora que sua postagem será publicada:"
-          div class="w-100" style="max-width:300px;"
-            label for="data"
-              = "Data:"
-            input type="date" id="data" class="form-control"
-          div class="w-100" style="max-width:300px;"
-            label for="hora"
-              = "Hora:"
-            input type="time" id="hora" class="form-control"
-          div class="w-100"
-            button class="btn btn-sm btn-outline-info w-100 mt-4" data-action="click->posts#setAgendamento"
-              = "Aplicar"
+    div class="modal fade" id="modal-agendamento" tabindex="-1" role="dialog" aria-labelledby="ModalAgendamento" aria-hidden="true"
+      div class="modal-dialog modal-dialog-centered" role="document"
+        div class="modal-content" style="background-color: var(--bs-body-bg) !important;"
+          div class="modal-header"
+            h6 class="modal-title text-body-secondary" id="title"
+              = "Agendamento da publicação"
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+              span aria-hidden="true"
+          div class="modal-body align-items-center d-flex flex-column gap-3 text-body-secondary"
+            h6 class="p-3 rounded text-bg-info"
+              = "Selecione a data e hora que sua postagem será publicada:"
+            div class="w-100" style="max-width:300px;"
+              label for="data"
+                = "Data:"
+              input type="date" id="data" class="form-control"
+            div class="w-100" style="max-width:300px;"
+              label for="hora"
+                = "Hora:"
+              input type="time" id="hora" class="form-control"
+            div class="w-100"
+              button class="btn btn-sm btn-outline-info w-100 mt-4" data-action="click->posts#setAgendamento"
+                = "Aplicar"
 
-  div class="modal fade" id="modal-valor" tabindex="-1" role="dialog" aria-labelledby="ModalValor" aria-hidden="true"
-    div class="modal-dialog modal-dialog-centered" role="document"
-      div class="modal-content" style="background-color: var(--bs-body-bg) !important;"
-        div class="modal-header"
-          h6 class="modal-title text-body-secondary" id="title"
-            = "Valor da assinatura"
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-            span aria-hidden="true"
-        div class="modal-body align-items-center d-flex flex-column gap-3 text-body-secondary"
-          h6 class="p-3 rounded text-bg-info"
-            = "Informe o valor que será cobrado para a assinatura dessa publicação:"
-          div class="input-group w-100" style="max-width:160px;"
-            span class="input-group-text text-bg-info"R$              
-            input type="number" id="edtpreco" class="form-control" max="999"
-            span class="input-group-text text-bg-info",00
-          div class="w-100"
-            span class="text-danger fade" id="error-price"
-              = "O valor mínimo é de R$ 10,00"
-            button class="btn btn-sm btn-outline-info w-100" data-action="click->posts#setPrice"
-              = "Aplicar"
-            button class="btn btn-sm btn-danger w-100 mt-1 d-none" id="btn-clean-price" data-action="click->posts#clearPrice"
-              = "Remover preço"
-  div id="toast-container" class="toast-container position-fixed bottom-0 end-0 p-3"
+    div class="modal fade" id="modal-valor" tabindex="-1" role="dialog" aria-labelledby="ModalValor" aria-hidden="true"
+      div class="modal-dialog modal-dialog-centered" role="document"
+        div class="modal-content" style="background-color: var(--bs-body-bg) !important;"
+          div class="modal-header"
+            h6 class="modal-title text-body-secondary" id="title"
+              = "Valor da assinatura"
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+              span aria-hidden="true"
+          div class="modal-body align-items-center d-flex flex-column gap-3 text-body-secondary"
+            h6 class="p-3 rounded text-bg-info"
+              = "Informe o valor que será cobrado para a assinatura dessa publicação:"
+            div class="input-group w-100" style="max-width:160px;"
+              span class="input-group-text text-bg-info"R$              
+              input type="number" id="edtpreco" class="form-control" max="999"
+              span class="input-group-text text-bg-info",00
+            div class="w-100"
+              span class="text-danger fade" id="error-price"
+                = "O valor mínimo é de R$ 10,00"
+              button class="btn btn-sm btn-outline-info w-100" data-action="click->posts#setPrice"
+                = "Aplicar"
+              button class="btn btn-sm btn-danger w-100 mt-1 d-none" id="btn-clean-price" data-action="click->posts#clearPrice"
+                = "Remover preço"
+    div id="toast-container" class="toast-container position-fixed bottom-0 end-0 p-3"

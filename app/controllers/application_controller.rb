@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
     #after_action :update_user_online, if: :user_signed_in?
 
     def index 
-
+        @posts = Post.all.order('created_at DESC') #where('user_id <> ?',current_user.id)
     end
 
     private

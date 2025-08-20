@@ -74,7 +74,7 @@ var binding = function(){
         
         //função para carregar o svg
         function mostraLogo(tempo){
-            new Vivus('logo', { type: 'sync', duration: tempo , file: 'http://localhost:3000/assets/logo-index-a4f7f9b0592c1da89067a1139dd5ebba2e383a7b3a069ee4625e045cb8b99455.svg'}, callBack);
+            new Vivus('logo', { type: 'sync', duration: tempo , file: '/assets/logo-index-a4f7f9b0592c1da89067a1139dd5ebba2e383a7b3a069ee4625e045cb8b99455.svg'}, callBack);
         }
         
         //chamada da função para carregar svg de acordo com o tipo de dispositivo

@@ -1,1 +1,5 @@
-== render "posts/form"
+div class="container"
+  == render "posts/form"
+  div class="feed" 
+    - @posts.each do |p|
+      == render "posts/view", post: p, fixar: false

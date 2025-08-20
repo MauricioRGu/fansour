@@ -3,17 +3,12 @@
   - if @user.id != current_user.id && @user.perfil_criador && !@assinante.present?
     == render "profiles/planos_show", user: @user
   - else 
-    div class="content"
-      - if @posts.present?
-        - @posts.each do |d|
-          p class="profile-description mt-1 px-2 bg-success"
-            = d.descricao.to_s + ' - ' + l(d.created_at, format: :diahora)
-            - d.anexos.each do |a|
-              - if a.image?
-                = image_tag(a)
-              - if a.video?
-                = url_for(a)
-      - else 
+    div class="container"
+      - if @posts.present? 
+        div class="container" data-controller='posts'     
+          - @posts.each do |p|
+            == render "posts/view", post: p, fixar: true
+      - else
         p Nenhuma Postagem.
 - else
   div class="d-flex flex-column justify-content-center align-items-center gap-2 fullheight" 

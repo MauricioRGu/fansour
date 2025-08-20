@@ -60,6 +60,29 @@ class PostsController < ApplicationController
     end
   end
 
+  def curtir
+    return unless params[:postId].present? && current_user.present?
+    curtida = Curtida.new
+    curtida.post_id = params[:postId]
+    curtida.user_id = current_user.id
+    if curtida.save 
+      msg = 'OK'
+    else
+      msg = ''
+    end
+    render plain: msg
+  end
+
+  def descurtir 
+    return unless params[:postId].present? && current_user.present?
+    if Curtida.delete_by(user_id: current_user.id, post_id: params[:postId])
+      msg = 'OK'
+    else
+      msg = ''
+    end
+    render plain: msg     
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_post
